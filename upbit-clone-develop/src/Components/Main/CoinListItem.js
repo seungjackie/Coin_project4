@@ -171,6 +171,7 @@ const CoinListItem = ({
   }, [dispatch, marketName, history]);
 
   return (
+  <div>
     <St.CoinLi
       borderBottomColor={theme.lightGray}
       bgColor={selectedMarket === marketName ? theme.lightGray : "white"}
@@ -200,6 +201,7 @@ const CoinListItem = ({
         </St.TradePrice>
       </St.CoinBtn>
     </St.CoinLi>
+  </div>
   );
 };
 

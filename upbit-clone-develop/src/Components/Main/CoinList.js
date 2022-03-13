@@ -179,20 +179,20 @@ const CoinList = ({
                 ? theme.strongBlue
                 : "black";
             return (
-              <CoinListItem
-                theme={theme}
-                marketName={marketName}
-                selectedMarket={selectedMarket}
-                coinName={marketNames[marketName].korean}
-                enCoinName={enCoinName}
-                fontColor={fontColor}
-                price={price}
-                changeRate24Hour={changeRate24Hour + "%"}
-                changePrice24Hour={changePrice24Hour}
-                tradePrice24Hour={tradePrice24Hour}
-                // isTraded={isTraded}
-                key={`coinList-${marketName}`}
-              />
+                <CoinListItem
+                  theme={theme}
+                  marketName={marketName}
+                  selectedMarket={selectedMarket}
+                  coinName={marketNames[marketName].korean}
+                  enCoinName={enCoinName}
+                  fontColor={fontColor}
+                  price={price}
+                  changeRate24Hour={changeRate24Hour + "%"}
+                  changePrice24Hour={changePrice24Hour}
+                  tradePrice24Hour={tradePrice24Hour}
+                  // isTraded={isTraded}
+                  key={`coinList-${marketName}`}
+                />
             );
           })
         )}

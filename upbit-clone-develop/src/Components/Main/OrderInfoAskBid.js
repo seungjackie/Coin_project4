@@ -229,7 +229,7 @@ const OrderInfoAskBid = ({
         <OrderInfoTradeList theme={theme} />
       )}
       <St.OrderBtnContainer>
-        <St.Button
+        {/* <St.Button
           width={"30%"}
           minWidth={"70px"}
           marginRight={"5px"}
@@ -246,7 +246,7 @@ const OrderInfoAskBid = ({
           fontColor={"white"}
         >
           로그인
-        </St.Button>
+        </St.Button> */}
       </St.OrderBtnContainer>
     </St.OrderInfoContainer>
   );

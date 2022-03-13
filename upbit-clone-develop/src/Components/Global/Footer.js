@@ -88,19 +88,19 @@ const Footer = () => {
     <St.Footer>
       <St.Container>
         <St.MainLink
-          href="/"
+          href="/intro"
           title={"메인으로 이동"}
           logo={process.env.PUBLIC_URL + "/blueLogo.png"}
         />
         <St.Description>
-          <St.DescSpan>Upbit Clone Project - Downbit</St.DescSpan>
-          <St.DescSpan>Created by Seongkyun Yu</St.DescSpan>
+          <St.DescSpan>Upbit Clone Project - DONUT</St.DescSpan>
+          <St.DescSpan>Created by KGA Team 4</St.DescSpan>
           <St.DescSpan>
-            Copyright © 2020 DOWNBIT INC. ALL RIGHTS RESERVED.
+            Copyright © 2022 DONUT INC. ALL RIGHTS RESERVED.
           </St.DescSpan>
         </St.Description>
         <St.ContactContainer>
-          <St.LinkTitle>Contact Me</St.LinkTitle>
+          <St.LinkTitle>Contact Us</St.LinkTitle>
           <ul>
             <li>
               <St.LinkTag href="https://github.com/Seongkyun-Yu/upbit-clone">
@@ -109,19 +109,19 @@ const Footer = () => {
                   size="lg"
                   title={"Github 아이콘"}
                 />
-                <St.LinkSpan>github.com/Seongkyun-Yu/upbit-clone</St.LinkSpan>
+                <St.LinkSpan>github.com/seungjackie/Coin_project4</St.LinkSpan>
               </St.LinkTag>
             </li>
-            <li>
+            {/* <li>
               <St.LinkTag href="mailto:ysungkyun@gmail.com">
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   size="lg"
                   title={"이메일 아이콘"}
                 />
-                <St.LinkSpan>ysungkyun@gmail.com</St.LinkSpan>
+                <St.LinkSpan>@gmail.com</St.LinkSpan>
               </St.LinkTag>
-            </li>
+            </li> */}
           </ul>
         </St.ContactContainer>
       </St.Container>

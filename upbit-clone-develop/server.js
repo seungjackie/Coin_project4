@@ -1,11 +1,14 @@
+//기본 서버 연결
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const PORT = process.env.PORT || 4000;
-
 const app = express();
+const PORT = process.env.PORT || 4000;
+const bodyParser = require('body-parser');
 
-const uri = 'mongodb://127.0.1:27017/userinfo';
+//몽구스 연결
+const mongoose = require('mongoose');
+const connectDB = require("./config/db");
+const uri = 'mongodb://13.124.19.24:27017/userinfo';
+
 
 //연결 성공여부 회신
 const db = mongoose.connect(uri, (err) => {
@@ -48,5 +51,8 @@ app.post('./login', (req, res) => {
         else return res.status(404).json({message : '유저 없음'});
     });
 });
+
+//connectDB
+// connectDB();
 
 app.listen(PORT, () => console.log(`###### ${PORT} 포트 실행 중 ######`));

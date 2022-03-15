@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 
-const uri = 'mongodb://127.0.1:27017/userinfo';
+const uri = 'mongodb://13.124.19.24:27017/userinfo';
 
 //연결 성공여부 회신
 const db = mongoose.connect(uri, (err) => {
@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: 'lgb', extended : false }));
 
 app.get('/', (req, res) => {
-    res.send('Wellcome!');
+    res.send('Welcome to api page!');
 });
 
 app.post('/join', (req, res) => {

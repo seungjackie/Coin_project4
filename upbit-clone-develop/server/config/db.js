@@ -1,6 +1,7 @@
 // package
 const mongoose = require("mongoose");
 const config = require("config");
+
 // URI
 const uri = config.get("mongoURI");
 
@@ -11,8 +12,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-
-    console.log("MongoDB Connected...");
+    console.log("###### MongoDB Connected ######");
   } catch (error) {
     console.error(error.message);
     process.exit(1);

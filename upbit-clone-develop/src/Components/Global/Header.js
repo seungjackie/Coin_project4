@@ -47,6 +47,7 @@ const St = {
     height: 100%;
   `,
   Head: styled.a`
+    /* padding: 20px; */
     display: flex;
     background-image: ${({ logo }) => `url(${logo})`};
     background-repeat: no-repeat;

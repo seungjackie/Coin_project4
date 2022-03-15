@@ -1,4 +1,6 @@
 import React, { useCallback } from "react";
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from "styled-components";
 
 const St = {
@@ -86,7 +88,11 @@ const St = {
     
 };
 
-const LoginForm = () => {
+const LoginForm = (props) => {
+  // react hook에서 state 사용. 컴포넌트 안에 작성
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+
   return (
     <St.Container>
         <St.Login>

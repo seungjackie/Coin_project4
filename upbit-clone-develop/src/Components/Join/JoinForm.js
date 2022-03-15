@@ -1,5 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom'
+
 
 const St = {
     Container: styled.div`
@@ -56,7 +59,7 @@ const St = {
     margin-top: 50px;
     width: 80%;
    `,
-    Submit_input: styled.input`
+    Submit_button: styled.button`
     width: 100%;
     height: 50px;
     border: 0;
@@ -72,7 +75,6 @@ const St = {
         color: white;
     }
     `,
-
     ToJoin: styled.a`
     margin: auto;
     text-decoration-line: none;
@@ -81,33 +83,59 @@ const St = {
     
 };
 
-const JoinForm = () => {
+const JoinForm = (props) => {
+  // redux의 dispatch
+  const dispatch = useDispatch();
+
+  // react hook에서 state 사용
+  const [Email, setEmail] = useState('');
+  const [Name, setName] = useState('');
+  const [Password, setPassword] = useState('');
+  const [ConfirmPassword, setConfirmPassword] = useState('');
+
+  // handler 함수들
+  const onEmailHandler = (event) => {
+    setEmail(event.currentTarget.value);
+  };
+
+  const onNameHandler = (event) => {
+    setName(event.currentTarget.value);
+  };
+
+  const onPasswordHandler = (event) => {
+    setPassword(event.currentTarget.value);
+  };
+
+  const onConfirmPasswordHandler = (event) => {
+    setConfirmPassword(event.currentTarget.value);
+  };
+  
   return (
     <St.Container>
         <St.Login>
             <St.Head>WELLCOME</St.Head>
             <St.Login_id>
                 <h4>E-mail</h4>
-                <St.Input type="email" name="" id="" placeholder="Email" />
+                <St.Input type="email" value={Email} onChange={onEmailHandler} name="" id="" placeholder="Email" />
             </St.Login_id>
             <St.Join_name>
                 <h4>Name</h4>
-                <St.Input type="text" name="" id="" placeholder="Name" />
+                <St.Input type="text" value={Name} onChange={onNameHandler} name="" id="" placeholder="Name" />
             </St.Join_name>
             <St.Login_pw>
                 <h4>Password</h4>
-                <St.Input type="password" name="" id="" placeholder="Password" />
+                <St.Input type="password" value={Password} onChange={onPasswordHandler} name="" id="" placeholder="Password" />
             </St.Login_pw>
             <St.Login_pw>
                 <h4>Password Confirm</h4>
-                <St.Input type="password" name="" id="" placeholder="Password Confirm" />
+                <St.Input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} name="" id="" placeholder="Password Confirm" />
             </St.Login_pw>
             <St.Submit>
-                <St.Submit_input type="submit" value="submit"></St.Submit_input>
+                <St.Submit_button type="submit">JOIN</St.Submit_button>
             </St.Submit>
         </St.Login>
     </St.Container>
   )
 }
 
-export default JoinForm;
+export default withRouter(JoinForm);

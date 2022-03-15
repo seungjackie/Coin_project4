@@ -30,14 +30,17 @@ const Users = mongoose.model('users', UserSchema);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: 'lgb', extended : false }));
+app.use(express.json({ extended: false })); //req의 body정보를 읽도록 설정함
+
+app.use("/api/register", require("./routes/api/register")); //라우터 연결
+
 
 app.get('/', (req, res) => {
-    res.send('Wellcome!');
+    res.send('Welcome!');
 });
 
 app.post('/join', (req, res) => {
     var new_user = new Users(req.body);
-
     new_user.save((err) => {
         if(err) return res.status(500).json({message : '저장실패'})
         else return res.status(200).json({message : '저장성공', data : new_user});
@@ -52,7 +55,7 @@ app.post('./login', (req, res) => {
     });
 });
 
-//connectDB
+// connectDB
 // connectDB();
 
 app.listen(PORT, () => console.log(`###### ${PORT} 포트 실행 중 ######`));

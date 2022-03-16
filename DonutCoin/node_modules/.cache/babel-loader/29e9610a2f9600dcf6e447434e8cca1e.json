@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nvar arraySlice = require('../internals/array-slice'); // https://tc39.github.io/proposal-setmap-offrom/\n\n\nmodule.exports = function of() {\n  return new this(arraySlice(arguments));\n};","map":null,"metadata":{},"sourceType":"script"}

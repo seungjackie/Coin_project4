@@ -21,7 +21,6 @@ const St = {
     }
   `,
 
-
 };
 
 const Login = ({ match, widthSize, heightSize }) => {

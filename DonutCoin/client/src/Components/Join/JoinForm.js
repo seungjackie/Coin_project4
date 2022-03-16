@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom'
+import { joinUser } from '../../Reducer/action/user_action';
 
 
 const St = {
@@ -109,10 +110,34 @@ const JoinForm = (props) => {
   const onConfirmPasswordHandler = (event) => {
     setConfirmPassword(event.currentTarget.value);
   };
+
+  const onSubmitHandler = (event) => {
+    // 태그의 기본 기능으로 리프레쉬 되는 것을 방지.
+    event.preventDefault();
+
+    if (Password !== ConfirmPassword) {
+      return alert('비밀번호 확인이 일치하지 않습니다.');
+    }
+
+    let body = {
+      email: Email,
+      name: Name,
+      password: Password,
+    };
+
+    // action을 dispatch해준다.
+    dispatch(joinUser(body)).then((response) => {
+      if (response.payload.success) {
+        props.history.push('/');
+      } else {
+        alert('회원가입에 실패했습니다.');
+      }
+    });
+  };
   
   return (
     <St.Container>
-        <St.Login>
+        <St.Login onSubmit={onSubmitHandler}>
             <St.Head>WELCOME</St.Head>
             <St.Login_id>
                 <h4>E-mail</h4>

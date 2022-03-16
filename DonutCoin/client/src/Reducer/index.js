@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 import { coinReducer, coinSaga } from "./coinReducer";
 import { loadingReducer } from "./loadingReducer";
 import { all } from "redux-saga/effects";

@@ -12,11 +12,16 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import createSagaMiddleware from "redux-saga";
-import ReduxThunk from "redux-thunk";
+import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
+
+//리덕스에 필요한 미들웨어
+import promiseMiddleware from 'redux-promise';
+import ReduxThunk from "redux-thunk";
+
+//리듀서 불러오기
 import { rootReducer, rootSaga } from "./Reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeProvider } from "styled-components";

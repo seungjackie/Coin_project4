@@ -1,6 +1,8 @@
-import React, { useCallback, useState } from "react";
-import { withRouter } from 'react-router-dom';
+import React, { useState } from 'react';
 import styled from "styled-components";
+import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { loginUser } from '../../Reducer/action/user_action';
 
 const St = {
     Container: styled.div`
@@ -27,10 +29,6 @@ const St = {
     font-size: 3em;
     font-weight: bolder;
     text-shadow: 1px 2px 3px black;
-  `,
-    Login_sns: styled.div`
-    padding: 20px;
-    display: flex;
   `,
     Login_id: styled.div`
     margin-top: 20px;
@@ -62,7 +60,7 @@ const St = {
     margin-top: 50px;
     width: 80%;
    `,
-    Submit_input: styled.input`
+    Submit_button: styled.button`
     width: 100%;
     height: 50px;
     border: 0;
@@ -82,45 +80,68 @@ const St = {
     ToJoin: styled.a`
     margin: auto;
     text-decoration-line: none;
-    text-decoration-line: none;
     `,
-    
 };
 
 const LoginForm = (props) => {
-  // react hook에서 state 사용. 컴포넌트 안에 작성
+  
+  // redux의 dispatch
+  const dispatch = useDispatch();
+  
+  // react hook에서 state 사용
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
 
+  //handler 함수
+  const onEmailHandler = (event) => {
+    setEmail(event.currentTarget.value);
+  }
+
+  const onPasswordHandler = (event) => {
+    setPassword(event.currentTarget.value);
+
+  }
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    let body = {
+      email: Email,
+      password: Password,
+    };
+
+    // action의 반환값을 dispatch해준다.
+    dispatch(loginUser(body)).then((response) => {
+      // 로그인이 성공하면 Landing Page로 보내주고, 실패하면 Error 알림을 띄워준다.
+      if (response.payload.loginSuccess) {
+        props.history.push('/');
+      } else {
+        alert('Error');
+      }
+    });
+  };
+
+
   return (
     <St.Container>
-        <St.Login>
+        <St.Login onSubmit={onSubmitHandler}>
             <St.Head>Log-in</St.Head>
-            <St.Login_sns>
-            {/* <li><a href=""><i class="fab fa-instagram"></i></a></li>
-            <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href=""><i class="fab fa-twitter"></i></a></li> */}
-            </St.Login_sns>
             <St.Login_id>
                 <h4>E-mail</h4>
-                <St.Input type="email" name="" id="" placeholder="Email" />
+                <St.Input type="email" value={Email} onChange={onEmailHandler} name="" id="" placeholder="Email" />
             </St.Login_id>
             <St.Login_pw>
                 <h4>Password</h4>
-                <St.Input type="password" name="" id="" placeholder="Password" />
+                <St.Input type="password" value={Password} onChange={onPasswordHandler} name="" id="" placeholder="Password" />
             </St.Login_pw>
             <St.Login_etc>
-                {/* <div>
-                    <input  type="checkbox" name="" id=""> Remember Me? </input>
-                </div> */}
-                <St.ToJoin href="/join">아직 회원이 아니신가요?</St.ToJoin>
+                <St.ToJoin href="/api/users/join">아직 회원이 아니신가요?</St.ToJoin>
             </St.Login_etc>
             <St.Submit>
-                <St.Submit_input type="submit" value="submit"></St.Submit_input>
+                <St.Submit_button type="submit">LOGIN</St.Submit_button>
             </St.Submit>
         </St.Login>
     </St.Container>
   )
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

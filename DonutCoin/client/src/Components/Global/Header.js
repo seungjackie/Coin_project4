@@ -114,7 +114,7 @@ const Header = ({ isRootURL }) => {
 
       <St.SiteHeading>
         <St.Head
-            href="/login"
+            href="/api/users/login"
             logo={process.env.PUBLIC_URL + "/loginWhiteLogo.png"}
             title={"로그인 이동"}
           >

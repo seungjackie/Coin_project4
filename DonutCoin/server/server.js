@@ -3,6 +3,19 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 4000;
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
+//프록시 서버 설정
+const proxy = require('http-proxy-middleware');
+module.exports = function(app) {
+    app.use(
+        '/api',
+        proxy({
+            target: 'http://localhost:4000',
+            changeOrigin: true
+        })
+    );
+};
 
 //몽구스 연결
 const mongoose = require('mongoose');
@@ -10,7 +23,7 @@ const connectDB = require("./config/db");
 const uri = 'mongodb://13.124.19.24:27017/userinfo';
 
 
-//연결 성공여부 회신
+//몽구스 연결 성공여부 회신
 const db = mongoose.connect(uri, (err) => {
     if(err){
         console.log(err.message);
@@ -19,7 +32,7 @@ const db = mongoose.connect(uri, (err) => {
     }
 });
 
-//유저 스키마
+//몽구스 유저 스키마
 const UserSchema = new mongoose.Schema({
     password : String, // 비밀번호
     name : String, //이름
@@ -28,12 +41,14 @@ const UserSchema = new mongoose.Schema({
 
 const Users = mongoose.model('users', UserSchema);
 
+
+
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: 'lgb', extended : false }));
 app.use(express.json({ extended: false })); //req의 body정보를 읽도록 설정함
 
 app.use("/api/register", require("./routes/api/register")); //라우터 연결
-
 
 app.get('/', (req, res) => {
     res.send('Welcome!');
@@ -55,7 +70,5 @@ app.post('./login', (req, res) => {
     });
 });
 
-// connectDB
-// connectDB();
 
 app.listen(PORT, () => console.log(`###### ${PORT} 포트 실행 중 ######`));

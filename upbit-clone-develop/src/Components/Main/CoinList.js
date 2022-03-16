@@ -11,6 +11,7 @@ import withSelectedOption from "../../Container/withSelectedOption";
 import withMarketNames from "../../Container/withMarketNames";
 import withLatestCoinData from "../../Container/withLatestCoinData";
 import withLoadingData from "../../Container/withLoadingData";
+const DncLogo = require("./favicon.png")
 
 const St = {
   CoinListContainer: styled.article`
@@ -39,7 +40,7 @@ const St = {
       margin-top: 0;
       margin-bottom: 0;
       height: ${({ heightSize }) =>
-        `${heightSize + 80}px`}; // 모바일 풀 화면을 위해 다시 80px 더해줌
+      `${heightSize + 80}px`}; // 모바일 풀 화면을 위해 다시 80px 더해줌
     }
   `,
   HiddenH3: styled.h3`
@@ -157,9 +158,30 @@ const CoinList = ({
         </St.CoinSortList>
       </St.CoinSortContainer>
       <St.CoinUl heightSize={heightSize - 140}>
+        <li class="sc-dvQaRk fwFfgc">
+          <button class="sc-TBWPX eRTGYL">
+            <i title="도넛코인 로고" class="sc-jIkXHa DONUT">
+              <img src={DncLogo}
+                width='24'
+                height='24'>
+              </img>
+            </i>
+            <div class="sc-ZOtfp ifVpiR">
+              <strong class="sc-jOxtWs fRnura">도넛코인</strong>
+              <span class="sc-hmjpVf rWtdp">DNC/KRW</span>
+              </div>
+              <strong class="sc-eLwHnm jklrYb">50,080,000</strong>
+              <div class="sc-bTfYFJ eaJCMQ">
+                <span class="sc-kHOZwM czmvwe">2.96%</span>
+                <span class="sc-hOGkXu gZdwXs">1,440,000</span>
+                </div>
+                <span class="sc-dtMgUX QzAZf">491,769 백만</span>
+                </button>
+        </li>
         {isMarketNamesLoading || isInitCandleLoading ? (
           <Loading center={false} />
         ) : (
+
           sortedMarketNames.map((marketName) => {
             const splitedName = marketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
@@ -176,23 +198,23 @@ const CoinList = ({
               +changePrice24Hour > 0
                 ? theme.strongRed
                 : +changePrice24Hour < 0
-                ? theme.strongBlue
-                : "black";
+                  ? theme.strongBlue
+                  : "black";
             return (
-                <CoinListItem
-                  theme={theme}
-                  marketName={marketName}
-                  selectedMarket={selectedMarket}
-                  coinName={marketNames[marketName].korean}
-                  enCoinName={enCoinName}
-                  fontColor={fontColor}
-                  price={price}
-                  changeRate24Hour={changeRate24Hour + "%"}
-                  changePrice24Hour={changePrice24Hour}
-                  tradePrice24Hour={tradePrice24Hour}
-                  // isTraded={isTraded}
-                  key={`coinList-${marketName}`}
-                />
+              <CoinListItem
+                theme={theme}
+                marketName={marketName}
+                selectedMarket={selectedMarket}
+                coinName={marketNames[marketName].korean}
+                enCoinName={enCoinName}
+                fontColor={fontColor}
+                price={price}
+                changeRate24Hour={changeRate24Hour + "%"}
+                changePrice24Hour={changePrice24Hour}
+                tradePrice24Hour={tradePrice24Hour}
+                // isTraded={isTraded}
+                key={`coinList-${marketName}`}
+              />
             );
           })
         )}

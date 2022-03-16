@@ -9,10 +9,6 @@ const mongoose = require('mongoose');
 const connectDB = require("./config/db");
 const uri = 'mongodb://13.124.19.24:27017/userinfo';
 
-<<<<<<< HEAD:upbit-clone-develop/server.js
-const uri = 'mongodb://13.124.19.24:27017/userinfo';
-=======
->>>>>>> 5f2fe1317173af163c6d451b2c313534111ebd37:upbit-clone-develop/server/server.js
 
 //연결 성공여부 회신
 const db = mongoose.connect(uri, (err) => {
@@ -40,11 +36,7 @@ app.use("/api/register", require("./routes/api/register")); //라우터 연결
 
 
 app.get('/', (req, res) => {
-<<<<<<< HEAD:upbit-clone-develop/server.js
-    res.send('Welcome to api page!');
-=======
     res.send('Welcome!');
->>>>>>> 5f2fe1317173af163c6d451b2c313534111ebd37:upbit-clone-develop/server/server.js
 });
 
 app.post('/join', (req, res) => {

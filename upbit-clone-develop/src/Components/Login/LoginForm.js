@@ -1,5 +1,4 @@
-import React, { useCallback } from "react";
-import React, { useState } from 'react';
+import React, { useCallback, useState } from "react";
 import { withRouter } from 'react-router-dom';
 import styled from "styled-components";
 
@@ -12,7 +11,7 @@ const St = {
     justify-content: center;
     background-color: rgb(231, 234, 239);
   `,
-    Login: styled.div`
+    Login: styled.form`
     width: 30%;
     height: 600px;
     background: white;

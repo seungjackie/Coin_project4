@@ -13,7 +13,7 @@ const St = {
     justify-content: center;
     background-color: rgb(231, 234, 239);
   `,
-    Login: styled.div`
+    Login: styled.form`
     width: 30%;
     height: 600px;
     background: white;
@@ -113,7 +113,7 @@ const JoinForm = (props) => {
   return (
     <St.Container>
         <St.Login>
-            <St.Head>WELLCOME</St.Head>
+            <St.Head>WELCOME</St.Head>
             <St.Login_id>
                 <h4>E-mail</h4>
                 <St.Input type="email" value={Email} onChange={onEmailHandler} name="" id="" placeholder="Email" />

@@ -229,13 +229,14 @@ const OrderInfoAskBid = ({
         <OrderInfoTradeList theme={theme} />
       )}
       <St.OrderBtnContainer>
-        {/* <St.Button
+        <St.Button
           width={"30%"}
           minWidth={"70px"}
           marginRight={"5px"}
           bgColor={theme.deepBlue}
           fontSize={"0.9rem"}
           fontColor={"white"}
+          //링크추가필요  
         >
           회원가입
         </St.Button>
@@ -244,9 +245,10 @@ const OrderInfoAskBid = ({
           bgColor={theme.priceDown}
           fontSize={"0.9rem"}
           fontColor={"white"}
+          //링크추가필요
         >
           로그인
-        </St.Button> */}
+        </St.Button>
       </St.OrderBtnContainer>
     </St.OrderInfoContainer>
   );

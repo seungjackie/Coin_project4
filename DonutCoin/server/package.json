@@ -19,5 +19,7 @@
     "express": "^4.17.3",
     "http-proxy-middleware": "^2.0.4",
     "mongoose": "^6.2.7"
-  }
+  },
+  "proxy" : "http://localhost:4000"
+
 }

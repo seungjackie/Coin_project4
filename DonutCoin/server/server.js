@@ -1,9 +1,15 @@
 //기본 서버 연결
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: 'lgb', extended : false }));
+app.use(express.json({ extended: false })); //req의 body정보를 읽도록 설정함
+app.use("/api/join", require("./routes/api/join")); //라우터 연결
 
 //프록시 서버 설정
 const proxy = require('http-proxy-middleware');
@@ -41,18 +47,18 @@ const UserSchema = new mongoose.Schema({
 
 const Users = mongoose.model('users', UserSchema);
 
-
-
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ limit: 'lgb', extended : false }));
-app.use(express.json({ extended: false })); //req의 body정보를 읽도록 설정함
-
-app.use("/api/register", require("./routes/api/register")); //라우터 연결
-
 app.get('/', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.send('Welcome!');
 });
+
+// app.post('http://localhost:4000/api/users/join', (req, res) => {
+//     var new_user = new Users(req.body);
+//     new_user.save((err) => {
+//         if(err) return res.status(500).json({message : '저장실패'})
+//         else return res.status(200).json({message : '저장성공', data : new_user});
+//     });
+// });
 
 app.post('/join', (req, res) => {
     var new_user = new Users(req.body);
@@ -62,6 +68,14 @@ app.post('/join', (req, res) => {
     });
 });
 
+// app.post('/api/users/login', (req, res) => {
+//     Users.findOne({ id : req.body.id, password : req.body.password }, (err, user) => {
+//         if(err) return res.status(500).json({message : '에러'})
+//         else if (user) return res.status(200).json({message : '유저확인', data : new_user});
+//         else return res.status(404).json({message : '유저 없음'});
+//     });
+// });
+
 app.post('/login', (req, res) => {
     Users.findOne({ id : req.body.id, password : req.body.password }, (err, user) => {
         if(err) return res.status(500).json({message : '에러'})
@@ -69,6 +83,5 @@ app.post('/login', (req, res) => {
         else return res.status(404).json({message : '유저 없음'});
     });
 });
-
 
 app.listen(PORT, () => console.log(`###### ${PORT} 포트 실행 중 ######`));

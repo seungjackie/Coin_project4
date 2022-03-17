@@ -11,7 +11,7 @@ import withSelectedOption from "../../Container/withSelectedOption";
 import withMarketNames from "../../Container/withMarketNames";
 import withLatestCoinData from "../../Container/withLatestCoinData";
 import withLoadingData from "../../Container/withLoadingData";
-const DncLogo = require("./favicon.png")
+const DncLogo = require("./favicon3.png")
 
 const St = {
   CoinListContainer: styled.article`
@@ -72,6 +72,16 @@ const St = {
     width: 30px;
     height: 30px;
     background: url("https://cdn.upbit.com/images/bg.e801517.png") -83px 2px no-repeat;
+    background-color: white;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border: none;
+  `,
+    CoinSearchBtn2: styled.button`
+    width: 30px;
+    height: 30px;
+    background : url("../../../../public/favicon2.png");
     background-color: white;
     padding: 10px;
     padding-right: 20px;
@@ -161,23 +171,21 @@ const CoinList = ({
         <li class="sc-dvQaRk fwFfgc">
           <button class="sc-TBWPX eRTGYL">
             <i title="도넛코인 로고" class="sc-jIkXHa DONUT">
-              <img src={DncLogo}
-                width='24'
-                height='24'>
-              </img>
+              <img src={DncLogo} width='40px' height='20px'></img>
             </i>
             <div class="sc-ZOtfp ifVpiR">
               <strong class="sc-jOxtWs fRnura">도넛코인</strong>
               <span class="sc-hmjpVf rWtdp">DNC/KRW</span>
               </div>
               <strong class="sc-eLwHnm jklrYb">50,080,000</strong>
-              <div class="sc-bTfYFJ eaJCMQ">
-                <span class="sc-kHOZwM czmvwe">2.96%</span>
-                <span class="sc-hOGkXu gZdwXs">1,440,000</span>
-                </div>
-                <span class="sc-dtMgUX QzAZf">491,769 백만</span>
-                </button>
+            <div class="sc-bTfYFJ eaJCMQ">
+              <span class="sc-kHOZwM czmvwe">2.96%</span>
+              <span class="sc-hOGkXu gZdwXs">1,440,000</span>
+            </div>
+              <span class="sc-dtMgUX QzAZf">491,769 백만</span>
+          </button>
         </li>
+
         {isMarketNamesLoading || isInitCandleLoading ? (
           <Loading center={false} />
         ) : (

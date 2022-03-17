@@ -66,7 +66,7 @@ const Header = ({ isRootURL }) => {
       <St.SiteHeading>
         <St.Head
             href="/intro"
-            logo={process.env.PUBLIC_URL + "/mainLogo.png"}
+            logo={process.env.PUBLIC_URL + "/mainLogo2.png"}
             title={"메인페이지 이동"}
           >
           </St.Head>

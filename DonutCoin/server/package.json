@@ -16,10 +16,10 @@
     "body-parser": "^1.19.2",
     "config": "^3.3.7",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "http-proxy-middleware": "^2.0.4",
     "mongoose": "^6.2.7"
   },
-  "proxy" : "http://localhost:4000"
-
+  "proxy": "http://localhost:4000"
 }

@@ -3,9 +3,12 @@ const User = require('../../models/User');
 const router = express.Router();
 const bcrypt = require('bcryptjs'); // 암호화 모듈
 
-router.post("/api/users/join",
+router.post("/join",
     async (req, res) => {
         const { email, name, password } = req.body;
+        console.log("email : " + email);
+        
+
 
         try {
             // email을 비교하여 user가 이미 존재하는지 확인
@@ -32,6 +35,7 @@ router.post("/api/users/join",
             await user.save(); // db에 user 저장
             
             res.send("##### 회원가입이 완료되었습니다 #####")
+            
         } catch (error) {
             console.error(error.message);
             res.status(500).send("##### ERROR : 서버를 확인하세요 #####")

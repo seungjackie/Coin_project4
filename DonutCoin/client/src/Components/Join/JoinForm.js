@@ -360,19 +360,19 @@ const JoinForm = (props) => {
             <St.Head>WELCOME</St.Head>
             <St.Login_id>
                 <h4>E-mail</h4>
-                <St.Input type="email" value={Email} onChange={onEmailHandler} name="" id="" placeholder="Email" />
+                <St.Input type="email" value={Email} onChange={onEmailHandler} name="Email" id="" placeholder="Email" />
             </St.Login_id>
             <St.Join_name>
                 <h4>Name</h4>
-                <St.Input type="text" value={Name} onChange={onNameHandler} name="" id="" placeholder="Name" />
+                <St.Input type="text" value={Name} onChange={onNameHandler} name="Name" id="" placeholder="Name" />
             </St.Join_name>
             <St.Login_pw>
                 <h4>Password</h4>
-                <St.Input type="password" value={Password} onChange={onPasswordHandler} name="" id="" placeholder="Password" />
+                <St.Input type="password" value={Password} onChange={onPasswordHandler} name="Password" id="" placeholder="Password" />
             </St.Login_pw>
             <St.Login_pw>
                 <h4>Password Confirm</h4>
-                <St.Input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} name="" id="" placeholder="Password Confirm" />
+                <St.Input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} name="ConfirmPassword" id="" placeholder="Password Confirm" />
             </St.Login_pw>
             <St.Submit>
                 <St.Submit_button type="submit">JOIN</St.Submit_button>

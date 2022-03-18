@@ -4,12 +4,15 @@ const app = express();
 const PORT = 4000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
+
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: 'lgb', extended : false }));
 app.use(express.json({ extended: false })); //req의 body정보를 읽도록 설정함
-app.use("/api/join", require("./routes/api/join")); //라우터 연결
+app.use("/api/users", require("./routes/api/join")); //라우터 연결
 
 //프록시 서버 설정
 const proxy = require('http-proxy-middleware');
@@ -38,21 +41,21 @@ const db = mongoose.connect(uri, (err) => {
     }
 });
 
-//몽구스 유저 스키마
-const UserSchema = new mongoose.Schema({
-    password : String, // 비밀번호
-    name : String, //이름
-    id : String, //아이디
-});
-
-const Users = mongoose.model('users', UserSchema);
+// //몽구스 유저 스키마
+// const UserSchema = new mongoose.Schema({
+//     password : String, // 비밀번호
+//     name : String, //이름
+//     email : String, //아이디
+// });
+// const Users = mongoose.model('users', UserSchema);
 
 app.get('/', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     res.send('Welcome!');
 });
 
-// app.post('http://localhost:4000/api/users/join', (req, res) => {
+// app.post('/api/users/join', (req, res) => {
+//     console.log("req.body : " + req.body.Email);
 //     var new_user = new Users(req.body);
 //     new_user.save((err) => {
 //         if(err) return res.status(500).json({message : '저장실패'})
@@ -60,13 +63,13 @@ app.get('/', (req, res) => {
 //     });
 // });
 
-app.post('/join', (req, res) => {
-    var new_user = new Users(req.body);
-    new_user.save((err) => {
-        if(err) return res.status(500).json({message : '저장실패'})
-        else return res.status(200).json({message : '저장성공', data : new_user});
-    });
-});
+// app.post('/join', (req, res) => {
+//     var new_user = new Users(req.body);
+//     new_user.save((err) => {
+//         if(err) return res.status(500).json({message : '저장실패'})
+//         else return res.status(200).json({message : '저장성공', data : new_user});
+//     });
+// });
 
 // app.post('/api/users/login', (req, res) => {
 //     Users.findOne({ id : req.body.id, password : req.body.password }, (err, user) => {

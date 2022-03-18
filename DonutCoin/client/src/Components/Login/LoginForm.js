@@ -138,7 +138,7 @@ const LoginForm = (props) => {
                 <St.Input type="password" value={Password} onChange={onPasswordHandler} name="" id="" placeholder="Password" />
             </St.Login_pw>
             <St.Login_etc>
-                <St.ToJoin href="/api/users/join">아직 회원이 아니신가요?</St.ToJoin>
+                <St.ToJoin href="/join">아직 회원이 아니신가요?</St.ToJoin>
             </St.Login_etc>
             <St.Submit>
                 <St.Submit_button type="submit">LOGIN</St.Submit_button>

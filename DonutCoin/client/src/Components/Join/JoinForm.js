@@ -341,17 +341,19 @@ const JoinForm = (props) => {
     };
 
     // action을 dispatch해준다.
-    dispatch(joinUser(body))
-
-    // // action을 dispatch해준다.
     // dispatch(joinUser(body))
-    // .then((response) => {
-    //   if (response.payload.success) {
-    //     props.history.push('/');
-    //   } else {
-    //     alert('회원가입에 실패했습니다.');
-    //   }
-    // });
+    // // action을 dispatch해준다.
+    const onSubmit = async body =>{
+      dispatch(joinUser(body))
+      .then((response) => {
+        if (response.payload.joinSuccess) {
+          props.history.push('/');
+        } else {
+          alert('회원가입에 실패했습니다.');
+        }
+      });
+    }
+
   };
   
   return (

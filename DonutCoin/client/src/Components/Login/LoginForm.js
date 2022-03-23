@@ -110,14 +110,18 @@ const LoginForm = (props) => {
     };
 
     // action의 반환값을 dispatch해준다.
-    dispatch(loginUser(body)).then((response) => {
-      // 로그인이 성공하면 Landing Page로 보내주고, 실패하면 Error 알림을 띄워준다.
-      if (response.payload.loginSuccess) {
-        props.history.push('/');
-      } else {
-        alert('Error');
-      }
-    });
+    dispatch(loginUser(body));
+    //   // action의 반환값을 dispatch해준다.
+  
+    // action의 반환값을 dispatch해준다.
+    // dispatch(loginUser(body)).then((response) => {
+    //   // 로그인이 성공하면 Landing Page로 보내주고, 실패하면 Error 알림을 띄워준다.
+    //   if (response.payload.loginSuccess) {
+    //     props.history.push('/');
+    //   } else {
+    //     alert('Error');
+    //   }
+    // });
   };
 
 
@@ -134,7 +138,7 @@ const LoginForm = (props) => {
                 <St.Input type="password" value={Password} onChange={onPasswordHandler} name="" id="" placeholder="Password" />
             </St.Login_pw>
             <St.Login_etc>
-                <St.ToJoin href="/api/users/join">아직 회원이 아니신가요?</St.ToJoin>
+                <St.ToJoin href="/join">아직 회원이 아니신가요?</St.ToJoin>
             </St.Login_etc>
             <St.Submit>
                 <St.Submit_button type="submit">LOGIN</St.Submit_button>

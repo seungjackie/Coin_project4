@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Main from "../Pages/Main";
 import Intro from "../Pages/Intro";
 import Login from "../Pages/Login";
-import Join from "../Pages/Join";
+import Register from "../Pages/Register";
 import Book from "../Pages/Book";
 import Mypage from "../Pages/Mypage";
 import Game from "../Pages/Game";
@@ -18,7 +18,7 @@ const MainRouter = () => {
       <Route exact path="/trade" component={Main} />
       <Route exact path="/intro" component={Intro} />
       <Route exact path="/login" component={Login} />
-      <Route exact path="/join" component={Join} />
+      <Route exact path="/register" component={Register} />
       <Route exact path="/book" component={Book} />
       <Route exact path="/mypage" component={Mypage} />
       <Route exact path="/game" component={Game} />

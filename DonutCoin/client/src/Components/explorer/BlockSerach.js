@@ -1,70 +1,67 @@
-import React, {Component} from 'react';
-import Information from './testJson/test-json';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-class BlockSerach extends Component{
+const BlockSearch = (event) =>{
 
-  //부모
-  constructor(){
-    super();
 
-    this.state={
-      search:null
-    };
-  }
+    const [allData,setAllData] = useState([]);
+    const [filteredData,setFilteredData] = useState(allData);
 
-  //초기에 null설정된 search라는변수 포함되어 결과를 표시
-  searchSpace=(event)=>{
-    let keyword = event.target.value;
-    this.setState({search:keyword})
-  }
 
-  render(){
-    const styleInfo={
-      paddingRight:'10px'
-    }
-    const elementStyle={
-      border:'solid',
-      borderRadius:'10px',
-      position:'relative',
-      left:'10vh',
-      height:'3vh',
-      width:'20vh',
-      marginTop:'5vh',
-      marginBottom:'10vh'
+
+    const handleSearch = (event) => {
+        let value = event.target.value.toLowerCase();
+        let result = [];
+            console.log(value);
+            result = allData.filter((data) => {
+                return data.title.search(value) != -1;
+            });
+        setFilteredData(result);
     }
 
-    //this.state.search변수에 있는 키워드를 포함하는지 확인하는지?
-    const items = Information.filter((data)=>{
-      if(this.state.search == null)
-          return data
-      else if(data.name.toLowerCase().includes(this.state.search.toLowerCase()) || data.country.toLocaleLowerCase().includes(this.state.search.toLowerCase())){
-          return data
-      }
-    }).map(data => {                       // in-json.js 파일 불러오기
-      return(
-        <div>
-          <ul>                                                    
-            <li style={{position:'relative',left:'10vh'}}>
-              <span style={styleInfo}>{data.name}</span>          
-              <span style={styleInfo}>{data.age}</span>
-              <span style={styleInfo}>{data.country}</span>
-            </li>
-          </ul>
-        </div>
-      )
-    })
 
-    //검색바
-    return (
-      <div>
-        <input type="text" 
-        placeholder="Enter item to be seaerched" 
-        style={elementStyle} onChange={(e)=>this.searchSpace(e)} />
-        {items}
-      </div>
-    )
-  }
+    useEffect(() => {
+        axios('https://jsonplaceholder.typicode.com/albums/1/photos')
+        .then(response => {
+        console.log(response.data)
+        setAllData(response.data);
+        setFilteredData(response.data);
+        })
+        .catch(error => {
+        console.log('Error getting fake data: ' + error);
+        })
+        }, []);
+
+        const styles = {
+            display:'inline',
+            width:'30%',
+            height:50,
+            float:'left',
+            padding:5,
+            border:'0.5px solid black',
+            marginBottom:10,
+            marginRight:10
+            }
+            
+        return (
+            <div className="App">
+                <div style={{ margin: '0 auto', marginTop: '10%' }}>
+                    <label>Search:</label>
+                    <input type="text" onChange={(event) =>handleSearch(event)} />
+                </div>
+                    <div style={{padding:10}}>
+                    {filteredData.map((value,index)=>{
+                        return(
+                            <div key={value.id}>
+                                <div style={styles}>
+                                    {value.title}
+                                </div>
+                            </div>
+                    )
+                    })}
+                </div>
+            </div>
+        )
 }
-;
 
-export default BlockSerach;
+export default BlockSearch;

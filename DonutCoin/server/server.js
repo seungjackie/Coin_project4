@@ -41,6 +41,11 @@ const db = mongoose.connect(uri, (err) => {
     }
 });
 
+app.get('/search'){
+    // db 쿼리문 싸주는데
+
+}
+
 // //몽구스 유저 스키마
 // const UserSchema = new mongoose.Schema({
 //     password : String, // 비밀번호
@@ -53,6 +58,28 @@ app.get('/', (req, res) => {
     // res.header("Access-Control-Allow-Origin", "*");
     res.send('Welcome!');
 });
+
+// client -> 요청 해야함으로 req
+axios.get('/', {params: }) //원하는데이터를 넘겨준다
+
+// db에서 작업 마무리 하구
+// 그때 res 쓴다... 우리는 read은 할것임으로 res
+
+//라우팅 주소
+axios.get('/search/api', (req,res) => {
+    res.           
+})
+
+
+
+// req 예시
+// 로그인, id , pw 치고 db값인지 확인할때
+// client. req -> db 로 보내고  조건문
+// server 에선 검색
+
+// 오케이,server
+
+
 
 // app.post('/api/users/join', (req, res) => {
 //     console.log("req.body : " + req.body.Email);

@@ -4,7 +4,7 @@ import axios from 'axios';
 const BlockSearch = (event) =>{
 
 
-    const [allData,setAllData] = useState([]);
+    const [allData,setAllData] = useState([]);                                // 검색 항목들
     const [filteredData,setFilteredData] = useState(allData);
 
 
@@ -19,12 +19,14 @@ const BlockSearch = (event) =>{
         setFilteredData(result);
     }
 
-
+    //창 로딩시 발생하는 행동 정리
+    //접근 ,app.get('/')
     useEffect(() => {
+        //요청
         axios('https://jsonplaceholder.typicode.com/albums/1/photos')
         .then(response => {
-        console.log(response.data)
-        setAllData(response.data);
+        console.log(response.data);
+        setAllData(response.data);                                          //res.data에 문구가 정리 되어있다       
         setFilteredData(response.data);
         })
         .catch(error => {

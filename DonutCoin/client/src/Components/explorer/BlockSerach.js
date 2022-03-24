@@ -3,7 +3,7 @@ import Information from './testJson/test-json';
 
 class BlockSerach extends Component{
 
-  //검색이 작동하는 방식
+  //부모
   constructor(){
     super();
 

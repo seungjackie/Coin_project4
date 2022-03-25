@@ -78,7 +78,7 @@ const St = {
     padding-left: 20px;
     border: none;
   `,
-    CoinSearchBtn2: styled.button`
+  CoinSearchBtn2: styled.button`
     width: 30px;
     height: 30px;
     background : url("../../../../public/favicon2.png");
@@ -168,7 +168,7 @@ const CoinList = ({
         </St.CoinSortList>
       </St.CoinSortContainer>
       <St.CoinUl heightSize={heightSize - 140}>
-        <li class="sc-dvQaRk fwFfgc">
+        {/* <li class="sc-dvQaRk fwFfgc">
           <button class="sc-TBWPX eRTGYL">
             <i title="도넛코인 로고" class="sc-jIkXHa DONUT">
               <img src={DncLogo} width='40px' height='20px'></img>
@@ -184,22 +184,28 @@ const CoinList = ({
             </div>
               <span class="sc-dtMgUX QzAZf">491,769 백만</span>
           </button>
-        </li>
+        </li> */}
 
         {isMarketNamesLoading || isInitCandleLoading ? (
           <Loading center={false} />
         ) : (
 
           sortedMarketNames.map((marketName) => {
-            const splitedName = marketName.split("-");
+            let marketNameforData = marketName;
+            if (marketName == 'KRW-DNC') { 
+              marketNameforData = 'KRW-BTC'
+            }
+            console.log('marketName : ' + marketName)
+            console.log('marketNameforData : ' + marketNameforData)
+            const splitedName = marketNameforData.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
             const changePrice24Hour =
-              latestCoinData[marketName].changePrice24Hour;
+              latestCoinData[marketNameforData].changePrice24Hour;
             const changeRate24Hour =
-              latestCoinData[marketName].changeRate24Hour;
+              latestCoinData[marketNameforData].changeRate24Hour;
             const tradePrice24Hour =
-              latestCoinData[marketName].tradePrice24Hour;
-            const price = latestCoinData[marketName].price;
+              latestCoinData[marketNameforData].tradePrice24Hour;
+            const price = latestCoinData[marketNameforData].price;
             // const isTraded = latestCoinData[marketName].isTraded;
 
             const fontColor =
@@ -213,7 +219,7 @@ const CoinList = ({
                 theme={theme}
                 marketName={marketName}
                 selectedMarket={selectedMarket}
-                coinName={marketNames[marketName].korean}
+                coinName={marketNames[marketNameforData].korean}
                 enCoinName={enCoinName}
                 fontColor={fontColor}
                 price={price}

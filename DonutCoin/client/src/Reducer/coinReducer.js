@@ -204,7 +204,12 @@ function* startInittSaga() {
   yield getMarketNameSaga(); // 코인/시장 종류 받기
 
   const state = yield select();
-  const marketNames = Object.keys(state.Coin.marketNames.data);
+  let marketNames = Object.keys(state.Coin.marketNames.data);
+  marketNames = Object.assign({ 113 : 'KRW-DNC' }, marketNames)
+  console.log(marketNames)
+  console.log(state.Coin.marketNames.data)
+  // let donutCoinData = coinListDatas
+  // Object.assign({ 'KRW-DNC': { korean: "도넛코인", english: "Donut" } }, marketNames)
   const selectedMarket = state.Coin.selectedMarket;
   const selectedTimeType = state.Coin.selectedTimeType;
   const selectedTimeCount = state.Coin.selectedTimeCount;
@@ -392,9 +397,10 @@ const initialState = {
   orderTotalPrice: 0,
   searchCoin: "",
   marketNames: {
-    error: false,
+    error: true,
     data: {
-      "KRW-BTC": "비트코인",
+      "KRW-BTC": {korean:'비트코인',english:'Bitcoin'},
+      "KRW-DNC": {korean:'도넛코인',english:'Donut'},
     },
   },
   candle: {
@@ -402,7 +408,7 @@ const initialState = {
     data: {
       "KRW-BTC": {
         candles: [
-          // { date: new Date(), open: 1, close: 1, high: 1, low: 1, volume: 1 },
+         { date: new Date(), open: 1, close: 1, high: 1, low: 1, volume: 1 },
         ],
         tradePrice24Hour: 0,
         volume24Hour: 0,

@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 
 const withLatestCoinData = () => (OriginalComponent) => (props) => {
   const coinListDatas = useSelector((state) => state.Coin.candle.data); // 코인들 데이터
-
+  //도넛코인 추가
+  let donutCoinData = coinListDatas['KRW-BTC']
+  // console.log(donutCoinData)
+  let newcoinListDatas = Object.assign({ 'KRW-DNC': donutCoinData }, coinListDatas) //도넛코인 data 추가
+  
   const latestCoinData = {};
 
   if (Object.keys(coinListDatas).length > 2) {

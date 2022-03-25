@@ -3,22 +3,27 @@ const bodyParser = require('body-parser');
 var cors = require('cors')
 const router = express.Router();
 const dotenv = require("dotenv");
-
+var http = require('http');
+// const rpcMethods = require('./routes/api');
+const mongoose = require('./mongoosecon');
+const Blocks = require('./blocks');
 dotenv.config();
+
 var app = express();
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.json({ extended: false }));
+// app.use(express.urlencoded());
 
+var request = require("request");
 const srequest = require("sync-request");
-
-
 
 const util = require('util');
 var encoder = new util.TextEncoder('utf-8');
 
-const USER = process.env.RPC_USER;
-const PASS = process.env.RPC_PASSWORD;
+const USER = 'parkisak';
+const PASS = 1234;
 const PORT = 9776;
 // const ACCOUNT = "parkisak";
 const ID_STRING = "donutoin_id";
@@ -26,18 +31,14 @@ const headers = {
     "content-type": "text/pliain;"
 };
 
+// app.use("/", rpcMethods);
+
 // mongoose
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 const { json } = require('body-parser');
 // // mongoose는 sync 어떻게?
 
-mongoose.createConnection('mongodb://13.124.19.24:27017/api', (err), async () => {
-    if (err) {
-        console.log(err.message);
-    } else {
-        console.log("###### 데이터베이스 연결 성공 ######");
-    }
-});
+
 
 // const db = mongoose.connection;
 
@@ -49,28 +50,8 @@ mongoose.createConnection('mongodb://13.124.19.24:27017/api', (err), async () =>
 //     console.log('Connected!');
 // });
 
-// 몽구스 유저 스키마
-const BlockSchema = new mongoose.Schema({
-    height: 'Number',
-    hash: 'String',
-    confirmation: 'Number',
-    strippedsize: 'Number',
-    size: 'Number',
-    weight: 'Number',
-    version: 'Number',
-    versionhex: 'Number',
-    merkleroot: 'String',
-    time: 'Number',
-    mediantime: 'Number',
-    nonce: 'Number',
-    bits: 'String',
-    difficulty: 'Number',
-    chainwork: 'Number',
-    previousblockhash: 'String',
-    nextblockhash: 'String'
-});
-const Blocks = mongoose.model('testblocks', BlockSchema);
-console.log(Blocks);
+// // 몽구스 유저 스키마
+
 
 var bdataString = `{
     "jsonrpc":"1.0", 
@@ -81,10 +62,13 @@ var bdataString = `{
 var options = {
     headers: headers,
     body: bdataString,
+
 };
 var bres = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, options);
+console.log(bres)
 var blockcount = JSON.parse(bres.body.toString()).result;
-// console.log(bres);
+console.log(blockcount);
+
 
 
 for (let i = 0; i < blockcount + 1; i++) {
@@ -96,12 +80,12 @@ for (let i = 0; i < blockcount + 1; i++) {
                 }`;
     var options = {
         headers: headers,
-        body: dataString,
+        body: dataString
     };
 
     var res = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, options);
     var hash = JSON.parse(res.body.toString()).result;
-    console.log(hash);
+    // console.log(hash);
 
     var sdataString = `{
                     "jsonrpc":"1.0", 
@@ -117,6 +101,10 @@ for (let i = 0; i < blockcount + 1; i++) {
 
     var res1 = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, soptions);
     var data = JSON.parse(res1.body.toString()).result;
+    // let block = await Blocks.findOne({ hash });
+    // if (block) {
+
+    // }
 
     console.log(data.height);
 
@@ -143,7 +131,7 @@ for (let i = 0; i < blockcount + 1; i++) {
         previousblockhash: data.previousblockhash,
         nextblockhash: data.nextblockhash
     });
-
+    console.log(newBlocks)
     newBlocks.save(function (error, data) {
         if (error) {
             console.log(error);

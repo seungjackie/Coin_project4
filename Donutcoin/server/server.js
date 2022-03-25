@@ -4,14 +4,22 @@ const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const dotenv = require("dotenv");
+const Blocks = require('./donut_express/blocks');
+const srequest = require("sync-request");
+// const mongoose = require('./donut_express/mongoosecon');
+dotenv.config();
 
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: 'lgb', extended: false }));
 app.use(express.json({ extended: false })); //req의 body정보를 읽도록 설정함
+// app.use("/api", require("./server/server"));
+app.use("/", require("./donut_express/api"));
+const { json } = require('body-parser');
+
 app.use("/api/users", require("./routes/api/join")); //라우터 연결
-app.use("/express/api", require("./donut_express/api.js"));
 //프록시 서버 설정
 const proxy = require('http-proxy-middleware');
 module.exports = function (app) {
@@ -38,7 +46,6 @@ const db = mongoose.connect(uri, (err) => {
         console.log('###### 데이터베이스 연결 성공 ######');
     }
 });
-
 // //몽구스 유저 스키마
 // const UserSchema = new mongoose.Schema({
 //     password : String, // 비밀번호
@@ -84,5 +91,15 @@ app.post('/login', (req, res) => {
         else return res.status(404).json({ message: '유저 없음' });
     });
 });
+
+
+
+
+
+
+
+
+
+
 
 app.listen(4000, () => console.log(`###### 4000 포트 실행 중 ######`));

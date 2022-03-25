@@ -23,11 +23,12 @@ const BlockSearch = (event) =>{
     //접근 ,app.get('/')
     useEffect(() => {
         //요청
-        axios('https://jsonplaceholder.typicode.com/albums/1/photos')
+        // axios('https://jsonplaceholder.typicode.com/albums/1/photos')
+        axios.get('')
         .then(response => {
-        console.log(response.data);
-        setAllData(response.data);                                          //res.data에 문구가 정리 되어있다       
-        setFilteredData(response.data);
+        console.log(res.data);
+        setAllData(res.data);                                          //res.data에 문구가 정리 되어있다       
+        setFilteredData(res.data);
         })
         .catch(error => {
         console.log('Error getting fake data: ' + error);

@@ -20,7 +20,7 @@ const withSelectedCoinName = () => (OriginalComponent) => (props) => {
       coinNameKor={coinNameKor}
       coinNameEng={coinNameEng}
       coinSymbol={coinSymbol}
-      coinNameAndMarketEng={coinNameAndMarketEng}
+      coinNameAndMarketEng={coinNameAndMarketEng==""}
     />
   );
 };

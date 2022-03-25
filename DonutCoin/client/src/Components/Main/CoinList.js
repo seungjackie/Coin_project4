@@ -145,7 +145,7 @@ const CoinList = ({
   isRootURL,
 }) => {
   const dispatch = useDispatch();
-
+  console.log(selectedMarket)
   return (
     <St.CoinListContainer isRootURL={isRootURL} heightSize={heightSize - 80}>
       <St.HiddenH3>코인 리스트</St.HiddenH3>
@@ -189,23 +189,24 @@ const CoinList = ({
         {isMarketNamesLoading || isInitCandleLoading ? (
           <Loading center={false} />
         ) : (
-
           sortedMarketNames.map((marketName) => {
-            let marketNameforData = marketName;
-            if (marketName == 'KRW-DNC') { 
-              marketNameforData = 'KRW-BTC'
-            }
-            console.log('marketName : ' + marketName)
-            console.log('marketNameforData : ' + marketNameforData)
-            const splitedName = marketNameforData.split("-");
+            let newMarketName = marketName
+            const splitedName = newMarketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
+
+            if (marketName == 'KRW-DNC') {
+              newMarketName = 'KRW-ETH'
+            }
+            // console.log(newMarketName)
+            
+
             const changePrice24Hour =
-              latestCoinData[marketNameforData].changePrice24Hour;
+              latestCoinData[newMarketName].changePrice24Hour;
             const changeRate24Hour =
-              latestCoinData[marketNameforData].changeRate24Hour;
+              latestCoinData[newMarketName].changeRate24Hour;
             const tradePrice24Hour =
-              latestCoinData[marketNameforData].tradePrice24Hour;
-            const price = latestCoinData[marketNameforData].price;
+              latestCoinData[newMarketName].tradePrice24Hour;
+            const price = latestCoinData[newMarketName].price;
             // const isTraded = latestCoinData[marketName].isTraded;
 
             const fontColor =
@@ -219,7 +220,9 @@ const CoinList = ({
                 theme={theme}
                 marketName={marketName}
                 selectedMarket={selectedMarket}
-                coinName={marketNames[marketNameforData].korean}
+                // selectedMarket={selectedMarket=="KRW-DNC"?"KRW-ETH":selectedMarket}
+                coinName={marketNames[marketName].korean}
+                // coinName={(marketNames[marketName].korean=='비트코인골드')?'쿠오코인':marketNames[marketName].korean}
                 enCoinName={enCoinName}
                 fontColor={fontColor}
                 price={price}

@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title getblockhash API
+  body
+    include includes/header.pug
+    form(action="getblockhash_result" method="post")
+      p
+        |INDEX(HEIGHT):
+        input(type="text" name="index")
+      input(type="submit" value="getblockhash")
+    include includes/footer.pug

@@ -342,9 +342,9 @@ const RegusterForm = (props) => {
     };
 
     // action을 dispatch해준다.
-    // dispatch(joinUser(body))
-    // props.history.push('/');
-    // alert('회원가입 되셨습니다.');
+    dispatch(joinUser(body))
+    props.history.push('/');
+    alert('회원가입 되셨습니다.');
     // // action을 dispatch해준다.
     const onSubmit = async body =>{
       dispatch(registerUser(body))

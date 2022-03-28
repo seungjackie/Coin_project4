@@ -168,7 +168,7 @@ const CoinList = ({
         </St.CoinSortList>
       </St.CoinSortContainer>
       <St.CoinUl heightSize={heightSize - 140}>
-        <li class="sc-dvQaRk fwFfgc">
+        {/* <li class="sc-dvQaRk fwFfgc">
           <button class="sc-TBWPX eRTGYL">
             <i title="도넛코인 로고" class="sc-jIkXHa DONUT">
               <img src={DncLogo} width='40px' height='20px'></img>
@@ -184,13 +184,18 @@ const CoinList = ({
             </div>
               <span class="sc-dtMgUX QzAZf">491,769 백만</span>
           </button>
-        </li>
+        </li> */}
 
         {isMarketNamesLoading || isInitCandleLoading ? (
           <Loading center={false} />
         ) : (
+          
 
           sortedMarketNames.map((marketName) => {
+            if (marketName == 'KRW-DNC')
+            {
+              marketName = 'KRW-ETH'
+            }
             const splitedName = marketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
             const changePrice24Hour =

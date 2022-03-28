@@ -168,6 +168,7 @@ const CoinListItem = ({
   const changeMarket = useCallback(() => {
     dispatch(startChangeMarketAndData(marketName));
     history.push("/trade");
+    console.log(marketName);
   }, [dispatch, marketName, history]);
 
   return (

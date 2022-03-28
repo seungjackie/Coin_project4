@@ -168,31 +168,36 @@ const CoinList = ({
         </St.CoinSortList>
       </St.CoinSortContainer>
       <St.CoinUl heightSize={heightSize - 140}>
-        <li class="sc-dvQaRk fwFfgc">
-          <button class="sc-TBWPX eRTGYL">
-            <i title="도넛코인 로고" class="sc-jIkXHa DONUT">
+        {/* <li className="sc-dvQaRk fwFfgc">
+          <button className="sc-TBWPX eRTGYL">
+            <i title="도넛코인 로고" className="sc-jIkXHa DONUT">
               <img src={DncLogo} width='40px' height='20px'></img>
             </i>
-            <div class="sc-ZOtfp ifVpiR">
-              <strong class="sc-jOxtWs fRnura">도넛코인</strong>
-              <span class="sc-hmjpVf rWtdp">DNC/KRW</span>
+            <div className="sc-ZOtfp ifVpiR">
+              <strong className="sc-jOxtWs fRnura">도넛코인</strong>
+              <span className="sc-hmjpVf rWtdp">DNC/KRW</span>
               </div>
-              <strong class="sc-eLwHnm jklrYb">50,080,000</strong>
-            <div class="sc-bTfYFJ eaJCMQ">
-              <span class="sc-kHOZwM czmvwe">2.96%</span>
-              <span class="sc-hOGkXu gZdwXs">1,440,000</span>
+              <strong className="sc-eLwHnm jklrYb">50,080,000</strong>
+            <div className="sc-bTfYFJ eaJCMQ">
+              <span className="sc-kHOZwM czmvwe">2.96%</span>
+              <span className="sc-hOGkXu gZdwXs">1,440,000</span>
             </div>
-              <span class="sc-dtMgUX QzAZf">491,769 백만</span>
+              <span className="sc-dtMgUX QzAZf">491,769 백만</span>
           </button>
-        </li>
+        </li> */}
 
         {isMarketNamesLoading || isInitCandleLoading ? (
           <Loading center={false} />
         ) : (
-
           sortedMarketNames.map((marketName) => {
-            const splitedName = marketName.split("-");
+            let newMarketName = marketName
+            const splitedName = newMarketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
+
+            if (marketName == 'KRW-DNC') {
+              newMarketName = 'KRW-ETH'
+            };
+            
             const changePrice24Hour =
               latestCoinData[marketName].changePrice24Hour;
             const changeRate24Hour =

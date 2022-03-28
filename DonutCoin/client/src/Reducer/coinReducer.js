@@ -241,13 +241,14 @@ function* startChangeMarketAndDataSaga(action) {
   const state = yield select();
   const selectedTimeType = state.Coin.selectedTimeType;
   const selectedTimeCount = state.Coin.selectedTimeCount;
-  const changingMarketName = action.payload=="KRW-DNC"?"KRW-BTC":action.payload;
+  // const changingMarketName = action.payload=='KRW-DNC'?'KRW-BTC':action.payload;
+  const changingMarketName = action.payload;
   const selectedCoinCandles =
-    state.Coin.candle.data[changingMarketName].candles;
+    state.Coin.candle.data[changingMarketName=='KRW-DNC'?'KRW-BTC':changingMarketName].candles;
 
   yield put(changeSelectedMarket(changingMarketName)); // 선택된 마켓 변경
-  yield getInitOrderbookSaga({ payload: changingMarketName }); // 호가창 초기값 받기
-  yield getOneCoinTradeListsSaga({ payload: changingMarketName }); // 체결내역 초기값 받기
+  yield getInitOrderbookSaga({ payload: changingMarketName=='KRW-DNC'?'KRW-BTC':changingMarketName }); // 호가창 초기값 받기
+  yield getOneCoinTradeListsSaga({ payload: changingMarketName=='KRW-DNC'?'KRW-BTC':changingMarketName }); // 체결내역 초기값 받기
 
   // 상태에 저장된 데이터가 200개 미만일때만 api콜 요청함
   if (selectedCoinCandles.length < 200) {

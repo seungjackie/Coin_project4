@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const withOHLCData = () => (OriginalComponent) => () => {
   const selectedMarket = useSelector((state) => state.Coin.selectedMarket); // 선택된 코인/마켓
   const selectedCandles = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket].candles
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket].candles
   ); // 선택된 코인/마켓 캔들 정보
 
   // return selectedCandles.length ? (

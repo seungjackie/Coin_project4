@@ -1,34 +1,12 @@
 import axios from "axios";
 
 export const coinApi = {
-  getMarketCodes: () => {
-    const marketAPI = axios.get('https://api.upbit.com/v1/market/all?isDetails=false')
-      .then((res) => {
-        let dncData = res.data
-        dncData[282] = { market: 'KRW-DNC', korean_name: "도넛코인", english_name: "Donut" }
-        // console.log(dncData)
-        // console.log(res)
-        return {
-          ...res,
-          data: dncData
-        }
-      })
-    // console.log(marketAPI)
-    return marketAPI
-  },
-  getInitCanldes: (coins) => {
-    // console.log(coins)
-    let DNCindex = coins.indexOf('KRW-DNC')
-    coins.splice(DNCindex, 1);
-    // console.log(coins)
-    return axios.get(`https://api.upbit.com/v1/ticker?markets=${coins}`)
-  },
-  getInitOrderbooks: (coins) => {
-    console.log(coins)
-    // let DNCindex = coins.indexOf('KRW-DNC')
-    // coins.splice(DNCindex, 1);
-    return axios.get(`https://api.upbit.com/v1/orderbook?markets=${coins}`)
-  },
+  getMarketCodes: () =>
+    axios.get("https://api.upbit.com/v1/market/all?isDetails=false"),
+  getInitCanldes: (coins) =>
+    axios.get(`https://api.upbit.com/v1/ticker?markets=${coins}`),
+  getInitOrderbooks: (coins) =>
+    axios.get(`https://api.upbit.com/v1/orderbook?markets=${coins}`),
   getOneCoinCandles: ({ coin, timeType, timeCount }) => {
     if (timeType === "minutes")
       return axios

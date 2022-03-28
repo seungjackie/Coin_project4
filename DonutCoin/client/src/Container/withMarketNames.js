@@ -14,13 +14,8 @@ const withMarketNames = () => (OriginalComponent) => (props) => {
   if (Object.keys(coinListDatas).length > 1) {
     // 검색 기준 필터링
     marketNamesArr = marketNamesArr.filter(
-      (coin) =>{
+      (coin) =>
         // 영어 검색
-        if (coin == "KRW-DNC")
-        {
-          coin = "KRW-ETH"
-        }
-        // console.log(coin)
         marketNames[coin].english
           .toLowerCase()
           .includes(coinSearchInputData.toLowerCase()) ||
@@ -35,7 +30,7 @@ const withMarketNames = () => (OriginalComponent) => (props) => {
         ) ||
         // 초성 검색
         choHangul(marketNames[coin].korean).includes(coinSearchInputData)
-    });
+    );
 
     // 정렬
     marketNamesArr = marketNamesArr.sort((coin1, coin2) => {

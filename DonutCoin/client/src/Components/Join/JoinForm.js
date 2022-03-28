@@ -81,7 +81,7 @@
 //     text-decoration-line: none;
 //     text-decoration-line: none;
 //     `,
-
+    
 // };
 
 // const JoinForm = (props) => {
@@ -139,9 +139,9 @@
 //         ppassword: inputs.password,
 //         ppasswordconfirm : inputs.passwordconfirm
 //       };
-
+  
 //       console.log(post);
-
+  
 //       fetch("http://localhost:3000/join", {
 //         method : "post",
 //         headers : {
@@ -160,7 +160,7 @@
 //       })
 //     }
 //   }
-
+  
 //   if (state) {
 //     // 이메일 유효성 검사
 //     const checkEmail = (e) => {
@@ -220,7 +220,7 @@ import { joinUser } from '../../Reducer/action/user_action';
 
 
 const St = {
-  Container: styled.div`
+    Container: styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -228,7 +228,7 @@ const St = {
     justify-content: center;
     background-color: rgb(231, 234, 239);
   `,
-  Login: styled.form`
+    Login: styled.form`
     width: 30%;
     height: 600px;
     background: white;
@@ -238,22 +238,22 @@ const St = {
     align-items: center;
     flex-direction: column;
   `,
-  Head: styled.div`
+    Head: styled.div`
     margin-bottom: 1rem;
     color: white;
     font-size: 3em;
     font-weight: bolder;
     text-shadow: 1px 2px 3px black;
   `,
-  Login_sns: styled.div`
+    Login_sns: styled.div`
     padding: 20px;
     display: flex;
   `,
-  Login_id: styled.div`
+    Login_id: styled.div`
     margin-top: 20px;
     width: 80%;
   `,
-  Input: styled.input`
+    Input: styled.input`
     width: 100%;
     height: 50px;
     border-radius: 30px;
@@ -262,19 +262,19 @@ const St = {
     border: 1px solid lightgray;
     outline: none;
   `,
-  Login_pw: styled.div`
+    Login_pw: styled.div`
     margin-top: 20px;
     width: 80%;
   `,
-  Join_name: styled.div`
+    Join_name: styled.div`
     margin-top: 20px;
     width: 80%;
 `,
-  Submit: styled.div`
+    Submit: styled.div`
     margin-top: 50px;
     width: 80%;
    `,
-  Submit_button: styled.button`
+    Submit_button: styled.button`
     width: 100%;
     height: 50px;
     border: 0;
@@ -290,12 +290,12 @@ const St = {
         color: white;
     }
     `,
-  ToJoin: styled.a`
+    ToJoin: styled.a`
     margin: auto;
     text-decoration-line: none;
     text-decoration-line: none;
     `,
-
+    
 };
 
 const JoinForm = (props) => {
@@ -326,7 +326,7 @@ const JoinForm = (props) => {
     setConfirmPassword(event.currentTarget.value);
   };
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = (event) => {
     // 태그의 기본 기능으로 리프레쉬 되는 것을 방지.
     event.preventDefault();
 
@@ -341,48 +341,45 @@ const JoinForm = (props) => {
     };
 
     // action을 dispatch해준다.
-    dispatch(joinUser(body))
-    props.history.push('/');
-    alert('회원가입 되셨습니다.');
+    // dispatch(joinUser(body))
     // // action을 dispatch해준다.
-    // const onSubmit = async body =>{
-    //   dispatch(checkUser(body))
-    //   .then((response) => {
-    //     if (response.payload.checkUser) {
-    //       props.history.push('/');
-    //       alert('회원가입 되셨습니다.');
-    //     } else {
-    //       alert('회원가입에 실패했습니다.');
-    //     }
-    //   });
-    // }
+    const onSubmit = async body =>{
+      dispatch(joinUser(body))
+      .then((response) => {
+        if (response.payload.joinSuccess) {
+          props.history.push('/');
+        } else {
+          alert('회원가입에 실패했습니다.');
+        }
+      });
+    }
 
   };
-
+  
   return (
     <St.Container>
-      <St.Login onSubmit={onSubmitHandler}>
-        <St.Head>WELCOME</St.Head>
-        <St.Login_id>
-          <h4>E-mail</h4>
-          <St.Input type="email" value={Email} onChange={onEmailHandler} name="Email" id="" placeholder="Email" />
-        </St.Login_id>
-        <St.Join_name>
-          <h4>Name</h4>
-          <St.Input type="text" value={Name} onChange={onNameHandler} name="Name" id="" placeholder="Name" />
-        </St.Join_name>
-        <St.Login_pw>
-          <h4>Password</h4>
-          <St.Input type="password" value={Password} onChange={onPasswordHandler} name="Password" id="" placeholder="Password" />
-        </St.Login_pw>
-        <St.Login_pw>
-          <h4>Password Confirm</h4>
-          <St.Input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} name="ConfirmPassword" id="" placeholder="Password Confirm" />
-        </St.Login_pw>
-        <St.Submit>
-          <St.Submit_button type="submit">JOIN</St.Submit_button>
-        </St.Submit>
-      </St.Login>
+        <St.Login onSubmit={onSubmitHandler}>
+            <St.Head>WELCOME</St.Head>
+            <St.Login_id>
+                <h4>E-mail</h4>
+                <St.Input type="email" value={Email} onChange={onEmailHandler} name="Email" id="" placeholder="Email" />
+            </St.Login_id>
+            <St.Join_name>
+                <h4>Name</h4>
+                <St.Input type="text" value={Name} onChange={onNameHandler} name="Name" id="" placeholder="Name" />
+            </St.Join_name>
+            <St.Login_pw>
+                <h4>Password</h4>
+                <St.Input type="password" value={Password} onChange={onPasswordHandler} name="Password" id="" placeholder="Password" />
+            </St.Login_pw>
+            <St.Login_pw>
+                <h4>Password Confirm</h4>
+                <St.Input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} name="ConfirmPassword" id="" placeholder="Password Confirm" />
+            </St.Login_pw>
+            <St.Submit>
+                <St.Submit_button type="submit">JOIN</St.Submit_button>
+            </St.Submit>
+        </St.Login>
     </St.Container>
   )
 }

@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { startChangeMarketAndData } from "../../Reducer/coinReducer";
 
 import isEqual from "react-fast-compare";
-import DncLogo from "./DNC.png"
+// import DncLogo from "./DNC.png"
 
 
 const St = {

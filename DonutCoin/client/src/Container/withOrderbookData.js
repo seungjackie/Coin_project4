@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const withOrderbookData = () => (OriginalComponent) => (props) => {
   const selectedMarket = useSelector((state) => state.Coin.selectedMarket);
   const orderbook = useSelector(
-    (state) => state.Coin.orderbook.data[selectedMarket]
+    (state) => state.Coin.orderbook.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket]
   );
 
   let totalData;

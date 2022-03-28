@@ -4,29 +4,29 @@ import { useSelector } from "react-redux";
 const withSelectedCoinPrice = () => (OriginalComponent) => (props) => {
   const selectedMarket = useSelector((state) => state.Coin.selectedMarket);
   const selectedCoinData = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket]
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket]
   );
 
   // 24시간 고가 저가
   const highestPrice24Hour = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket]["highestPrice24Hour"]
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket]["highestPrice24Hour"]
   );
   const lowestPrice24Hour = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket]["lowestPrice24Hour"]
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket]["lowestPrice24Hour"]
   );
 
   // 52주 고가 저가
   const highestPrice52Week = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket].highestPrice52Week
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket].highestPrice52Week
   );
   const highestDate52Week = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket].highestDate52Week
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket].highestDate52Week
   );
   const lowestPrice52Week = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket].lowestPrice52Week
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket].lowestPrice52Week
   );
   const lowestDate52Week = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket].lowestDate52Week
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket].lowestDate52Week
   );
 
   // 24시간 거래대금, 거래량
@@ -42,7 +42,7 @@ const withSelectedCoinPrice = () => (OriginalComponent) => (props) => {
 
   // 전일, 당일 가격
   const selecteCoinCadnles = useSelector(
-    (state) => state.Coin.candle.data[selectedMarket].candles
+    (state) => state.Coin.candle.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket].candles
   );
   const lastCandleIndex = selecteCoinCadnles.length - 1;
 

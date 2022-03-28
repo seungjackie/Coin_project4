@@ -78,7 +78,7 @@ const St = {
     padding-left: 20px;
     border: none;
   `,
-    CoinSearchBtn2: styled.button`
+  CoinSearchBtn2: styled.button`
     width: 30px;
     height: 30px;
     background : url("../../../../public/favicon2.png");
@@ -145,7 +145,7 @@ const CoinList = ({
   isRootURL,
 }) => {
   const dispatch = useDispatch();
-
+  console.log(selectedMarket)
   return (
     <St.CoinListContainer isRootURL={isRootURL} heightSize={heightSize - 80}>
       <St.HiddenH3>코인 리스트</St.HiddenH3>
@@ -168,9 +168,9 @@ const CoinList = ({
         </St.CoinSortList>
       </St.CoinSortContainer>
       <St.CoinUl heightSize={heightSize - 140}>
-        {/* <li className="sc-dvQaRk fwFfgc">
-          <button className="sc-TBWPX eRTGYL">
-            <i title="도넛코인 로고" className="sc-jIkXHa DONUT">
+        {/* <li class="sc-dvQaRk fwFfgc">
+          <button class="sc-TBWPX eRTGYL">
+            <i title="도넛코인 로고" class="sc-jIkXHa DONUT">
               <img src={DncLogo} width='40px' height='20px'></img>
             </i>
             <div className="sc-ZOtfp ifVpiR">
@@ -196,15 +196,17 @@ const CoinList = ({
 
             if (marketName == 'KRW-DNC') {
               newMarketName = 'KRW-ETH'
-            };
+            }
+            // console.log(newMarketName)
             
+
             const changePrice24Hour =
-              latestCoinData[marketName].changePrice24Hour;
+              latestCoinData[newMarketName].changePrice24Hour;
             const changeRate24Hour =
-              latestCoinData[marketName].changeRate24Hour;
+              latestCoinData[newMarketName].changeRate24Hour;
             const tradePrice24Hour =
-              latestCoinData[marketName].tradePrice24Hour;
-            const price = latestCoinData[marketName].price;
+              latestCoinData[newMarketName].tradePrice24Hour;
+            const price = latestCoinData[newMarketName].price;
             // const isTraded = latestCoinData[marketName].isTraded;
 
             const fontColor =
@@ -218,7 +220,9 @@ const CoinList = ({
                 theme={theme}
                 marketName={marketName}
                 selectedMarket={selectedMarket}
+                // selectedMarket={selectedMarket=="KRW-DNC"?"KRW-ETH":selectedMarket}
                 coinName={marketNames[marketName].korean}
+                // coinName={(marketNames[marketName].korean=='비트코인골드')?'쿠오코인':marketNames[marketName].korean}
                 enCoinName={enCoinName}
                 fontColor={fontColor}
                 price={price}

@@ -236,7 +236,7 @@ function* startChangeMarketAndDataSaga(action) {
   const state = yield select();
   const selectedTimeType = state.Coin.selectedTimeType;
   const selectedTimeCount = state.Coin.selectedTimeCount;
-  const changingMarketName = action.payload;
+  const changingMarketName = action.payload=="KRW-DNC"?"KRW-BTC":action.payload;
   const selectedCoinCandles =
     state.Coin.candle.data[changingMarketName].candles;
 

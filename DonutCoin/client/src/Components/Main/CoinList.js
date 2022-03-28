@@ -153,7 +153,7 @@ const CoinList = ({
   const [DNClatestCoinData, setDNClatestCoinData] = useState();
   const DNCname = { 'KRW-DNC': { korean: '도넛코인', english: 'Donutcoin' } }
   useEffect(() => {
-
+    // console.log(selectedMarket)
     setDNCmarketNames(Object.assign(DNCname, marketNames))
     setDNCsortedMarketNames([...sortedMarketNames, 'KRW-DNC'])
     // console.log(DNCmarketNames)
@@ -164,7 +164,7 @@ const CoinList = ({
     // console.log(BTCdata)
     setDNClatestCoinData(Object.assign(BTCdata, latestCoinData))
     // console.log(DNClatestCoinData)
-  }, [marketNames, sortedMarketNames, latestCoinData])
+  }, [marketNames, sortedMarketNames, latestCoinData, selectedMarket])
 
   // console.log(marketNames['KRW-BTC'])
   // console.log(sortedMarketNames)
@@ -256,6 +256,7 @@ const CoinList = ({
                 theme={theme}
                 marketName={marketName}
                 selectedMarket={selectedMarket}
+                // selectedMarket={selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket}
                 coinName={DNCmarketNames[marketName].korean}
                 enCoinName={enCoinName}
                 fontColor={fontColor}
@@ -273,6 +274,7 @@ const CoinList = ({
     </St.CoinListContainer>
   );
 };
+
 
 export default withLatestCoinData()(
   withMarketNames()(

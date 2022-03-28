@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import withSize from "../Container/withSize";
 import Header from "../Components/Global/Header";
-import RegisterForm from "../Components/Register/RegisterForm";
+import JoinForm from "../Components/Join/JoinForm";
 import Footer from "../Components/Global/Footer";
 
 const St = {
@@ -22,18 +22,18 @@ const St = {
   `,
 };
 
-const Register = ({ match, widthSize, heightSize }) => {
+const Login = ({ match, widthSize, heightSize }) => {
   const isRootURL = match.path === "/";
 
   return (
     <>
       <Header isRootURL={isRootURL} />
       <St.JoinContentContainer>
-        <RegisterForm />
+        <JoinForm />
       </St.JoinContentContainer>
       <Footer />
     </>
   );
 };
 
-export default withSize()(React.memo(Register));
+export default withSize()(React.memo(Login));

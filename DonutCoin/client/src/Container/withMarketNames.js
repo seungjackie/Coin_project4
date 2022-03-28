@@ -32,22 +32,26 @@ const withMarketNames = () => (OriginalComponent) => (props) => {
           Hangul.disassembleToString(coinSearchInputData)
         ) ||
         // 초성 검색
+
         choHangul(marketNames[coin].korean).includes(coinSearchInputData)
       });
 
     // 정렬
     marketNamesArr = marketNamesArr.sort((coin1, coin2) => {
-      // console.log(coin1, coin2)
-      if (coin1 == 'KRW-DNC' ){
+      if (coin1 == 'KRW-DNC') {
         coin1 = 'KRW-ETH'
       }
-      if (coin2 == 'KRW-DNC' ){
+      if (coin2 == 'KRW-DNC') {
         coin2 = 'KRW-ETH'
       }
-      return (
-        +coinListDatas[coin2].tradePrice24Hour -
-        +coinListDatas[coin1].tradePrice24Hour
-      );
+
+        // console.log(coin1)
+        // console.log(coin2)
+        return (
+          
+          +coinListDatas[coin2].tradePrice24Hour -
+          +coinListDatas[coin1].tradePrice24Hour
+        );
     });
   }
   return (

@@ -41,10 +41,10 @@ const db = mongoose.connect(uri, (err) => {
     }
 });
 
-app.get('/search'){
-    // db 쿼리문 싸주는데
-    db.testblocks.find({})
-}
+// app.get('/search'){
+//     // db 쿼리문 싸주는데
+//     db.testblocks.find({})
+// }
 
 // //몽구스 유저 스키마
 // const UserSchema = new mongoose.Schema({
@@ -60,15 +60,15 @@ app.get('/', (req, res) => {
 });
 
 // client -> 요청 해야함으로 req
-axios.get('/', {params: }) //원하는데이터를 넘겨준다
+// axios.get('/', {params: }) //원하는데이터를 넘겨준다
 
 // db에서 작업 마무리 하구
 // 그때 res 쓴다... 우리는 read은 할것임으로 res
 
 //라우팅 주소
-axios.get('/search/api', (req,res) => {
-    res.           
-})
+// axios.get('/search/api', (req,res) => {
+//     res.           
+// })
 
 
 

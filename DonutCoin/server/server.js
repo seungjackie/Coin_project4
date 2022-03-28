@@ -43,7 +43,7 @@ const db = mongoose.connect(uri, (err) => {
 
 app.get('/search'){
     // db 쿼리문 싸주는데
-
+    db.testblocks.find({})
 }
 
 // //몽구스 유저 스키마

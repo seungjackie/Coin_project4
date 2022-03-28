@@ -24,7 +24,7 @@ const BlockSearch = (event) =>{
     useEffect(() => {
         //요청
         // axios('https://jsonplaceholder.typicode.com/albums/1/photos')
-        axios.get('')
+        axios.get('http://localhost:4000/search')
         .then(response => {
         console.log(res.data);
         setAllData(res.data);                                          //res.data에 문구가 정리 되어있다       

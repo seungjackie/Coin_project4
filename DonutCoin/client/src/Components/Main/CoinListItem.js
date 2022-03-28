@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -152,6 +152,8 @@ const CoinListItem = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [DNCmarketNames, setDNCmarketNames] = useState();
+  const DNCname = { 'KRW-DNC': { korean: '도넛코인', english: 'Donutcoin' } }
 
   const tradeListData = useSelector(
     (state) => state.Coin.tradeList.data[marketName]
@@ -161,9 +163,9 @@ const CoinListItem = ({
 
   const isTraded =
     tradeListData &&
-    tradeListData.length > 2 &&
-    nowTimestamp - tradeListData[0].timestamp < 500 &&
-    tradeListData[0].trade_price !== tradeListData[1].trade_price
+      tradeListData.length > 2 &&
+      nowTimestamp - tradeListData[0].timestamp < 500 &&
+      tradeListData[0].trade_price !== tradeListData[1].trade_price
       ? tradeListData[0].ask_bid
       : false;
 
@@ -173,37 +175,37 @@ const CoinListItem = ({
   }, [dispatch, marketName, history]);
 
   return (
-  <div>
-    <St.CoinLi
-      borderBottomColor={theme.lightGray}
-      bgColor={selectedMarket === marketName ? theme.lightGray : "white"}
-    >
-      <St.CoinBtn onClick={changeMarket}>
-        <St.CoinLogo
-          coinNameEn={enCoinName.split("/")[0]}
-          title={`${coinName} 로고`}
-        />
-        <St.CoinNameContainer>
-          <St.CoinName theme={theme}>{coinName}</St.CoinName>
-          <St.CoinNameEn>{enCoinName}</St.CoinNameEn>
-        </St.CoinNameContainer>
-        <St.Price theme={theme} fontColor={fontColor} isTraded={isTraded}>
-          {price.toLocaleString()}
-        </St.Price>
-        <St.ChangRateContainer>
-          <St.ChangeRate fontColor={fontColor}>
-            {changeRate24Hour}
-          </St.ChangeRate>
-          <St.ChangePrice fontColor={fontColor}>
-            {changePrice24Hour.toLocaleString()}
-          </St.ChangePrice>
-        </St.ChangRateContainer>
-        <St.TradePrice>
-          {tradePrice24Hour.toLocaleString() + " 백만"}
-        </St.TradePrice>
-      </St.CoinBtn>
-    </St.CoinLi>
-  </div>
+    <div>
+      <St.CoinLi
+        borderBottomColor={theme.lightGray}
+        bgColor={selectedMarket === marketName ? theme.lightGray : "white"}
+      >
+        <St.CoinBtn onClick={changeMarket}>
+          <St.CoinLogo
+            coinNameEn={enCoinName.split("/")[0]}
+            title={`${coinName} 로고`}
+          />
+          <St.CoinNameContainer>
+            <St.CoinName theme={theme}>{coinName}</St.CoinName>
+            <St.CoinNameEn>{enCoinName}</St.CoinNameEn>
+          </St.CoinNameContainer>
+          <St.Price theme={theme} fontColor={fontColor} isTraded={isTraded}>
+            {price.toLocaleString()}
+          </St.Price>
+          <St.ChangRateContainer>
+            <St.ChangeRate fontColor={fontColor}>
+              {changeRate24Hour}
+            </St.ChangeRate>
+            <St.ChangePrice fontColor={fontColor}>
+              {changePrice24Hour.toLocaleString()}
+            </St.ChangePrice>
+          </St.ChangRateContainer>
+          <St.TradePrice>
+            {tradePrice24Hour.toLocaleString() + " 백만"}
+          </St.TradePrice>
+        </St.CoinBtn>
+      </St.CoinLi>
+    </div>
   );
 };
 

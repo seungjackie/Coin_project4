@@ -100,9 +100,9 @@ const withMarketNames = () => (OriginalComponent) => (props) => {
     let BTCdata = { 'KRW-DNC': coinListDatas['KRW-BTC'] }
     setDNCcoinListDatas(Object.assign(BTCdata, coinListDatas))
     setDNCmarketNamesArr(marketNamesArr)
-    console.log("4 : ", DNCmarketNames)
-    console.log("5 : ", DNCcoinListDatas)
-    console.log("6 : ", DNCmarketNamesArr)
+    // console.log("4 : ", DNCmarketNames)
+    // console.log("5 : ", DNCcoinListDatas)
+    // console.log("6 : ", DNCmarketNamesArr)
 
   }, [props])
 

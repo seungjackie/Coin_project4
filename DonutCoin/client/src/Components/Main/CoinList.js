@@ -164,6 +164,7 @@ const CoinList = ({
     // console.log(BTCdata)
     setDNClatestCoinData(Object.assign(BTCdata, latestCoinData))
     // console.log(DNClatestCoinData)
+    // console.log(DNCsortedMarketNames[-1])
   }, [marketNames, sortedMarketNames, latestCoinData, selectedMarket])
 
   // console.log(marketNames['KRW-BTC'])
@@ -228,10 +229,7 @@ const CoinList = ({
         ) : (
 
           DNCsortedMarketNames.map((marketName) => {
-            // let newMarketName = marketName
-            // if (marketName == 'KRW-DNC') {
-            //   newMarketName = 'KRW-ETH'
-            // }
+
 
             const splitedName = marketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
@@ -241,8 +239,8 @@ const CoinList = ({
               DNClatestCoinData[marketName].changeRate24Hour;
             const tradePrice24Hour =
               DNClatestCoinData[marketName].tradePrice24Hour;
-            const price = 
-            DNClatestCoinData[marketName].price;
+            const price =
+              DNClatestCoinData[marketName].price;
             // const isTraded = latestCoinData[marketName].isTraded;
 
             const fontColor =
@@ -251,6 +249,7 @@ const CoinList = ({
                 : +changePrice24Hour < 0
                   ? theme.strongBlue
                   : "black";
+
             return (
               <CoinListItem
                 theme={theme}

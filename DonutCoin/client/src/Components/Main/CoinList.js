@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { searchCoin } from "../../Reducer/coinReducer";
 import { useDispatch } from "react-redux";
@@ -78,7 +78,7 @@ const St = {
     padding-left: 20px;
     border: none;
   `,
-    CoinSearchBtn2: styled.button`
+  CoinSearchBtn2: styled.button`
     width: 30px;
     height: 30px;
     background : url("../../../../public/favicon2.png");
@@ -132,6 +132,9 @@ const St = {
   `,
 };
 
+
+
+
 const CoinList = ({
   theme,
   marketNames,
@@ -145,6 +148,40 @@ const CoinList = ({
   isRootURL,
 }) => {
   const dispatch = useDispatch();
+  const [DNCmarketNames, setDNCmarketNames] = useState();
+  const [DNCsortedMarketNames, setDNCsortedMarketNames] = useState();
+  const [DNClatestCoinData, setDNClatestCoinData] = useState();
+  const DNCname = { 'KRW-DNC': { korean: '도넛코인', english: 'Donutcoin' } }
+  useEffect(() => {
+
+    setDNCmarketNames(Object.assign(DNCname, marketNames))
+    setDNCsortedMarketNames([...sortedMarketNames, 'KRW-DNC'])
+    // console.log(DNCmarketNames)
+    // console.log(DNCsortedMarketNames)
+    let BTCdata = { 'KRW-DNC': latestCoinData['KRW-BTC'] }
+    // setDNClatestCoinData();
+    // console.log(latestCoinData['KRW-BTC'])
+    // console.log(BTCdata)
+    setDNClatestCoinData(Object.assign(BTCdata, latestCoinData))
+    // console.log(DNClatestCoinData)
+  }, [marketNames, sortedMarketNames, latestCoinData])
+
+  // console.log(marketNames['KRW-BTC'])
+  // console.log(sortedMarketNames)
+  // console.log(latestCoinData['KRW-BTC'])
+  // 
+  // setDNCmarketNames(Object.assign(DNCname, marketNames))
+  // if (Object.keys(sortedMarketNames).length > 100 && !sortedMarketNames.hasOwnProperty('KRW-DNC')) {
+  //   // console.log(sortedMarketNames)
+  //   setDNCsortedMarketNames(sortedMarketNames.push('KRW-DNC'))
+  // }
+  // console.log(sortedMarketNames)
+  // let BTCdata = { 'KRW-DNC': latestCoinData['KRW-BTC'] }
+  // console.log(latestCoinData['KRW-BTC'])
+  // setDNClatestCoinData(Object.assign(BTCdata, latestCoinData))
+  // console.log(DNClatestCoinData)
+
+
 
   return (
     <St.CoinListContainer isRootURL={isRootURL} heightSize={heightSize - 80}>
@@ -189,22 +226,23 @@ const CoinList = ({
         {isMarketNamesLoading || isInitCandleLoading ? (
           <Loading center={false} />
         ) : (
-          
 
-          sortedMarketNames.map((marketName) => {
-            if (marketName == 'KRW-DNC')
-            {
-              marketName = 'KRW-ETH'
-            }
+          DNCsortedMarketNames.map((marketName) => {
+            // let newMarketName = marketName
+            // if (marketName == 'KRW-DNC') {
+            //   newMarketName = 'KRW-ETH'
+            // }
+
             const splitedName = marketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
             const changePrice24Hour =
-              latestCoinData[marketName].changePrice24Hour;
+              DNClatestCoinData[marketName].changePrice24Hour;
             const changeRate24Hour =
-              latestCoinData[marketName].changeRate24Hour;
+              DNClatestCoinData[marketName].changeRate24Hour;
             const tradePrice24Hour =
-              latestCoinData[marketName].tradePrice24Hour;
-            const price = latestCoinData[marketName].price;
+              DNClatestCoinData[marketName].tradePrice24Hour;
+            const price = 
+            DNClatestCoinData[marketName].price;
             // const isTraded = latestCoinData[marketName].isTraded;
 
             const fontColor =
@@ -218,7 +256,7 @@ const CoinList = ({
                 theme={theme}
                 marketName={marketName}
                 selectedMarket={selectedMarket}
-                coinName={marketNames[marketName].korean}
+                coinName={DNCmarketNames[marketName].korean}
                 enCoinName={enCoinName}
                 fontColor={fontColor}
                 price={price}

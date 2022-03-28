@@ -212,11 +212,11 @@
 // export default withRouter(JoinForm);
 
 
-import React, { useRef, useState } from 'react';
-import { withRouter } from 'react-router-dom'
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../../Reducer/action/user_action';
+import { withRouter } from 'react-router-dom'
+import { joinUser } from '../../Reducer/action/user_action';
 
 
 const St = {
@@ -298,10 +298,9 @@ const St = {
 
 };
 
-const RegusterForm = (props) => {
+const JoinForm = (props) => {
   // redux의 dispatch
   const dispatch = useDispatch();
-  const password = useRef();
 
   // react hook에서 state 사용
   const [Email, setEmail] = useState('');
@@ -346,16 +345,17 @@ const RegusterForm = (props) => {
     props.history.push('/');
     alert('회원가입 되셨습니다.');
     // // action을 dispatch해준다.
-    const onSubmit = async body =>{
-      dispatch(registerUser(body))
-      .then((response) => {
-        if (response.payload.registerSuccess) {
-          props.history.push('/');
-        } else {
-          alert('회원가입에 실패했습니다.');
-        }
-      });
-    }
+    // const onSubmit = async body =>{
+    //   dispatch(checkUser(body))
+    //   .then((response) => {
+    //     if (response.payload.checkUser) {
+    //       props.history.push('/');
+    //       alert('회원가입 되셨습니다.');
+    //     } else {
+    //       alert('회원가입에 실패했습니다.');
+    //     }
+    //   });
+    // }
 
   };
 
@@ -387,4 +387,4 @@ const RegusterForm = (props) => {
   )
 }
 
-export default withRouter(RegusterForm);
+export default withRouter(JoinForm);

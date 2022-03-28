@@ -34,9 +34,9 @@ const St = {
     width: 20px;
     height: 20px;
     background-image: ${({ coinNameEn }) =>
-      coinNameEn !== "DNC"
+      coinNameEn !== "ADX"
         ? `url(https://static.upbit.com/logos/${coinNameEn}.png)`
-        : "../styles/img/DNC.png"};
+        : "../styles/img/ADX.png"};
     background-size: cover;
     margin-left: 5px;
     margin-right: 15px;

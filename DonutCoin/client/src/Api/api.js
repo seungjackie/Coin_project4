@@ -17,14 +17,14 @@ export const coinApi = {
     return marketAPI
   },
   getInitCanldes: (coins) => {
-    
+    // console.log(coins)
     let DNCindex = coins.indexOf('KRW-DNC')
     coins.splice(DNCindex, 1);
     // console.log(coins)
     return axios.get(`https://api.upbit.com/v1/ticker?markets=${coins}`)
   },
   getInitOrderbooks: (coins) => {
-    // console.log(coins)
+    console.log(coins)
     // let DNCindex = coins.indexOf('KRW-DNC')
     // coins.splice(DNCindex, 1);
     return axios.get(`https://api.upbit.com/v1/orderbook?markets=${coins}`)

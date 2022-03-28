@@ -1,12 +1,12 @@
 import axios from "axios";
-import { LOGIN_USER, REGISTER_USER } from '../action/types';
+import { LOGIN_USER, JOIN_USER } from '../action/types';
 
-export function registerUser(dataToSubmit) {
-  // axios를 이용해 register 요청을 보내고 response.data를 반환하여 request에 넣어준다.
+export function joinUser(dataToSubmit) {
+  // axios를 이용해 join 요청을 보내고 response.data를 반환하여 request에 넣어준다.
   const request = axios.post('/api/users/join', dataToSubmit)
   .then((response) => response.data);
   return {
-    type: REGISTER_USER,
+    type: JOIN_USER,
     payload: request,
   };
 }

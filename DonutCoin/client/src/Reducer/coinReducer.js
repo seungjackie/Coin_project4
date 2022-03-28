@@ -236,8 +236,8 @@ function* startChangeMarketAndDataSaga(action) {
   const state = yield select();
   const selectedTimeType = state.Coin.selectedTimeType;
   const selectedTimeCount = state.Coin.selectedTimeCount;
-  const changingMarketName = action.payload=="KRW-DNC"?"KRW-ETH":action.payload;
-  const selectedCoinCandles = 
+  const changingMarketName = action.payload;
+  const selectedCoinCandles =
     state.Coin.candle.data[changingMarketName].candles;
 
   yield put(changeSelectedMarket(changingMarketName)); // 선택된 마켓 변경
@@ -392,13 +392,13 @@ const initialState = {
   orderTotalPrice: 0,
   searchCoin: "",
   marketNames: {
-    error: true,
+    error: false,
     data: {
       "KRW-BTC": "비트코인",
     },
   },
   candle: {
-    error: true,
+    error: false,
     data: {
       "KRW-BTC": {
         candles: [
@@ -411,7 +411,7 @@ const initialState = {
     },
   },
   orderbook: {
-    error: true,
+    error: false,
     data: {
       "KRW-BTC": {
         total_bid_size: 0,

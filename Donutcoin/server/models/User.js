@@ -4,19 +4,19 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
+        required : true,
         trim: true,    // space를 없애주는 역할
         unique: 1
     },
-    name: {
+    name : {
         type: String,
-        required: true,
+        required : true,
         maxlength: 50
     },
     password: {
         type: String,
         required: true,
-    },
+      },
 });
 
 module.exports = mongoose.model("User", userSchema);

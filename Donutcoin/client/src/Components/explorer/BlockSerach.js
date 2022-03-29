@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { values } from 'lodash';
+import './block.css';
+// import {Bootst}
 
 
 const BlockSearch = (event) =>{
+
+    
 
     //이렇게 연결한느지?
     const USER = 'parkisak';
@@ -50,19 +54,24 @@ const BlockSearch = (event) =>{
         })
         }, []);
 
-        const styles = {
-            display:'inline',
-            width:'200',
-            height:300,
-            float:'left',
-            padding:5,
-            border:'0.5px solid black',
-            marginBottom:10,
-            marginRight:10
-            }
+        // export const blockLink = (height) => {
+        //     return ( <Link to={"/block/" + height}>{height}</Link>);
+        // };
+        
+        // const styles = {
+        //     display:'inline',
+        //     width:'200',
+        //     height:600,
+        //     float:'left',
+        //     padding:5,
+        //     border:'0.5px solid black',
+        //     marginBottom:10,
+        //     marginRight:10
+        //     }
+        
             
         return (
-            <div className="App">
+            <div backgroundcolor='black'>
                 <div style={{ margin: '0 auto', marginTop: '10%' }}>
                     <label>Search:</label>
                     <input type="text" onChange={(event) => handleSearch(event)} />
@@ -70,45 +79,66 @@ const BlockSearch = (event) =>{
                     <div style={{padding:10}}>
                     {filteredData.map((value,index)=>{
                         return(
-                            <div key={value.height}>
-                                <div style={styles}>
-                                    hash: {value.hash}
-                                    <br/>
+                            <div key={value.height} >
+                                
+                                {/* <div style={styles}> */}
+                                <table className="block-table">
+                                    <tbody>
+                                        <tr><td className="tdLabel">hash: </td><td>{value.hash}</td></tr>
+                                        <tr><td className="tdLabel">height: </td><td>{value.height}</td></tr>
+                                        <tr><td className="tdLabel">bits: </td><td>{value.bits}</td></tr>
+                                        <tr><td className="tdLabel">confirmation: </td><td>{value.confirmation}</td></tr>
+                                        <tr><td className="tdLabel">strippedsize: </td>{value.strippedsize}</tr>
+                                        {/* <td><Link to={`../block/${this.state.block.parentHash}`}>{this.state.block.parentHash}</Link></td></tr> */}
+                                        <tr><td className="tdLabel">size: </td><td>{value.strippedsize}</td></tr>
+                                        <tr><td className="tdLabel">weight: </td><td>{value.weight}</td></tr>
+                                        <tr><td className="tdLabel">version: </td><td>{value.version}</td></tr>
+                                        <tr><td className="tdLabel">versionhex: </td><td>{value.versionhex}</td></tr>
+                                        <tr><td className="tdLabel">merkleroot: </td><td>{value.merkleroot}</td></tr>
+                                        <tr><td className="tdLabel">time: </td><td>{value.time}</td></tr>
+                                        <tr><td className="tdLabel">mediantime: </td><td>{value.mediantime}</td></tr>
+                                        <tr><td className="tdLabel">nonce: </td><td>{value.nonce}</td></tr>
+                                        <tr><td className="tdLabel">difficulty: </td><td>{value.difficulty}</td></tr>
+                                        <tr><td className="tdLabel">chainwork: </td><td>{value.chainwork} </td></tr>
+                                        <tr><td className="tdLabel">previousblockhash: </td><td>{value.previousblockhash} </td></tr>
+                                        <tr><td className="tdLabel">nextblockhash: </td><td>{value.nextblockhash} </td></tr>
+                                    </tbody>
+                                </table>
+                                    {/* hash: {value.hash}
+                                    <hr />
                                     height: {value.height}
-                                    <br />
+                                    <hr />
                                     bits: {value.bits}
-                                    <br />
+                                    <hr />
                                     confirmation: {value.confirmation}
-                                    <br />
+                                    <hr />
                                     strippedsize: {value.strippedsize}
-                                    <br />
+                                    <hr />
                                     size: {value.size}
-                                    <br />
+                                    <hr />
                                     hi :{value.weight}
-                                    <br />
+                                    <hr />
                                     {value.version}
-                                    <br />
+                                    <hr />
                                     {value.versionhex}
-                                    <br />
+                                    <hr />
                                     {value.merkleroot}
-                                    <br />
+                                    <hr />
                                     {value.time}
-                                    <br />
+                                    <hr />
                                     {value.mediantime}
-                                    <br />
+                                    <hr />
                                     {value.nonce}
-                                    <br />
-                                    {value.bits}
-                                    <br />
+                                    <hr />
                                     {value.difficulty}
-                                    <br />
+                                    <hr />
                                     {value.chainwork}
-                                    <br />
+                                    <hr />
                                     {value.previousblockhash}
-                                    <br />
-                                    {value.nextblockhash}
+                                    <hr />
+                                    {value.nextblockhash} */}
 
-                                </div>
+                                {/* </div> */}
                             </div>
                     )
                     })}
@@ -116,5 +146,8 @@ const BlockSearch = (event) =>{
             </div>
         )
 }
+
+
+
 
 export default BlockSearch;

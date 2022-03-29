@@ -84,101 +84,101 @@ const User = require('../models/User');
 
 
 
-var bdataString = `{
-    "jsonrpc":"1.0", 
-    "id":"${ID_STRING}", 
-    "method":"getblockcount",
-    "params":[]
-}`;
-var options = {
-    headers: headers,
-    body: bdataString,
+// var bdataString = `{
+//     "jsonrpc":"1.0", 
+//     "id":"${ID_STRING}", 
+//     "method":"getblockcount",
+//     "params":[]
+// }`;
+// var options = {
+//     headers: headers,
+//     body: bdataString,
 
-};
-//기록된 요청을 디비로
-var bres = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, options);
-// console.log(bres)
-var blockcount = JSON.parse(bres.body.toString()).result;
-// console.log("blockcount = " + blockcount);
+// };
+// //기록된 요청을 디비로
+// var bres = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, options);
+// // console.log(bres)
+// var blockcount = JSON.parse(bres.body.toString()).result;
+// // console.log("blockcount = " + blockcount);
 
-for (let i = 0; i < blockcount + 1; i++) {
-    setTimeout(() => {
-        console.log(i + " round");
-        var dataString = `{
-            "jsonrpc":"1.0", 
-            "id":"${ID_STRING}", 
-            "method":"getblockhash",
-            "params":[${i}]
-        }`;
-        var options = {
-            headers: headers,
-            body: dataString
-        };
+// for (let i = 0; i < blockcount + 1; i++) {
+//     setTimeout(() => {
+//         console.log(i + " round");
+//         var dataString = `{
+//             "jsonrpc":"1.0", 
+//             "id":"${ID_STRING}", 
+//             "method":"getblockhash",
+//             "params":[${i}]
+//         }`;
+//         var options = {
+//             headers: headers,
+//             body: dataString
+//         };
 
-        var res = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, options);
-        var hash = JSON.parse(res.body.toString()).result;
-        // console.log(hash);
+//         var res = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, options);
+//         var hash = JSON.parse(res.body.toString()).result;
+//         // console.log(hash);
 
-        var sdataString = `{
-            "jsonrpc":"1.0", 
-            "id":"${ID_STRING}", 
-            "method":"getblock",
-            "params":["${hash}"]
-        }`;
-        var soptions = {
-            headers: headers,
-            body: sdataString,
-        };
+//         var sdataString = `{
+//             "jsonrpc":"1.0", 
+//             "id":"${ID_STRING}", 
+//             "method":"getblock",
+//             "params":["${hash}"]
+//         }`;
+//         var soptions = {
+//             headers: headers,
+//             body: sdataString,
+//         };
 
-        var res1 = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, soptions);
-        var data = JSON.parse(res1.body.toString()).result;
-        // let block = await Blocks.findOne({ hash });
+//         var res1 = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, soptions);
+//         var data = JSON.parse(res1.body.toString()).result;
+//         // let block = await Blocks.findOne({ hash });
 
-        // 스케마 짜기
-        // height를 idx로 사용 
-        // 테이블 항목 17
-        // height hash confirmation strippedsize size weight version versionhex merkleroot time(new Date로 변환) mediantime nonce bits difficulty chainwork previousblockhash nextblockhash
-        var newBlocks = new Blocks({
-            height: data.height,
-            hash: data.hash,
-            confirmation: data.confirmation,
-            strippedsize: data.strippedsize,
-            size: data.size,
-            weight: data.weight,
-            version: data.version,
-            versionhex: data.versionhex,
-            merkleroot: data.merkleroot,
-            time: data.time,
-            mediantime: data.mediantime,
-            nonce: data.nonce,
-            bits: data.bits,
-            difficulty: data.difficulty,
-            chainwork: data.chainwork,
-            previousblockhash: data.previousblockhash,
-            nextblockhash: data.nextblockhash
-        });
-        console.log(newBlocks.height);
+//         // 스케마 짜기
+//         // height를 idx로 사용 
+//         // 테이블 항목 17
+//         // height hash confirmation strippedsize size weight version versionhex merkleroot time(new Date로 변환) mediantime nonce bits difficulty chainwork previousblockhash nextblockhash
+//         var newBlocks = new Blocks({
+//             height: data.height,
+//             hash: data.hash,
+//             confirmation: data.confirmation,
+//             strippedsize: data.strippedsize,
+//             size: data.size,
+//             weight: data.weight,
+//             version: data.version,
+//             versionhex: data.versionhex,
+//             merkleroot: data.merkleroot,
+//             time: data.time,
+//             mediantime: data.mediantime,
+//             nonce: data.nonce,
+//             bits: data.bits,
+//             difficulty: data.difficulty,
+//             chainwork: data.chainwork,
+//             previousblockhash: data.previousblockhash,
+//             nextblockhash: data.nextblockhash
+//         });
+//         console.log(newBlocks.height);
 
-        Blocks.findOne({height : i}, function(error, block){
-            if (error) {
-                console.log(error);
-            }
-            else if (!block){
-                console.log(i + " loop & "+ newBlocks.height + " save");
-                newBlocks.save(function (error, data) {  
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Saved!');
-                    }
-                }); 
-            }
-            else {
-                // console.log("ac" + " " + block);
-                console.log(block.height +" already exist block");
-            }
-        }); 
-    }, 100);
-};
+//         Blocks.findOne({height : i}, function(error, block){
+//             if (error) {
+//                 console.log(error);
+//             }
+//             else if (!block){
+//                 console.log(i + " loop & "+ newBlocks.height + " save");
+//                 newBlocks.save(function (error, data) {  
+//                     if (error) {
+//                         console.log(error);
+//                     } else {
+//                         console.log('Saved!');
+//                     }
+//                 }); 
+//             }
+//             else {
+//                 // console.log("ac" + " " + block);
+//                 console.log(block.height +" already exist block");
+//             }
+//         }); 
+//     }, 100);
+// };
 
 module.exports = router;

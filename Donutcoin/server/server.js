@@ -98,6 +98,7 @@ app.post('/login', (req, res) => {
 
 
 app.get('/search',async(req,res) => {
+// app.get('/block',async(req,res) => {
     const blocks = await Blocks.find({})
     res.json(blocks)                                                    //클라이언트 요청에 반응하는거다 ..
     console.log(blocks)

@@ -34,8 +34,11 @@ import axios from "axios";
 export const coinApi = {
   getMarketCodes: () =>
     axios.get("https://api.upbit.com/v1/market/all?isDetails=false"),
-  getInitCanldes: (coins) =>
-    axios.get(`https://api.upbit.com/v1/ticker?markets=${coins}`),
+  getInitCanldes: (coins) => {
+    let DNCindex = coins.indexOf('KRW-DNC')
+    coins.splice(DNCindex, 1);
+    return axios.get(`https://api.upbit.com/v1/ticker?markets=${coins}`)
+  },
   getInitOrderbooks: (coins) =>
     axios.get(`https://api.upbit.com/v1/orderbook?markets=${coins}`),
   getOneCoinCandles: ({ coin, timeType, timeCount }) => {

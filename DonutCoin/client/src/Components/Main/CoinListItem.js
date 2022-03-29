@@ -152,8 +152,6 @@ const CoinListItem = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [DNCmarketNames, setDNCmarketNames] = useState();
-  const DNCname = { 'KRW-DNC': { korean: '도넛코인', english: 'Donutcoin' } }
 
   const tradeListData = useSelector(
     (state) => state.Coin.tradeList.data[marketName]

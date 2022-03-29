@@ -154,8 +154,10 @@ const CoinList = ({
   const DNCname = { 'KRW-DNC': { korean: '도넛코인', english: 'Donutcoin' } }
   useEffect(() => {
     // console.log(selectedMarket)
-    setDNCmarketNames(Object.assign(DNCname, marketNames))
-    setDNCsortedMarketNames([...sortedMarketNames, 'KRW-DNC'])
+    // setDNCmarketNames(Object.assign(DNCname, marketNames))
+    setDNCmarketNames(marketNames)
+    setDNCsortedMarketNames(sortedMarketNames)
+    // setDNCsortedMarketNames([...sortedMarketNames, 'KRW-DNC'])
     // console.log(DNCmarketNames)
     // console.log(DNCsortedMarketNames)
     let BTCdata = { 'KRW-DNC': latestCoinData['KRW-BTC'] }
@@ -229,10 +231,9 @@ const CoinList = ({
         ) : (
 
           DNCsortedMarketNames.map((marketName) => {
-
-
             const splitedName = marketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
+            // console.log(marketName)
             const changePrice24Hour =
               DNClatestCoinData[marketName].changePrice24Hour;
             const changeRate24Hour =

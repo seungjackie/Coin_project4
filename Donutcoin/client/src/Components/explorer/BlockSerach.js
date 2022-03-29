@@ -84,7 +84,7 @@ const BlockSearch = (event) =>{
                                     <br />
                                     size: {value.size}
                                     <br />
-                                    {value.weight}
+                                    hi :{value.weight}
                                     <br />
                                     {value.version}
                                     <br />

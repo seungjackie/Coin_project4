@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { auth } from 'reducer/modules/user';
+import { auth } from '../../reducer/action/user';
 
 export default function auth_user(
   SpecificComponent,

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { startAddMoreCandleData } from "../../reducer/coinReducer";
+import { startAddMoreCandleData } from "../../reducer/modules/coinReducer";
 
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";

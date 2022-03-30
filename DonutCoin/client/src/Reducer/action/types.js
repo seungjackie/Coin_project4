@@ -1,7 +1,3 @@
-// export const LOGIN_USER = 'login_user';
-export const JOIN_USER = 'join_user';
-
-// -----------------------------------
 // USER (로그인, 회원가입, 이메일 중복확인, 토큰인증, 회원탈퇴)
 export const REGISTER_USER = 'register_user'; // registerUser
 export const LOGIN_USER = 'login_user'; // loginUser

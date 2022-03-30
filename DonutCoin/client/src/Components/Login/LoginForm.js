@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { loginUser } from '../../reducer/action/user_action';
+import { loginUser } from '../../reducer/action/user';
 
 const St = {
     Container: styled.div`

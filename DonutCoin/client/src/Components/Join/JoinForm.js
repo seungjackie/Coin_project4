@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { registerUser, checkUser } from '../../reducer/modules/user';
+import { registerUser, checkUser } from '../../reducer/action/user';
+
 
 import { useForm } from 'react-hook-form';
 import styled from "styled-components";
@@ -109,6 +110,7 @@ function JoinForm(props) {
     try {
       await dispatch(checkUser(data.email))
         .then(response => {
+          console.log(response)
           if (response.payload.success) {
             dispatch(registerUser(data));
             alert(`${data.name}님 회원가입을 축하드립니다.`);

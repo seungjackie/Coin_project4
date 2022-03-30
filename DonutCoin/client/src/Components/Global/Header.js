@@ -11,6 +11,8 @@ const St = {
     width: 100%;
     height: 60px;
     background-color: #f7b5c9;
+    /* background-color: #1296d3; */
+    /* background-color: #fef040; */
   `,
   Container: styled.div`
     display: flex;
@@ -139,3 +141,5 @@ const Header = ({ isRootURL }) => {
 };
 
 export default Header;
+
+

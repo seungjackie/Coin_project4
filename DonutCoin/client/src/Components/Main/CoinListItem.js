@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { startChangeMarketAndData } from "../../reducer/coinReducer";
+import { startChangeMarketAndData } from "../../reducer/modules/coinReducer";
 
 import isEqual from "react-fast-compare";
 import DncLogo from "./DNC.png"

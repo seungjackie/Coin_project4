@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { searchCoin } from "../../reducer/coinReducer";
+import { searchCoin } from "../../reducer/modules/coinReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 import CoinListItem from "./CoinListItem";

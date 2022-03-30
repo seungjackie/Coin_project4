@@ -13,19 +13,19 @@ const bcrypt = require('bcrypt');
 //=================================
 
 // 회원가입
-// POST http://127.0.0.1:4000/api/user/register
+// POST http://127.0.0.1:4000/api/user/join
 router.post('/register', async (req, res) => {
   console.log("2 : register")
   // 이메일 중복확인
   const emailExist = await User.findOne({ email: req.body.email });
-  if(emailExist) return res.status(400)
+  if (emailExist) return res.status(400)
     .send('이미 존재하는 이메일입니다.')
     .json({
       overlap: true,
       message: "이미 존재하는 이메일입니다."
     });
   const user = new User(req.body);
-  try{
+  try {
     await user.save();
     res.json({
       email: user.email,
@@ -44,27 +44,27 @@ router.post('/register', async (req, res) => {
   } catch (err) {
     res.status(400)
       .json({ message: '회원가입에 실패하였습니다.', success: false })
-  }       
+  }
 });
 
 // 로그인
 // POST http://127.0.0.1:5000/api/user/login
 router.post('/login', (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
-    if(!user) {
+    if (!user) {
       return res.json({
-        success: false, 
+        success: false,
         message: "해당 이메일에 가입된 사용자가 없습니다."
       });
     }
     // 비밀번호 비교 (몽고스키마 인스턴스 메소드)
     user.comparePassword(req.body.password, (err, isMatch) => {
-      if(!isMatch)
-      return res.json({ success: false, message: "비밀번호가 틀렸습니다." });
-    // 토큰 생성 (몽고스키마 인스턴스 메소드)
+      if (!isMatch)
+        return res.json({ success: false, message: "비밀번호가 틀렸습니다." });
+      // 토큰 생성 (몽고스키마 인스턴스 메소드)
       user.generateToken((err, user) => {
-          if(err) return res.status(400).send(err);
-          res.cookie("auth_token", user.token).status(200)
+        if (err) return res.status(400).send(err);
+        res.cookie("auth_token", user.token).status(200)
           .json({
             _id: user._id,
             name: user.name,
@@ -80,12 +80,12 @@ router.post('/login', (req, res) => {
 router.get('/logout', auth, (req, res) => {
   console.log(req.body);
   User.findOneAndUpdate(
-    { _id: req.user._id}, 
-    {token: ''}, 
+    { _id: req.user._id },
+    { token: '' },
     (err, user) => {
-    if(err) return res.json({ success: false, err });
-    return res.status(200).send({ success: true, isAuth: false });
-  })
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({ success: true, isAuth: false });
+    })
 })
 
 // 회원리스트 조회
@@ -97,7 +97,7 @@ router.get('/', async (req, res) => {
       .limit(limit * 1)
       .skip((page - 1) * limit);
     res.status(200).json({ list: userList.length, userList });
-  }catch (err) {
+  } catch (err) {
     console.log(err);
     res.status(500).json({ message: err })
   }
@@ -123,13 +123,17 @@ router.get('/:uid', async (req, res) => {
 router.post('/checkEmail', (req, res) => {
   console.log("1 : checkemail")
   User.findOne({ email: req.body.email }, (err, user) => {
-    if(user) return res.json({
-      success: false,
-      message: '이미 가입된 이메일입니다.'
-    });
+    if (user) {
+      console.log("1 : no")
+      return res.json({
+        success: false,
+        message: '이미 가입된 이메일입니다.'
+      });
+    }
     else {
-      res.json({ 
-        success: true, 
+      console.log("1 : yes")
+      res.json({
+        success: true,
         message: '사용 가능한 이메일입니다.',
         email: req.body.email
       });
@@ -141,31 +145,31 @@ router.post('/checkEmail', (req, res) => {
 // POST http://127.0.0.1:5000/api/user/withdrawal
 router.post('/withdrawal', auth, (req, res) => {
   User.findOne({ _id: req.body._id }, (err, user) => {
-    if(err) return res.status(400).send(err);
-    user.comparePassword(req.body.password , (err, isMatch ) => {
-        if (!isMatch) return res.json({ changeSuccess: false, message: "비밀번호가 틀렸습니다." })
-        else {
-          Reply.deleteMany({ userFrom: user._id })
-            .exec((err, result) => {
-              return { success: true, result }
-            })
-          Comment.deleteMany({ userFrom: user._id })
-            .exec((err, result) => {
-              return { success : true, result }
+    if (err) return res.status(400).send(err);
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch) return res.json({ changeSuccess: false, message: "비밀번호가 틀렸습니다." })
+      else {
+        Reply.deleteMany({ userFrom: user._id })
+          .exec((err, result) => {
+            return { success: true, result }
           })
-          Like.deleteMany({ userFrom: user._id })
-              .exec((err, result) => {
-              return { success : true, result }
+        Comment.deleteMany({ userFrom: user._id })
+          .exec((err, result) => {
+            return { success: true, result }
           })
-          Board.deleteMany({ userFrom: user._id })
-            .exec((err, result) => {
-              return { success : true, result }
+        Like.deleteMany({ userFrom: user._id })
+          .exec((err, result) => {
+            return { success: true, result }
           })
-          User.deleteOne({ _id: req.body._id }, (err, user) => {
-              if(err) return res.status(404).send();
-              else return res.json({ changeSuccess: true });
-          });
-        } 
+        Board.deleteMany({ userFrom: user._id })
+          .exec((err, result) => {
+            return { success: true, result }
+          })
+        User.deleteOne({ _id: req.body._id }, (err, user) => {
+          if (err) return res.status(404).send();
+          else return res.json({ changeSuccess: true });
+        });
+      }
     })
   })
 })
@@ -175,8 +179,8 @@ router.post('/withdrawal', auth, (req, res) => {
 // POST http://127.0.0.1:5000/api/user/
 router.post('/myEmail', auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, user) => {
-    if(user) return res.status(200).json({        
-        email: req.user.email
+    if (user) return res.status(200).json({
+      email: req.user.email
     })
     else return res.status(404).send();
   })
@@ -186,7 +190,7 @@ router.post('/myEmail', auth, (req, res) => {
 // POST http://127.0.0.1:5000/api/user/
 router.post('/myGithub', auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, user) => {
-    if(user) return res.status(200).json({
+    if (user) return res.status(200).json({
       github: req.user.github
     })
     else return res.status(404).send();
@@ -199,14 +203,14 @@ router.post('/myGithub', auth, (req, res) => {
 router.post('/update/email', auth, (req, res) => {
   User.findOne({ _id: req.body._id }, (err, user) => {
     user.comparePassword(req.body.password, (err, isMatch) => {
-      if(!isMatch) return res.json({ changeSuccess: false, message: "비밀번호가 틀렸습니다."})
+      if (!isMatch) return res.json({ changeSuccess: false, message: "비밀번호가 틀렸습니다." })
       else User.findOneAndUpdate(
         { _id: req.body._id },
-        { $set: { email: req.body.email }},
+        { $set: { email: req.body.email } },
         { new: true },
         (err, user) => {
           console.log(err);
-          if(!user) return res.json({ message: '이미 존재하는 이메일입니다.'});
+          if (!user) return res.json({ message: '이미 존재하는 이메일입니다.' });
           else return res.json({ changeSuccess: true });
         }
       )
@@ -218,18 +222,18 @@ router.post('/update/email', auth, (req, res) => {
 // POST http://127.0.0.1:5000/api/user/update/password
 router.post('/update/password', auth, (req, res) => {
   User.findOne({ _id: req.body._id }, (err, user) => {
-    if(req.body.currentPassword === req.body.newPassword) {
-      return res.json({ message: "현재 비밀번호와 새 비밀번호가 동일합니다."})
+    if (req.body.currentPassword === req.body.newPassword) {
+      return res.json({ message: "현재 비밀번호와 새 비밀번호가 동일합니다." })
     }
     user.comparePassword(req.body.currentPassword, (err, isMatch) => {
-      if(!isMatch) return res.json({ changeSuccess: false, message: "비밀번호가 틀렸습니다." })
-      else bcrypt.genSalt(saltRounds, function(err, salt) {
-        if(err) return res.status(400).send(err)
-        bcrypt.hash(req.body.newPassword, salt, function(err, hash) {
-          if(err) return res.status(400).send(err);
+      if (!isMatch) return res.json({ changeSuccess: false, message: "비밀번호가 틀렸습니다." })
+      else bcrypt.genSalt(saltRounds, function (err, salt) {
+        if (err) return res.status(400).send(err)
+        bcrypt.hash(req.body.newPassword, salt, function (err, hash) {
+          if (err) return res.status(400).send(err);
           User.findOneAndUpdate({ _id: req.body._id }, { password: hash })
-          .then(() => res.status(200).json({ changeSuccess: true }))
-          .catch(err => res.status(500).json(err))
+            .then(() => res.status(200).json({ changeSuccess: true }))
+            .catch(err => res.status(500).json(err))
         })
       })
     })
@@ -241,11 +245,11 @@ router.post('/update/password', auth, (req, res) => {
 router.post('/update/github', auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.body._id },
-    { $set: { github: req.body.newGithub }},
+    { $set: { github: req.body.newGithub } },
     { new: true },
     (err, github) => {
       console.log(err);
-      if(!github) return res.status(400).json({ message: '이미 존재하는 깃헙주소입니다.'});
+      if (!github) return res.status(400).json({ message: '이미 존재하는 깃헙주소입니다.' });
       else return res.json({ changeSuccess: true });
     }
   )
@@ -257,7 +261,7 @@ router.post('/myBoard', (req, res) => {
   Board.find({ userFrom: req.body.userFrom })
     .sort({ createdAt: -1 })
     .exec((err, boards) => {
-      if(err) return res.status(400).send(err);
+      if (err) return res.status(400).send(err);
       return res.status(200).json({ success: true, boards })
     })
 })
@@ -266,24 +270,24 @@ router.post('/myBoard', (req, res) => {
 // POST http://127.0.0.1:5000/api/user/myComment
 router.post('/myComment', (req, res) => {
   Comment.find({ userFrom: req.body.userFrom })
-  .populate("boardFrom")
-  .sort({ createdAt: -1 })
-  .exec((err, comments) => {
-    if(err) return res.status(400).send(err);
-    return res.status(200).json({ success: true, comments })
-  })
+    .populate("boardFrom")
+    .sort({ createdAt: -1 })
+    .exec((err, comments) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).json({ success: true, comments })
+    })
 })
 
 // 내가 쓴 대댓글 조회하기
 // POST http://127.0.0.1:5000/api/user/myReply
 router.post('/myReply', (req, res) => {
   Reply.find({ userFrom: req.body.userFrom })
-  .populate("commentFrom")
-  .sort({ createdAt: -1 })
-  .exec((err, replies) => {
-    if(err) return res.status(400).send(err);
-    return res.status(200).json({ success: true, replies })
-  })
+    .populate("commentFrom")
+    .sort({ createdAt: -1 })
+    .exec((err, replies) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).json({ success: true, replies })
+    })
 })
 
 module.exports = router;

@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { startChangeMarketAndData } from "../../Reducer/coinReducer";
 
 import isEqual from "react-fast-compare";
-// import DncLogo from "./DNC.png"
+import DncLogo from "./DNC.png"
 
 
 const St = {
@@ -38,7 +38,7 @@ const St = {
     background-image: ${({ coinNameEn }) =>
       coinNameEn !== "DNC"
         ? `url(https://static.upbit.com/logos/${coinNameEn}.png)`
-        : "url(process.env.PUBLIC_URL + '/favicon3.png')"};
+        : `url(${DncLogo})`};
     background-size: cover;
     margin-left: 5px;
     margin-right: 15px;

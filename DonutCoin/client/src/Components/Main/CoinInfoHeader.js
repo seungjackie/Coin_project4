@@ -4,6 +4,8 @@ import withSelectedCoinName from "../../Container/withSelectedCoinName";
 import withSelectedCoinPrice from "../../Container/withSelectedCoinPrice";
 import withThemeData from "../../Container/withThemeData";
 import isEqual from "react-fast-compare";
+const DncLogo = require("./DNC.png")
+
 
 const St = {
   CoinInfoContainer: styled.section`
@@ -33,8 +35,10 @@ const St = {
     display: inline-block;
     width: 35px;
     height: 35px;
-    background-image: ${({ coinSymbol }) =>
-      `url(https://static.upbit.com/logos/${coinSymbol}.png)`};
+    background-image: ${({ coinSymbol }) => 
+      coinSymbol !== "DNC"
+      ?`url(https://static.upbit.com/logos/${coinSymbol}.png)`
+      :`url(${DncLogo})`};
     background-size: cover;
     margin-left: 5px;
   `,

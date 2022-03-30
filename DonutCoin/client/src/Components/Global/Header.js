@@ -16,7 +16,7 @@ const St = {
   `,
   Container: styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 100%;
@@ -31,7 +31,7 @@ const St = {
       max-width: 100%;
     }
   `,
-  SiteHeading: styled.h1`
+  SiteHeading: styled.div`
     padding: 0 20px;
     width: 150px;
     height: 100%;
@@ -45,6 +45,7 @@ const St = {
     color: transparent;
     width: 100%;
     height: 100%;
+    font-size: 50px;
   `,
   Head: styled.a`
     /* padding: 20px; */
@@ -73,7 +74,6 @@ const Header = ({ isRootURL }) => {
         </St.SiteHeading>
 
       <St.Container isRootURL={isRootURL}>
-
         <St.SiteHeading>
           <St.Link
               href="/trade"
@@ -88,18 +88,10 @@ const Header = ({ isRootURL }) => {
               href="/explorer"
               logo={process.env.PUBLIC_URL + "/explorerWhiteLogo.png"}
               title={"익스플로러 이동"}
-            >
+            >Explorer
           </St.Link>
         </St.SiteHeading>
 
-        <St.SiteHeading>
-          <St.Link
-              href="/game"
-              logo={process.env.PUBLIC_URL + "/gameWhiteLogo.png"}
-              title={"게임존 이동"}
-            >
-          </St.Link>
-        </St.SiteHeading>
 
         <St.SiteHeading>
           <St.Link

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const St = {
-  Header: styled.header`
+    Header: styled.header`
     display: flex;
     flex-direction: row;
     position: sticky;
@@ -11,8 +11,8 @@ const St = {
     width: 100%;
     height: 60px;
     background-color: #f7b5c9;
-    /ackground-color: #1296d3; */
-    /ackground-color: #fef040; */
+    /* background-color: #1296d3; */
+    /* background-color: #fef040; */
   `,
   Container: styled.div`
     display: flex;
@@ -32,10 +32,24 @@ const St = {
     }
   `,
   SiteHeading: styled.div`
-    padding: 0 20px;
-    width: 150px;
+    padding: 10px;
+    /* background-color: red; */
+    width: 200px;
     height: 100%;
   `,
+  SiteHeadingExplore: styled.div`
+    padding: 0px;
+    /* background-color: red; */
+    width: 200px;
+    height: 100%;
+  `,
+  SiteHeadingMypage: styled.div`
+    padding: 5px;
+    /* background-color: red; */
+    width: 200px;
+    height: 100%;
+  `,
+  
   Link: styled.a`
     display: block;
     background-image: ${({ logo }) => `url(${logo})`};
@@ -47,8 +61,17 @@ const St = {
     height: 100%;
     font-size: 50px;
   `,
+    LinkExploer: styled.a`
+    display: block;
+    background-image: ${({ logo }) => `url(${logo})`};
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    color: transparent;
+    width: 150%;
+    height: 150%;
+  `,
   Head: styled.a`
-    /* padding: 20px; */
     display: flex;
     background-image: ${({ logo }) => `url(${logo})`};
     background-repeat: no-repeat;
@@ -79,28 +102,28 @@ const Header = ({ isRootURL }) => {
               href="/trade"
               logo={process.env.PUBLIC_URL + "/chartWhiteLogo.png"}
               title={"거래소 이동"}
-            >
+              >
           </St.Link>
         </St.SiteHeading>
 
-        <St.SiteHeading>
+        <St.SiteHeadingExplore>
           <St.Link
               href="/explorer"
               logo={process.env.PUBLIC_URL + "/explorerWhiteLogo.png"}
               title={"익스플로러 이동"}
-            >Explorer
+            >
           </St.Link>
-        </St.SiteHeading>
+        </St.SiteHeadingExplore>
 
 
-        <St.SiteHeading>
+        <St.SiteHeadingMypage>
           <St.Link
               href="/mypage"
               logo={process.env.PUBLIC_URL + "/mypageWhiteLogo.png"}
               title={"마이페이지 이동"}
             >
           </St.Link>
-        </St.SiteHeading>
+        </St.SiteHeadingMypage>
 
       </St.Container>
 

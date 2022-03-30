@@ -5,3 +5,4 @@ ubuntu_keypair.ppk
 node_modules
 build
 .gitignore
+*.DS_Store

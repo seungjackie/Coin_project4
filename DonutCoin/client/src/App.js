@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { startInit } from "./reducer/coinReducer";
+import { startInit } from "./Reducer/coinReducer";
 import MainRouter from "./Router/MainRouter";
 
 function App() {

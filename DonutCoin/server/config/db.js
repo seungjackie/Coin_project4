@@ -4,7 +4,6 @@ const config = require("config");
 
 // URI
 const uri = config.get("mongoURI");
-console.log(uri)
 
 // Connect MongoDB
 const connectDB = async () => {

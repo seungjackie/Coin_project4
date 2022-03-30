@@ -1,6 +1,6 @@
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { call, put, select, flush, delay } from "redux-saga/effects";
-import { startLoading, finishLoading } from "../reducer/loadingReducer";
+import { startLoading, finishLoading } from "../Reducer/loadingReducer";
 import { throttle } from "lodash";
 import { buffers, eventChannel, END } from "redux-saga";
 import encoding from "text-encoding";

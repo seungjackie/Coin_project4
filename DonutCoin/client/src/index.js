@@ -20,7 +20,7 @@ import promiseMiddleware from 'redux-promise';
 import ReduxThunk from "redux-thunk";
 
 //리듀서 불러오기
-import { rootReducer, rootSaga } from "./reducer";
+import { rootReducer, rootSaga } from "./Reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { BrowserRouter } from "react-router-dom";
 

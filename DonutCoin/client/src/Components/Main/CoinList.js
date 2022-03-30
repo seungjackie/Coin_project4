@@ -11,7 +11,7 @@ import withSelectedOption from "../../Container/withSelectedOption";
 import withMarketNames from "../../Container/withMarketNames";
 import withLatestCoinData from "../../Container/withLatestCoinData";
 import withLoadingData from "../../Container/withLoadingData";
-const DncLogo = require("./favicon3.png")
+// const DncLogo = require("./favicon3.png")
 
 const St = {
   CoinListContainer: styled.article`

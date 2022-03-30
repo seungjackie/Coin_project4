@@ -110,18 +110,15 @@ const LoginForm = (props) => {
     };
 
     // action의 반환값을 dispatch해준다.
-    dispatch(loginUser(body));
-    //   // action의 반환값을 dispatch해준다.
-  
-    // action의 반환값을 dispatch해준다.
-    // dispatch(loginUser(body)).then((response) => {
-    //   // 로그인이 성공하면 Landing Page로 보내주고, 실패하면 Error 알림을 띄워준다.
-    //   if (response.payload.loginSuccess) {
-    //     props.history.push('/');
-    //   } else {
-    //     alert('Error');
-    //   }
-    // });
+    dispatch(loginUser(body))
+    .then((response) => {
+      if(response.payload.loginSuccess) {
+        window.location.replace('/')
+      } else {
+        alert("로그인 정보를 확인하세요.")
+        window.location.replace('/login')
+      }
+    });
   };
 
 

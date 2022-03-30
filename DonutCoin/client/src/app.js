@@ -39,9 +39,9 @@ function App() {
             <Route exact path="/login" component={Auth(Login, false)} />
             <Route exact path="/register" component={Auth(Register, false)} />
             <Route exact path="/home" component={Auth(Main, true)} /> */}
-          <Route exact path="/" component={Intro} />
+          <Route exact path="/" component={Auth(Intro, false)} />
           <Route exact path="/trade" component={Auth(Main, false)} />
-          <Route exact path="/home" component={Auth(Main, true)} />
+          <Route exact path="/home" component={Auth(Main, false)} />
           <Route exact path="/intro" component={Auth(Intro, false)} />
           <Route exact path="/login" component={Auth(Login, false)} />
           <Route exact path="/join" component={Auth(Join, false)} />

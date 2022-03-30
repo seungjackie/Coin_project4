@@ -47,7 +47,7 @@ const createConnectSocketThunk = (type, connectType, dataMaker) => {
     client.onopen = () => {
       client.send(
         JSON.stringify([
-          { ticket: "downbit-clone" },
+          { ticket: "test-clone" },
           { type: connectType, codes: action.payload },
         ])
       );
@@ -83,7 +83,7 @@ const createConnectSocketThrottleThunk = (type, connectType, dataMaker) => {
     client.onopen = () => {
       client.send(
         JSON.stringify([
-          { ticket: "downbit-clone" },
+          { ticket: "test-clone" },
           { type: connectType, codes: action.payload },
         ])
       );
@@ -119,7 +119,7 @@ const connectSocekt = (socket, connectType, action, buffer) => {
     socket.onopen = () => {
       socket.send(
         JSON.stringify([
-          { ticket: "downbit-clone" },
+          { ticket: "test-clone" },
           { type: connectType, codes: action.payload },
         ])
       );
@@ -135,10 +135,12 @@ const connectSocekt = (socket, connectType, action, buffer) => {
 
     socket.onerror = (evt) => {
       emit(evt);
+      console.log("END")
       emit(END);
     };
 
     const unsubscribe = () => {
+      console.log("unsubscribe")
       socket.close();
     };
 
@@ -186,11 +188,12 @@ const createConnectSocketSaga = (type, connectType, dataMaker) => {
 
           yield put({ type: SUCCESS, payload: dataMaker(sortedData, state) });
         }
-        yield delay(500); // 500ms 동안 대기
+        yield delay(1000); // 500ms 동안 대기 -> 200
       }
     } catch (e) {
       yield put({ type: ERROR, payload: e });
     } finally {
+      console.log("closing")
       clientChannel.close(); // emit(END) 접근시 소켓 닫기
     }
   };

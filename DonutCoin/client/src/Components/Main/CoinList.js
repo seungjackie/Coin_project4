@@ -230,18 +230,18 @@ const CoinList = ({
           <Loading center={false} />
         ) : (
 
-          DNCsortedMarketNames.map((marketName) => {
+          DNCsortedMarketNames?.map((marketName) => {
             const splitedName = marketName.split("-");
             const enCoinName = splitedName[1] + "/" + splitedName[0];
             // console.log(marketName)
             const changePrice24Hour =
-              DNClatestCoinData[marketName].changePrice24Hour;
+              DNClatestCoinData[marketName]?.changePrice24Hour;
             const changeRate24Hour =
-              DNClatestCoinData[marketName].changeRate24Hour;
+              DNClatestCoinData[marketName]?.changeRate24Hour;
             const tradePrice24Hour =
-              DNClatestCoinData[marketName].tradePrice24Hour;
+              DNClatestCoinData[marketName]?.tradePrice24Hour;
             const price =
-              DNClatestCoinData[marketName].price;
+              DNClatestCoinData[marketName]?.price;
             // const isTraded = latestCoinData[marketName].isTraded;
 
             const fontColor =

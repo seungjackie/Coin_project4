@@ -27,10 +27,10 @@ import theme from "./styles/theme";
 import GlobalStyle from "./styles/GlobalStyle";
 
 // client middleware
-const createStoreWithMiddleware = applyMiddleware(
-  promiseMiddleware,
-  ReduxThunk,
-)(createStore);
+// const createStoreWithMiddleware = applyMiddleware(
+//   promiseMiddleware,
+//   ReduxThunk,
+// )(createStore);
 
 //upbit middleware
 const sagaMiddleware = createSagaMiddleware();

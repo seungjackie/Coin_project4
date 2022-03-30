@@ -144,12 +144,19 @@ const withMarketNames = () => (OriginalComponent) => (props) => {
     // console.log("1 : ", DNCmarketNamesArr)
     // 정렬
     DNCmarketNamesArr = DNCmarketNamesArr.sort((coin1, coin2) => {
+      if (DNCcoinListDatas[coin2].tradePrice24Hour != null && (coin1 != "KRW-CELO" || coin2 != "KRW-CELO")) {
+        // console.log(coin2)
+        // console.log("DNCcoinListDatas[coin2].tradePrice24Hour : ", DNCcoinListDatas[coin2].tradePrice24Hour)
+        // console.log(coin1)
+        // console.log("DNCcoinListDatas[coin2].tradePrice24Hour : ", DNCcoinListDatas[coin1].tradePrice24Hour)
 
-      return (
-
-        +DNCcoinListDatas[coin2].tradePrice24Hour -
-        +DNCcoinListDatas[coin1].tradePrice24Hour
-      );
+        return (
+          +DNCcoinListDatas[coin2]?.tradePrice24Hour -
+          +DNCcoinListDatas[coin1]?.tradePrice24Hour
+        );
+      } else {
+        console.log('failed')
+      }
     });
   }
   // console.log("0 : ", DNCmarketNamesArr)

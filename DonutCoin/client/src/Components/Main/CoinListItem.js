@@ -188,18 +188,18 @@ const CoinListItem = ({
             <St.CoinNameEn>{enCoinName}</St.CoinNameEn>
           </St.CoinNameContainer>
           <St.Price theme={theme} fontColor={fontColor} isTraded={isTraded}>
-            {price.toLocaleString()}
+            {price?.toLocaleString()}
           </St.Price>
           <St.ChangRateContainer>
             <St.ChangeRate fontColor={fontColor}>
               {changeRate24Hour}
             </St.ChangeRate>
             <St.ChangePrice fontColor={fontColor}>
-              {changePrice24Hour.toLocaleString()}
+              {changePrice24Hour?.toLocaleString()}
             </St.ChangePrice>
           </St.ChangRateContainer>
           <St.TradePrice>
-            {tradePrice24Hour.toLocaleString() + " 백만"}
+            {tradePrice24Hour?.toLocaleString() + " 백만"}
           </St.TradePrice>
         </St.CoinBtn>
       </St.CoinLi>

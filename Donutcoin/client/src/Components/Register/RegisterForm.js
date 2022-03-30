@@ -142,7 +142,7 @@
   
 //       console.log(post);
   
-//       fetch("http://localhost:join", {
+//       fetch("http://localhost:3000/join", {
 //         method : "post",
 //         headers : {
 //           "content-type" : "application/json"

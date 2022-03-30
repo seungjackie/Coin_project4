@@ -4,13 +4,13 @@ const router = express.Router();
 const bcrypt = require('bcryptjs'); // 암호화 모듈
 
 
-router.post('/api/users/join', (req, res) => {
-    var new_user = new Users(req.body);
-    new_user.save((err) => {
-        if(err) return res.status(500).json({message : '저장실패'})
-        else return res.status(200).json({message : '저장성공', data : new_user});
-    });
-});
+// router.post('/api/users/join', (req, res) => {
+//     var new_user = new Users(req.body);
+//     new_user.save((err, info) => {
+//         if(err) return res.status(500).json({success : false, message : '저장실패'})
+//         else return res.status(200).json({success : true, message : '저장성공', data : new_user});
+//     });
+// });
 
 router.post("/join", async (req, res) => {
         const { email, name, password } = req.body;

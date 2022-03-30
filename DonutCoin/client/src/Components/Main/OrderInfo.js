@@ -7,7 +7,7 @@ import withSelectedOption from "../../Container/withSelectedOption";
 import withThemeData from "../../Container/withThemeData";
 import withSelectedCoinName from "../../Container/withSelectedCoinName";
 
-import { changeAskBidOrder } from "../../Reducer/coinReducer";
+import { changeAskBidOrder } from "../../reducer/coinReducer";
 import isEqual from "react-fast-compare";
 
 const St = {

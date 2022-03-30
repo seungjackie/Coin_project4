@@ -77,7 +77,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as Hangul from "hangul-js";
-import { choHangul } from "../Lib/utils";
+import { choHangul } from "../lib/utils";
 
 const withMarketNames = () => (OriginalComponent) => (props) => {
   const marketNames = useSelector((state) => state.Coin.marketNames.data); // 코인 마켓 이름들(객체)

@@ -1,222 +1,10 @@
-// import React, { useState } from "react";
-// import styled from "styled-components";
-// import { useDispatch } from 'react-redux';
-// import { withRouter } from 'react-router-dom'
-// import { joinUser } from '../../Reducer/action/user_action';
-
-
-// const St = {
-//     Container: styled.div`
-//     width: 100vw;
-//     height: 100vh;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     background-color: rgb(231, 234, 239);
-//   `,
-//     Login: styled.form`
-//     width: 30%;
-//     height: 600px;
-//     background: white;
-//     border-radius: 20px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     flex-direction: column;
-//   `,
-//     Head: styled.div`
-//     margin-bottom: 1rem;
-//     color: white;
-//     font-size: 3em;
-//     font-weight: bolder;
-//     text-shadow: 1px 2px 3px black;
-//   `,
-//     Login_sns: styled.div`
-//     padding: 20px;
-//     display: flex;
-//   `,
-//     Login_id: styled.div`
-//     margin-top: 20px;
-//     width: 80%;
-//   `,
-//     Input: styled.input`
-//     width: 100%;
-//     height: 50px;
-//     border-radius: 30px;
-//     margin-top: 10px;
-//     padding: 0px 20px;
-//     border: 1px solid lightgray;
-//     outline: none;
-//   `,
-//     Login_pw: styled.div`
-//     margin-top: 20px;
-//     width: 80%;
-//   `,
-//     Join_name: styled.div`
-//     margin-top: 20px;
-//     width: 80%;
-// `,
-//     Submit: styled.div`
-//     margin-top: 50px;
-//     width: 80%;
-//    `,
-//     Submit_button: styled.button`
-//     width: 100%;
-//     height: 50px;
-//     border: 0;
-//     outline: none;
-//     border-radius: 40px;
-//     background: linear-gradient(to right, rgb(231, 234, 239), #f7b5c9);
-//     color: white;
-//     font-size: 1.2em;
-//     letter-spacing: 2px;
-//     cursor:pointer;
-//     &:hover {
-//         background: linear-gradient(to right, #f7b5c9, #f7b5c9);
-//         color: white;
-//     }
-//     `,
-//     ToJoin: styled.a`
-//     margin: auto;
-//     text-decoration-line: none;
-//     text-decoration-line: none;
-//     `,
-
-// };
-
-// const JoinForm = (props) => {
-//   // redux의 dispatch
-
-//   const [state, setState] = useState(true);
-//   const [inputs, setInputs] = useState({
-//     email : "",
-//     name : "",
-//     password : "",
-//     passwordconfirm : ""
-//   });
-
-//   const {email, name, password, passwordconfirm} = inputs;
-
-//   const onChange = (e) => {
-//     const { name, value } = e.target;
-
-//     setInputs({
-//       ...inputs,
-//       [name] : value
-//     })
-//   }
-
-//     //비밀번호 유효성 검사
-//   const checkPassword = (value) => {
-//     var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/ 
-//     //  8 ~ 10자 영문, 숫자 조합
-//     // 형식에 맞는 경우 true 리턴
-//     if(!regExp.test(value)){
-//       alert("비밀번호를 재설정하세요")
-//       return true
-//     }
-//     // console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
-//   }
-//   // 이메일 유효성 검사
-//   const checkEmail = (value) => {
-//       var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-//       // 형식에 맞는 경우 true 리턴
-//       if(!regExp.test(value)){
-//         alert("이메일 형식으로 입력하세요")
-//         return true
-//       }
-//       // console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
-//   }
-
-
-//   const onSubmit = () => {
-//     if (checkEmail(inputs.email) || checkPassword(inputs.password)) return;
-//     else if (inputs.passwordconfirm=="") alert("비밀번호를 재입력하세요");
-//     else {
-//       const post ={
-//         pemail : inputs.email,
-//         pname: inputs.name,
-//         ppassword: inputs.password,
-//         ppasswordconfirm : inputs.passwordconfirm
-//       };
-
-//       console.log(post);
-
-//       fetch("http://localhost:3000/join", {
-//         method : "post",
-//         headers : {
-//           "content-type" : "application/json"
-//         },
-//         body : JSON.stringify(post)
-//       })
-//       .then((res)=> res.json())
-//       .then((json)=>{
-//         console.log(json);
-//         if (json) {
-//           alert("회원 가입 성공!")
-//           setState(!state);
-//         }
-//         else alert("중복된 아이디입니다")
-//       })
-//     }
-//   }
-
-//   if (state) {
-//     // 이메일 유효성 검사
-//     const checkEmail = (e) => {
-//       var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-//       // 형식에 맞는 경우 true 리턴
-//       if(!regExp.test(e.target.value)){
-//         alert("이메일 형식으로 입력하세요")
-//       }
-//     }
-//     //비밀번호 유효성 검사
-//     const checkPassword = (e) => {
-//       var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/ 
-//       //  8 ~ 10자 영문, 숫자 조합
-//       // 형식에 맞는 경우 true 리턴
-//       if(!regExp.test(e.target.value)){
-//         alert("비밀번호를 재설정하세요")
-//       }
-//    }
-//   }
-
-//   return (
-//     <St.Container action='post'>
-//         <St.Login onSubmit={onSubmit} >
-//             <St.Head>WELCOME</St.Head>
-//             <St.Login_id>
-//                 <h4>E-mail</h4>
-//                 <St.Input type="email" value={email} onChange={onChange} name="" id="" placeholder="Email" />
-//             </St.Login_id>
-//             <St.Join_name>
-//                 <h4>Name</h4>
-//                 <St.Input type="text" value={name} onChange={onChange} name="" id="" placeholder="Name" />
-//             </St.Join_name>
-//             <St.Login_pw>
-//                 <h4>Password</h4>
-//                 <St.Input type="password" value={password} onChange={onChange} name="" id="" placeholder="Password" />
-//             </St.Login_pw>
-//             <St.Login_pw>
-//                 <h4>Password Confirm</h4>
-//                 <St.Input type="password" value={passwordconfirm} onChange={onChange} name="" id="" placeholder="Password Confirm" />
-//             </St.Login_pw>
-//             <St.Submit>
-//                 <St.Submit_button type="submit">JOIN</St.Submit_button>
-//             </St.Submit>
-//         </St.Login>
-//     </St.Container>
-//   )
-// }
-
-// export default withRouter(JoinForm);
-
-
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useRef, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom'
-import { joinUser } from '../../Reducer/action/user_action';
+import { registerUser, checkUser } from '../../reducer/modules/user';
+
+import { useForm } from 'react-hook-form';
+import styled from "styled-components";
 
 
 const St = {
@@ -297,95 +85,121 @@ const St = {
     `,
 
 };
-
-const JoinForm = (props) => {
-  // redux의 dispatch
+function JoinForm(props) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+  });
   const dispatch = useDispatch();
+  const password = useRef();
+  password.current = watch('password');
 
-  // react hook에서 state 사용
-  const [Email, setEmail] = useState('');
-  const [Name, setName] = useState('');
-  const [Password, setPassword] = useState('');
-  const [ConfirmPassword, setConfirmPassword] = useState('');
-
-
-  // handler 함수들
-  const onEmailHandler = (event) => {
-    setEmail(event.currentTarget.value);
+  const [ShowPassword, setShowPassword] = useState(false);
+  const handleVisibility = () => {
+    setShowPassword(!ShowPassword);
   };
 
-  const onNameHandler = (event) => {
-    setName(event.currentTarget.value);
-  };
-
-  const onPasswordHandler = (event) => {
-    setPassword(event.currentTarget.value);
-  };
-
-  const onConfirmPasswordHandler = (event) => {
-    setConfirmPassword(event.currentTarget.value);
-  };
-
-  const onSubmitHandler = (event) => {
-    // 태그의 기본 기능으로 리프레쉬 되는 것을 방지.
-    event.preventDefault();
-
-    if (Password !== ConfirmPassword) {
-      return alert('비밀번호 확인이 일치하지 않습니다.');
+  const onSubmit = async data => {
+    // console.log(data);
+    try {
+      await dispatch(checkUser(data.email))
+        .then(response => {
+          if (response.payload.success) {
+            dispatch(registerUser(data));
+            alert(`${data.name}님 회원가입을 축하드립니다.`);
+            props.history.push('/login');
+          } else {
+            setError('email', {
+              type: 'validate',
+              message: response.payload.message,
+            });
+          }
+        })
+        .catch(error => {
+          console.log('response: ', error.response);
+        });
+    } catch (err) {
+      console.log(err);
     }
-
-    let body = {
-      email: Email,
-      name: Name,
-      password: Password,
-    };
-
-    // action을 dispatch해준다.
-    dispatch(joinUser(body)).then((response) => {
-      if (response.payload.success) {
-        props.history.push('/');
-      } else {
-        alert('회원가입에 실패했습니다.');
-      }
-    });
   };
-  // // action을 dispatch해준다.
-  // const onSubmit = async body =>{
-  //   dispatch(joinUser(body))
-  //   .then((response) => {
-  //     if (response.payload.joinSuccess) {
-  //       props.history.push('/');
-  //       alert('가입 완료하였습니다.')
-  //     } else {
-  //       alert('회원가입에 실패했습니다.');
-  //     }
-  //   });
-  // }
-
-
 
   return (
     <St.Container>
-      <St.Login onSubmit={onSubmitHandler}>
+      <St.Login onSubmit={handleSubmit(onSubmit)}>
         <St.Head>WELCOME</St.Head>
         <St.Login_id>
           <h4>E-mail</h4>
-          <St.Input type="email" value={Email} onChange={onEmailHandler} name="Email" id="" placeholder="Email" />
+          <St.Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="이메일 형식에 맞게 입력해주세요."
+            {...register('email', {
+              required: '이메일을 입력해주세요.',
+              pattern: {
+                // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: '이메일 형식이 올바르지 않습니다.',
+              },
+            })} />
         </St.Login_id>
         <St.Join_name>
           <h4>Name</h4>
-          <St.Input type="text" value={Name} onChange={onNameHandler} name="Name" id="" placeholder="Name" />
+          <St.Input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="이름을 입력해주세요."
+            {...register('name', {
+              required: true,
+              minLength: true,
+              minLength: 2,
+              maxLength: 8,
+            })} />
         </St.Join_name>
         <St.Login_pw>
           <h4>Password</h4>
-          <St.Input type="password" value={Password} onChange={onPasswordHandler} name="Password" id="" placeholder="Password" />
+          <St.Input id="password"
+            name="password"
+            type={ShowPassword ? 'text' : 'password'}
+            placeholder="대/소문자, 숫자, 특수문자 포함 8~20자"
+            {...register('password', {
+              required: true,
+              minLength: 8,
+              maxLength: 20,
+              validate: {
+                checkLang: value =>
+                  ![/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/].every(pattern =>
+                    pattern.test(value),
+                  ),
+                // checkLower: value =>
+                //   [/[a-z]/].every(pattern => pattern.test(value)),
+                // checkUpper: value =>
+                //   [/[A-Z]/].every(pattern => pattern.test(value)),
+                // checkNumber: value =>
+                //   [/[0-9]/].every(pattern => pattern.test(value)),
+                // checkSpec: value =>
+                //   [/[^a-zA-Z0-9]/].every(pattern => pattern.test(value)),
+              },
+            })} />
         </St.Login_pw>
         <St.Login_pw>
           <h4>Password Confirm</h4>
-          <St.Input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} name="ConfirmPassword" id="" placeholder="Password Confirm" />
+          <St.Input id="confirmpassword"
+            name="confirmpassword"
+            type="password"
+            placeholder="비밀번호 확인"
+            {...register('passwordConfirm', {
+              required: true,
+              validate: value => value === password.current,
+            })} />
         </St.Login_pw>
         <St.Submit>
-          <St.Submit_button>JOIN</St.Submit_button>
+          <St.Submit_button type="submit" onClick={handleSubmit(onSubmit)}>JOIN</St.Submit_button>
         </St.Submit>
       </St.Login>
     </St.Container>

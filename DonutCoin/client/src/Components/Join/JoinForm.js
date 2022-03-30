@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { registerUser, checkUser } from 'reducer/modules/user';
+import { registerUser, checkUser } from '../../reducer/modules/user';
 
 import { useForm } from 'react-hook-form';
 import styled from "styled-components";

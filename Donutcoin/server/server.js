@@ -1,30 +1,22 @@
 //기본 서버 연결
 const express = require('express');
 const app = express();
+const PORT = 4000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const dotenv = require("dotenv");
-const Blocks = require('./donut_express/blocks');
-const srequest = require("sync-request");
-// const mongoose = require('./donut_express/mongoosecon');
-dotenv.config();
-
 
 
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ limit: 'lgb', extended: false }));
+app.use(bodyParser.urlencoded({ limit: 'lgb', extended : false }));
 app.use(express.json({ extended: false })); //req의 body정보를 읽도록 설정함
-// app.use("/api", require("./server/server"));
-app.use("/", require("./donut_express/api"));
-const { json } = require('body-parser');
-
 app.use("/api/users", require("./routes/api/join")); //라우터 연결
+
 //프록시 서버 설정
 const proxy = require('http-proxy-middleware');
-module.exports = function (app) {
+module.exports = function(app) {
     app.use(
         '/api',
         proxy({
@@ -42,12 +34,18 @@ const uri = 'mongodb://13.124.19.24:27017/userinfo';
 
 //몽구스 연결 성공여부 회신
 const db = mongoose.connect(uri, (err) => {
-    if (err) {
+    if(err){
         console.log(err.message);
     } else {
         console.log('###### 데이터베이스 연결 성공 ######');
     }
 });
+
+// app.get('/search'){
+//     // db 쿼리문 싸주는데
+//     db.testblocks.find({})
+// }
+
 // //몽구스 유저 스키마
 // const UserSchema = new mongoose.Schema({
 //     password : String, // 비밀번호
@@ -56,10 +54,32 @@ const db = mongoose.connect(uri, (err) => {
 // });
 // const Users = mongoose.model('users', UserSchema);
 
-app.get('/1', (req, res) => {
+app.get('/', (req, res) => {
     // res.header("Access-Control-Allow-Origin", "*");
     res.send('Welcome!');
 });
+
+// client -> 요청 해야함으로 req
+// axios.get('/', {params: }) //원하는데이터를 넘겨준다
+
+// db에서 작업 마무리 하구
+// 그때 res 쓴다... 우리는 read은 할것임으로 res
+
+//라우팅 주소
+// axios.get('/search/api', (req,res) => {
+//     res.           
+// })
+
+
+
+// req 예시
+// 로그인, id , pw 치고 db값인지 확인할때
+// client. req -> db 로 보내고  조건문
+// server 에선 검색
+
+// 오케이,server
+
+
 
 // app.post('/api/users/join', (req, res) => {
 //     console.log("req.body : " + req.body.Email);
@@ -87,31 +107,11 @@ app.get('/1', (req, res) => {
 // });
 
 app.post('/login', (req, res) => {
-    Users.findOne({ id: req.body.id, password: req.body.password }, (err, user) => {
-        if (err) return res.status(500).json({ message: '에러' })
-        else if (user) return res.status(200).json({ message: '유저확인', data: new_user });
-        else return res.status(404).json({ message: '유저 없음' });
+    Users.findOne({ id : req.body.id, password : req.body.password }, (err, user) => {
+        if(err) return res.status(500).json({message : '에러'})
+        else if (user) return res.status(200).json({message : '유저확인', data : new_user});
+        else return res.status(404).json({message : '유저 없음'});
     });
 });
 
-// 
-
-
-app.get('/search',async(req,res) => {
-// app.get('/block',async(req,res) => {
-    const blocks = await Blocks.find({})
-    res.json(blocks)                                                    //클라이언트 요청에 반응하는거다 ..
-    console.log(blocks)
-})
-
-
-
-
-// 서버에서 connectdb를 가져와야함
-// 모듈일땐 어떻게 해야하지?
-
-
-
-
-
-app.listen(4000, () => console.log(`###### 4000 포트 실행 중 ######`));
+app.listen(PORT, () => console.log(`###### ${PORT} 포트 실행 중 ######`));

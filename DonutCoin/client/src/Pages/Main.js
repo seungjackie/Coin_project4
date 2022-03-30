@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import styled from "styled-components";
 import withSize from "../Container/withSize";
 import { viewSize } from "../styles/theme";
@@ -82,38 +82,40 @@ const Main = ({ match, widthSize, heightSize }) => {
 
   return (
     <>
-      <Header isRootURL={isRootURL} />
-      <St.MainContentContainer>
-        {
-          // 차트 및 주문 관련 뷰는 메인 페이지이면서 tablet 사이즈보다 크거나, 메인 페이지가 아닌 경우에만 그린다
-          ((isRootURL && widthSize > viewSize.tablet) || !isRootURL) && (
-            <St.ChartAndTradeContainer isRootURL={isRootURL}>
-              <St.HiddenH2>차트 및 주문 정보 창</St.HiddenH2>
-              <CoinInfoHeader />
-              <ChartDataConsole />
-              <MainChart />
-              <St.TradeInfoContainer>
-                <Orderbook />
-                <St.TradeOrderContainer>
-                  <OrderInfo />
-                  <TradeList />
-                </St.TradeOrderContainer>
-              </St.TradeInfoContainer>
-            </St.ChartAndTradeContainer>
-          )
-        }
-        {
-          // 코인 리스트 뷰는 메인 페이지이거나, 메인 페이지가 아니면서  tablet 사이즈보다 큰  경우에만 그린다
-          (isRootURL || (!isRootURL && widthSize > viewSize.tablet)) && (
-            <CoinList
-              widthSize={widthSize}
-              heightSize={heightSize}
-              isRootURL={isRootURL}
-            />
-          )
-        }
-      </St.MainContentContainer>
-      <Footer />
+      <Suspense fallback={<div>...loading</div>}>
+        <Header isRootURL={isRootURL} />
+        <St.MainContentContainer>
+          {
+            // 차트 및 주문 관련 뷰는 메인 페이지이면서 tablet 사이즈보다 크거나, 메인 페이지가 아닌 경우에만 그린다
+            ((isRootURL && widthSize > viewSize.tablet) || !isRootURL) && (
+              <St.ChartAndTradeContainer isRootURL={isRootURL}>
+                <St.HiddenH2>차트 및 주문 정보 창</St.HiddenH2>
+                <CoinInfoHeader />
+                <ChartDataConsole />
+                <MainChart />
+                <St.TradeInfoContainer>
+                  <Orderbook />
+                  <St.TradeOrderContainer>
+                    <OrderInfo />
+                    <TradeList />
+                  </St.TradeOrderContainer>
+                </St.TradeInfoContainer>
+              </St.ChartAndTradeContainer>
+            )
+          }
+          {
+            // 코인 리스트 뷰는 메인 페이지이거나, 메인 페이지가 아니면서  tablet 사이즈보다 큰  경우에만 그린다
+            (isRootURL || (!isRootURL && widthSize > viewSize.tablet)) && (
+              <CoinList
+                widthSize={widthSize}
+                heightSize={heightSize}
+                isRootURL={isRootURL}
+              />
+            )
+          }
+        </St.MainContentContainer>
+        <Footer />
+      </Suspense>
     </>
   );
 };

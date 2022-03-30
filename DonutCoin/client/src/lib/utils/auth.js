@@ -20,7 +20,7 @@ export default function auth_user(
         } else if (adminRoute && !response.payload.isAdmin) {
           props.history.push('/');
         } else if (option === false) {
-          props.history.push('/home');
+          props.history.push('/trade');
         }
       });
     }, []);

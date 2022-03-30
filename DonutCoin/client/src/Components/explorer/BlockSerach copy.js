@@ -8,41 +8,104 @@ import styled from 'styled-components';
 
 
 const Main = styled.div`
-    .Big_container {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    border: 5px black solid;
-    width: 50vw;
-    height: 70vh;
-    }
+  .Big_container {
+    /* position: relative; */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* background-color: mediumaquamarine; */
+    /* padding-left: 10px; */
+    /* padding-right: 120px; */
+    padding-top: 20px;
+    background-color: red;
+    height: 400px;
+    width: 500px;
+    padding: 10px;
+
+    z-index: 1;
+    /* inlin  */
+  }
+
+  .hash_container {      
+    /* position: absolute; */
+    /* display: inline; */a
+    /* width: 400px; */
+    /* margin: 0px; */
+    /* background-color: red; */
+    /* display: flex; */
+    /* height: 100px; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* overflow: hidden; */
+    /* background-color: blue; */
+    /* padding-top: 10px; */
+    /* padding-top: 20px; */
+    margin: 10px;
+    background-color: green;
+    height: 100px;
+    width: 400px;
+
+    z-index: 2;
+}
+
+  .middle_container{
+    /* margin-top: 150px; */
+    /* position: absolute; */
+    /* display: inline; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* height: 150px; */
+    /* position: absolute;     */
+    /* padding-top: 10px; */
+    /* padding-right: 120px; */
+    /* padding-top: 20px; */
+    background-color: yellow;
+    height: 200px;
+    width: 400px;
+    margin: 10px;
 
 
-    .hash_container {
-        flex: 1;
-    }
+    z-index: 2;
+    
+  }
 
-    .middle_container {
-        flex: 9;
-        background-color: yellow;
-        display: flex;
-        flex-direction: row;
-    }
+  .small_con1{
+      position: absolute;
+      /* margin-top: 20px; */
+    /* bottom: 10%; */
+    /* width: 100px; */
+    /* position: relative; */
+    /* color: white; */
+    /* font-size: 30px; */
+    position: absolute;
+    background-color: pink;
+    height: 50px;
+    width: 50px;
+    padding: 5px;
+    display: inline;
+    z-index: 2;
+  }
+  .small_con2{
+    /* display: flex; */
+    /* bottom: 10%; */
+    /* width: 100px; */
+    /* background-color: gray; */
+    /* position: relative; */
+    /* color: white; */
+    position: absolute;
 
-    .small_con1{
-        flex: 1;
-        background-color: blue;
-    }
-
-    .small_con2 {
-        flex: 1;
-        background-color: pink;
-    }
-
+    font-size: 30px;
+    display: inline;
+    background-color: black;
+    height: 50px;
+    width: 50px;
+    margin: 20px
+    display: inline-block;
+    z-index: 2;
+  }
 `;
 
 const BlockSearch = (event) =>{
-    
 
 
     //이렇게 연결한느지?
@@ -108,9 +171,9 @@ const BlockSearch = (event) =>{
             
         return (
             <div backgroundcolor='black'>
-                <div style={{ margin: 'auto', marginTop: '10%' }}>
+                <div style={{ margin: '0 auto', marginTop: '10%' }}>
                     <label>Search:</label>
-                    <input type="text" onChange={(event) => handleSearch(event)} margin="auto"/>
+                    <input type="text" onChange={(event) => handleSearch(event)} />
                 </div>
                     <div style={{padding:10}}>
                     {filteredData.map((value,index)=>{
@@ -121,16 +184,17 @@ const BlockSearch = (event) =>{
                                         <div className='hash_container' >
                                             hash: {value.hash}
                                         </div>
-
                                         <div className='middle_container'>
+                                            bbbb
                                             <div className='small_con1'>
                                                 cc
+                                                <br />
+                                                ff
                                             </div>
                                             <div className='small_con2'>
                                                 dd
                                             </div>
                                         </div>
-
                                     </div>
 
                                 {/* <div style={styles}> */}

@@ -18,8 +18,6 @@
     text-align: center;
   }
   
-  .App-header {
-  }
   
   .App-title {
     font-size: 1.5em;
@@ -29,8 +27,6 @@
     font-size: large;
   }
   
-  .block-content {
-  }
   
   .block-table {
     margin-left: 30%;
@@ -42,6 +38,7 @@
     border:0.5px solid white;
     padding: 30px;
 }
+
   
   @keyframes App-logo-spin {
     from { transform: rotate(0deg); }

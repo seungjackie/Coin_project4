@@ -41,29 +41,6 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Provider
-//       store={createStoreWithMiddleware(
-//         rootReducer,
-//         window.__REDUX_DEVTOOLS_EXTENSION__ &&
-//         window.__REDUX_DEVTOOLS_EXTENSION__(),
-//       )}
-//     >
-//       <App />
-//     </Provider>
-//     <ThemeProvider theme={theme}>
-//       <Provider store={store}>
-//         <BrowserRouter>
-//           <GlobalStyle />
-//           <AppUpbit />
-//         </BrowserRouter>
-//       </Provider>
-//     </ThemeProvider>
-//   </React.StrictMode>,
-//   document.getElementById('rootapp'),
-// );
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>

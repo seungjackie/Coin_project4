@@ -1,26 +1,3 @@
-// const mongoose = require('mongoose');
-
-// //스케마 생성
-// const userSchema = new mongoose.Schema({
-//     email: {
-//         type: String,
-//         required : true,
-//         trim: true,    // space를 없애주는 역할
-//         unique: 1
-//     },
-//     name : {
-//         type: String,
-//         required : true,
-//         maxlength: 50
-//     },
-//     password: {
-//         type: String,
-//         required: true,
-//       },
-// });
-
-// module.exports = mongoose.model("User", userSchema);
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -39,7 +16,7 @@ const userSchema = mongoose.Schema({
   // field: { type: String },
   // userDescription: { type: String, maxlength: 100 },
   date: { type: Date, default: moment().format('YYYY-MM-DD HH:mm:ss')},
-  token: { type: String }
+  token: { type: String },
 });
 
 

@@ -45,5 +45,10 @@ export const UPLOAD_REPLY = 'upload_reply';
 export const GET_REPLY = 'get_reply';
 export const DELETE_REPLY = 'delete_reply';
 
+// Wallet
+export const GET_WALLET = 'get_wallet';
+export const BUY_WALLET = 'buy_wallet';
+export const SELL_WALLET = 'sell_wallet';
+
 
 export const LIST_COIN = 'list_coin';

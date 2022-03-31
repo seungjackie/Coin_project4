@@ -4,6 +4,7 @@ import { loadingReducer } from "./loadingReducer";
 import { all } from "redux-saga/effects";
 
 import userReducer from './user';
+import walletReducer from './wallet';
 // import boardReducer from './board';
 // import commentReducer from './comment';
 // import likeReducer from './like';
@@ -11,6 +12,7 @@ import userReducer from './user';
 
 const rootReducer = combineReducers({
   user: userReducer,
+  wallet: walletReducer,
   // board: boardReducer,
   // comment: commentReducer,
   // like: likeReducer,

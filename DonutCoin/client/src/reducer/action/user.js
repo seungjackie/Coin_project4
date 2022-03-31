@@ -29,11 +29,11 @@ export function loginUser(dataToSubmit) {
 
 // 이메일 중복확인
 export function checkUser(dataToSubmit) {
-  console.log("1")
+  // console.log("1")
   const request = axios
     .post(`/api/user/checkEmail`, { email: dataToSubmit })
     .then(response => response.data);
-    console.log("1")
+  // console.log("1")
 
   return {
     type: CHECK_USER,
@@ -171,3 +171,4 @@ export function getMyReply({ userFrom: userFrom }) {
     payload: request,
   };
 }
+

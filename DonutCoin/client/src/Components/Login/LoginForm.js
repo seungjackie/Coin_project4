@@ -96,43 +96,6 @@ const St = {
     `,
 };
 
-// const LoginForm = (props) => {
-
-//   // redux의 dispatch
-//   const dispatch = useDispatch();
-
-//   // react hook에서 state 사용
-//   const [Email, setEmail] = useState('');
-//   const [Password, setPassword] = useState('');
-
-//   //handler 함수
-//   const onEmailHandler = (event) => {
-//     setEmail(event.currentTarget.value);
-//   }
-
-//   const onPasswordHandler = (event) => {
-//     setPassword(event.currentTarget.value);
-
-//   }
-//   const onSubmitHandler = (event) => {
-//     event.preventDefault();
-
-//     let body = {
-//       email: Email,
-//       password: Password,
-//     };
-
-//     // action의 반환값을 dispatch해준다.
-//     dispatch(loginUser(body))
-//     .then((response) => {
-//       if(response.payload.loginSuccess) {
-//         window.location.replace('/')
-//       } else {
-//         alert("로그인 정보를 확인하세요.")
-//         window.location.replace('/login')
-//       }
-//     });
-//   };
 function LoginForm() {
   const {
     register,

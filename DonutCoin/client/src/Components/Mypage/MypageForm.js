@@ -83,16 +83,18 @@ const MypageForm = (props, { isRootURL }) => {
 
   const user = useSelector(state => state.user);
 
-  const getName = () => {
+  const getInfo = () => {
     dispatch(auth()).then(response => {
       if (response.payload.userData != null) {
-        setUserName(response.payload.userData.name);
+        setUserEmail(response.payload.userData.email)
+        setUserName(response.payload.userData.name)
+        console.log(response.payload.userData)
       }
     });
   };
 
   useEffect(() => {
-    getName();
+    getInfo();
   }, []);
 
   return (
@@ -101,15 +103,21 @@ const MypageForm = (props, { isRootURL }) => {
         <St.Head>MY PAGE</St.Head>
         <St.Id>
           <h4>E-mail</h4>
-          <St.Input/>
+          <St.Input
+            value={userEmail}
+          />
         </St.Id>
         <St.Name>
           <h4>Name</h4>
-          <St.Input/>
+          <St.Input
+            value={userName}
+          />
         </St.Name>
         <St.Pw>
           <h4>Password</h4>
-          <St.Input />
+          <St.Input
+            value={userPassword}
+          />
         </St.Pw>
         <St.Pw>
           <h4>My Wallet Address</h4>

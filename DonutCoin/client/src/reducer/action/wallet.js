@@ -11,7 +11,7 @@ import {
 // Wallet 구현
 export function getMyWallet({ userFrom: userFrom, coinName: coinName }) {
   const request = axios
-    .post('/api/myWallet', { userFrom: userFrom, coinName: coinName })
+    .post('/api/wallet', { userFrom: userFrom, coinName: coinName })
     .then(response => response.data);
 
   return {
@@ -20,9 +20,9 @@ export function getMyWallet({ userFrom: userFrom, coinName: coinName }) {
   };
 }
 // 매수
-export function buyCoin({ userFrom: userFrom, coinName: coinName }) {
+export function buyCoin(dataToSubmit) {
   const request = axios
-    .post('/api/myWallet/buy', { userFrom: userFrom, coinName: coinName })
+    .post('/api/wallet/buy', dataToSubmit)
     .then(response => response.data);
 
   return {
@@ -31,9 +31,9 @@ export function buyCoin({ userFrom: userFrom, coinName: coinName }) {
   };
 }
 //매도
-export function sellCoin({ userFrom: userFrom, coinName: coinName }) {
+export function sellCoin(dataToSubmit) {
   const request = axios
-    .post('/api/myWallet/sell', { userFrom: userFrom })
+    .post('/api/wallet/sell', dataToSubmit)
     .then(response => response.data);
 
   return {

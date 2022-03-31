@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { values } from 'lodash';
 import './block.css';
 import styled from 'styled-components';
 

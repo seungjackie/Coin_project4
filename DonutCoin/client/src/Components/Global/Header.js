@@ -146,9 +146,6 @@ const Header = (props, { isRootURL }) => {
     });
   };
 
-  src/Reducer/action/types.js
-src/Reducer/modules/types.js
-
   const getName = () => {
     dispatch(auth()).then(response => {
       if (response.payload.userData != null) {

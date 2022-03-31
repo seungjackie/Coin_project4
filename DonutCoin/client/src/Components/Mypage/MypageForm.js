@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { auth, update } from '../../reducer/action/user';
 import { Link, withRouter } from 'react-router-dom';
-
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
 const St = {
@@ -82,6 +82,14 @@ const St = {
 
 };
 function MypageForm(props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+  });
+
   const dispatch = useDispatch();
 
   const [userEmail, setUserEmail] = useState('');
@@ -90,15 +98,6 @@ function MypageForm(props) {
   const [userWalletaddress, setUserWalletaddress] = useState('');
   const [userMoney, setUserMoney] = useState('');
   const [userCoin, setUserCoin] = useState('');
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-    defaultValues: {email : userEmail, name: userName, money: userMoney},
-  });
 
   const getInfo = () => {
     dispatch(auth()).then(response => {
@@ -117,27 +116,49 @@ function MypageForm(props) {
     getInfo();
   }, []);
 
-  const emailchage = (e) => {
+  const emailchange = (e) => {
     setUserEmail(e.currentTarget.value);
   };
-  const namechage = (e) => {
+  const namechange = (e) => {
     setUserName(e.currentTarget.value);
+  };  
+  const passwordchange = (e) => {
+    setUserPassword(e.currentTarget.value);
   };
-  const moneychage = (e) => {
+  const moneychange = (e) => {
     setUserMoney(e.currentTarget.value);
   };
 
-  const onEdit = useCallback(user => {
-    console.log(user);
-    dispatch(update(user)).then(response => {
-      if (response.payload.success) {
-        alert(`회원정보 변경 성공.`);
-        window.location.replace('/mypage');
+  const onEdit = async() => {
+    axios.post("http://localhost:4000/api/user/update", {
+      _id: window.localStorage.getItem('userId'),
+      email: userEmail,
+      name: userName,
+      password: userPassword,
+    }).then((response) => { if(response.data.message) {
+        alert("실패")
+        window.location.replace("/mypage")
       } else {
-        alert(response.payload.message);
+        alert("success");
+        window.location.replace("/mypage")
       }
-    });
-  }, []);
+    })
+  };
+  
+  const onLoadmoney = async() => {
+    axios.post("http://localhost:4000/api/user/loadmoney", {
+      email: userEmail,
+      money: userMoney,
+    }).then((response) => { if(response.data.message) {
+        alert("실패")
+        window.location.replace("/mypage")
+      } else {
+        alert("success");
+        window.location.replace("/mypage")
+      }
+    })
+  };
+
 
   return (
     <St.Container>
@@ -150,9 +171,7 @@ function MypageForm(props) {
             name="email"
             type="email"
             value={userEmail}
-            onChange={emailchage}
-            //ref={register}
-            {...register('email')}
+            onChange={emailchange}
           />
         </St.Id>
         <St.Name>
@@ -162,8 +181,7 @@ function MypageForm(props) {
             name="name"
             type="text"
             value={userName}
-            onChange={namechage}
-            {...register('name')}
+            onChange={namechange}
           />
         </St.Name>
         <St.Pw>
@@ -172,15 +190,21 @@ function MypageForm(props) {
             id="password"
             name="password"
             type="password"
+            placeholder='*********'
             value={userPassword}
-            readOnly
+            onChange={passwordchange}
           />
         </St.Pw>
+        <St.Submit>
+          <St.Submit_button type="submit" onClick={handleSubmit(onEdit)}>Edit</St.Submit_button>
+        </St.Submit>
+      </St.Login>
+      <St.Login onSubmit={handleSubmit(onLoadmoney)}>
+        <St.Head>MY WALLET</St.Head>
         <St.Pw>
           <h4>My Wallet Address</h4>
           <St.Input value={userWalletaddress} readOnly/>
-        </St.Pw>
-        <St.Head>MY WALLET</St.Head>
+        </St.Pw>        
         <St.Id>
           <h4>Money</h4>
           <St.Input
@@ -188,8 +212,7 @@ function MypageForm(props) {
             name="money"
             type="number"
             value={userMoney}
-            onChange={moneychage}
-            {...register('money')}
+            onChange={moneychange}
           />
         </St.Id>
         <St.Name>
@@ -197,7 +220,7 @@ function MypageForm(props) {
           <St.Input value={userCoin} readOnly/>
         </St.Name>
         <St.Submit>
-          <St.Submit_button type="submit" onClick={handleSubmit(onEdit)}>Edit</St.Submit_button>
+          <St.Submit_button type="submit" onClick={handleSubmit(onLoadmoney)}>Load Money</St.Submit_button>
         </St.Submit>
       </St.Login>
     </St.Container>

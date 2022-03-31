@@ -20,15 +20,13 @@ const headers = {
 //             User
 //=================================
 
-// mypage updates
-// POST http://127.0.0.1:5000/api/user/update
-router.post('/update', (req, res) => {
-  console.log('update' + req.body.email);
+// loadmoney
+// POST http://127.0.0.1:5000/api/user/loadmoney
+router.post('/loadmoney', (req, res) => {
+  console.log('loadmoney' + req.body.email);
   User.findOneAndUpdate(
     { email: req.body.email },
     { $set: { 
-      email: req.body.email,
-      name: req.body.name,
       money: req.body.money,
     }},
     { new: true },
@@ -38,6 +36,32 @@ router.post('/update', (req, res) => {
       else return res.json({ changeSuccess: true });
     }
   )
+})
+
+// mypage updates
+// POST http://127.0.0.1:5000/api/user/update
+router.post('/update', (req, res) => {
+  console.log('update' + req.body.email);
+  User.findOne({ _id: req.body._id }, (err, user) => {
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch) return res.json({ changeSuccess: false, message: "비밀번호가 틀렸습니다." })
+      else { 
+          User.findOneAndUpdate(
+          { _id: req.body._id },
+          { $set: { 
+            email: req.body.email,
+            name: req.body.name,
+          }},
+          { new: true },
+          (err, user) => {
+            console.log(err);
+            if (!user) return res.json({ message: '입력값을 확인해주세요.' });
+            else return res.json({ changeSuccess: true });
+          }
+        )
+      }
+    })
+  })
 })
 
 // 회원가입

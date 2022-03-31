@@ -77,6 +77,7 @@ const St = {
   `,
 };
 
+
 const Main = ({ match, widthSize, heightSize }) => {
   const isRootURL = match.path === "/";
 
@@ -84,7 +85,10 @@ const Main = ({ match, widthSize, heightSize }) => {
     <>
       <Header isRootURL={isRootURL} />
       <St.MainContentContainer>
-        {
+          <imgcontainer width="1000px">
+            <img src={require("./test/mainLogo2.png")} width="800px" height="800px" />
+          </imgcontainer>
+        {/* {
           // 차트 및 주문 관련 뷰는 메인 페이지이면서 tablet 사이즈보다 크거나, 메인 페이지가 아닌 경우에만 그린다
           ((isRootURL && widthSize > viewSize.tablet) || !isRootURL) && (
             <St.ChartAndTradeContainer isRootURL={isRootURL}>
@@ -101,8 +105,8 @@ const Main = ({ match, widthSize, heightSize }) => {
               </St.TradeInfoContainer>
             </St.ChartAndTradeContainer>
           )
-        }
-        {
+        } */}
+        {/* {
           // 코인 리스트 뷰는 메인 페이지이거나, 메인 페이지가 아니면서  tablet 사이즈보다 큰  경우에만 그린다
           (isRootURL || (!isRootURL && widthSize > viewSize.tablet)) && (
             <CoinList
@@ -111,9 +115,9 @@ const Main = ({ match, widthSize, heightSize }) => {
               isRootURL={isRootURL}
             />
           )
-        }
+        } */}
       </St.MainContentContainer>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

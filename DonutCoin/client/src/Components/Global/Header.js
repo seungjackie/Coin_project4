@@ -26,7 +26,7 @@ const St = {
     width: 100%;
     height: 100%;
     max-width: 1360px;
-    margin: 0 auto;
+    /* margin:  auto; */
 
     @media ${({ theme, isRootURL }) => (!isRootURL ? theme.tablet : true)} {
       max-width: 950px;
@@ -53,6 +53,21 @@ const St = {
     /* background-color: red; */
     width: 200px;
     height: 100%;
+  `,
+  SiteHeadingLogout: styled.div`
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    /* background-color: red; */
+
+
+    .profileBox {
+      display: flex;
+      flex-direction: column;
+      justify-content:center;
+      text-decoration-line: none;
+    }
+
   `,
 
   Link: styled.a`
@@ -96,6 +111,21 @@ const St = {
     width: 100%;
     height: 100%;
   `,
+  LogoutButton : styled.div`
+    background-image: ${({ logo }) => `url(${logo})`};
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 10vw;
+    height: 100%;
+  `,
+  WellcomeInput : styled.input`
+    border-style: none;
+    background-color: #f7b5c9;
+    color: white;
+    font-weight : 600;
+    letter-spacing: 2px;
+  `
 };
 
 const Header = (props, { isRootURL }) => {
@@ -115,6 +145,9 @@ const Header = (props, { isRootURL }) => {
       }
     });
   };
+
+  src/Reducer/action/types.js
+src/Reducer/modules/types.js
 
   const getName = () => {
     dispatch(auth()).then(response => {
@@ -180,24 +213,26 @@ const Header = (props, { isRootURL }) => {
           >
           </St.Head>
         </St.SiteHeading>
-      ) : (
-        <>
-          <Link to="/mypage" className="profileBox">
-            <input
-              type="text"
-              className="userName"
-              value={userName + '님 환영합니다.'}
-              readOnly
-            />
-          </Link>
-          <Link to="/">
-            <button onClick={onClickLogout} className="logoutbar">
-              로그아웃
-            </button>
-          </Link>
+            ) : (
+              <St.SiteHeadingLogout>
+                <Link to="/mypage" className="profileBox">
+                  <St.WellcomeInput
+                    type="text"
+                    className="userName"
+                    value={userName + '님 환영합니다.'}
+                    readOnly
+                  />
+                </Link>
+                <Link to="/">
+                  <St.LogoutButton onClick={onClickLogout}
+                  logo={process.env.PUBLIC_URL + "/logoutWhiteLogo.png"}
+                  title={"로그아웃 이동"}
+                  >
+                  </St.LogoutButton>
+                </Link>
 
-        </>
-      )}
+              </St.SiteHeadingLogout>
+            )}
     </St.Header>
   );
 };

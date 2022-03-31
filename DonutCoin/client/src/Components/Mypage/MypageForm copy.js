@@ -86,7 +86,9 @@ const St = {
     `,
 
 };
-function JoinForm(props) {
+const MypageForm = (props) => {
+  const [userName, setUserName] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -134,14 +136,13 @@ function JoinForm(props) {
   return (
     <St.Container>
       <St.Login onSubmit={handleSubmit(onSubmit)}>
-        <St.Head>WELCOME</St.Head>
+        <St.Head>MY PAGE</St.Head>
         <St.Login_id>
           <h4>E-mail</h4>
           <St.Input
             id="email"
             name="email"
             type="email"
-            placeholder="이메일 형식에 맞게 입력해주세요."
             {...register('email', {
               required: '이메일을 입력해주세요.',
               pattern: {
@@ -156,7 +157,6 @@ function JoinForm(props) {
             id="name"
             name="name"
             type="text"
-            placeholder="이름을 입력해주세요."
             {...register('name', {
               required: true,
               minLength: true,
@@ -169,7 +169,6 @@ function JoinForm(props) {
           <St.Input id="password"
             name="password"
             type={ShowPassword ? 'text' : 'password'}
-            placeholder="대/소문자, 숫자, 특수문자 포함 8~20자"
             {...register('password', {
               required: true,
               minLength: 8,
@@ -191,22 +190,21 @@ function JoinForm(props) {
             })} />
         </St.Login_pw>
         <St.Login_pw>
-          <h4>Password Confirm</h4>
+          <h4>My Wallet Address</h4>
           <St.Input id="confirmpassword"
             name="confirmpassword"
             type="password"
-            placeholder="비밀번호 확인"
             {...register('passwordConfirm', {
               required: true,
               validate: value => value === password.current,
             })} />
         </St.Login_pw>
         <St.Submit>
-          <St.Submit_button type="submit" onClick={handleSubmit(onSubmit)}>JOIN</St.Submit_button>
+          <St.Submit_button type="submit" onClick={handleSubmit(onSubmit)}>Edit</St.Submit_button>
         </St.Submit>
       </St.Login>
     </St.Container>
   )
 }
 
-export default withRouter(JoinForm);
+export default withRouter(MypageForm);

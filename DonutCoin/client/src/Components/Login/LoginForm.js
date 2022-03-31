@@ -126,6 +126,7 @@ function LoginForm() {
         window.location.replace('/');
       } else {
         alert(response.payload.message);
+        
       }
     });
   }, []);

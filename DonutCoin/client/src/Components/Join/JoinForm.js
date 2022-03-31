@@ -106,7 +106,7 @@ function JoinForm(props) {
   };
 
   const onSubmit = async data => {
-    // console.log(data);
+    console.log(data);
     try {
       await dispatch(checkUser(data.email))
         .then(response => {

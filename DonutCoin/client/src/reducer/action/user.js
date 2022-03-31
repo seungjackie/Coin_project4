@@ -13,7 +13,19 @@ import {
   GET_MYCOMMENT,
   GET_MYBOARD,
   GET_MYREPLY,
+  UPDATE,
 } from './types';
+
+// mypage 변경
+export function update(dataToSubmit) {
+  const request = axios
+    .post('/api/user/update/', dataToSubmit)
+    .then(response => response.data);
+  return {
+    type: UPDATE,
+    payload: request,
+  };
+}
 
 // 로그인
 export function loginUser(dataToSubmit) {

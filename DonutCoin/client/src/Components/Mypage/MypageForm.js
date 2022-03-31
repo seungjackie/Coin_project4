@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import styled from "styled-components";
 import { useDispatch } from 'react-redux';
-import { registerUser, checkUser } from '../../reducer/action/user';
-
+import { auth, update } from '../../reducer/action/user';
+import { Link, withRouter } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
-import styled from "styled-components";
-
 
 const St = {
   Container: styled.div`
@@ -34,11 +32,15 @@ const St = {
     font-weight: bolder;
     text-shadow: 1px 2px 3px black;
   `,
-  Login_sns: styled.div`
-    padding: 20px;
-    display: flex;
+  Id: styled.div`
+    margin-top: 20px;
+    width: 80%;
   `,
-  Login_id: styled.div`
+  Name: styled.div`
+    margin-top: 20px;
+    width: 80%;
+  `,
+  Pw: styled.div`
     margin-top: 20px;
     width: 80%;
   `,
@@ -50,15 +52,8 @@ const St = {
     padding: 0px 20px;
     border: 1px solid lightgray;
     outline: none;
-  `,
-  Login_pw: styled.div`
-    margin-top: 20px;
-    width: 80%;
-  `,
-  Join_name: styled.div`
-    margin-top: 20px;
-    width: 80%;
-`,
+    letter-spacing: 5px;
+    `,
   Submit: styled.div`
     margin-top: 50px;
     width: 80%;
@@ -87,118 +82,122 @@ const St = {
 
 };
 function MypageForm(props) {
+  const dispatch = useDispatch();
+
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userWalletaddress, setUserWalletaddress] = useState('');
+  const [userMoney, setUserMoney] = useState('');
+  const [userCoin, setUserCoin] = useState('');
+
   const {
     register,
     handleSubmit,
-    watch,
-    setError,
     formState: { errors },
   } = useForm({
     mode: 'onTouched',
+    defaultValues: {email : userEmail, name: userName, money: userMoney},
   });
-  const dispatch = useDispatch();
-  const password = useRef();
-  password.current = watch('password');
 
-  const [ShowPassword, setShowPassword] = useState(false);
-  const handleVisibility = () => {
-    setShowPassword(!ShowPassword);
+  const getInfo = () => {
+    dispatch(auth()).then(response => {
+      if (response.payload.userData != null) {
+        setUserName(response.payload.userData.name);
+        setUserEmail(response.payload.userData.email);
+        // setUserPassword(response.payload.userData.password);
+        setUserWalletaddress(response.payload.userData.walletaddress);
+        setUserMoney(response.payload.userData.money);
+        setUserCoin(response.payload.userData.coin);
+      }
+    });
   };
 
-  const onSubmit = async data => {
-    // console.log(data);
-    try {
-      await dispatch(checkUser(data.email))
-        .then(response => {
-          console.log(response)
-          if (response.payload.success) {
-            dispatch(registerUser(data));
-            alert(`${data.name}님 회원가입을 축하드립니다.`);
-            props.history.push('/login');
-          } else {
-            setError('email', {
-              type: 'validate',
-              message: response.payload.message,
-            }
-            );
-          }
-        })
-        .catch(error => {
-          console.log('response: ', error.response);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+  useEffect(() => {
+    getInfo();
+  }, []);
+
+  const emailchage = (e) => {
+    setUserEmail(e.currentTarget.value);
   };
+  const namechage = (e) => {
+    setUserName(e.currentTarget.value);
+  };
+  const moneychage = (e) => {
+    setUserMoney(e.currentTarget.value);
+  };
+
+  const onEdit = useCallback(user => {
+    console.log(user);
+    dispatch(update(user)).then(response => {
+      if (response.payload.success) {
+        alert(`회원정보 변경 성공.`);
+        window.location.replace('/mypage');
+      } else {
+        alert(response.payload.message);
+      }
+    });
+  }, []);
 
   return (
     <St.Container>
-      <St.Login onSubmit={handleSubmit(onSubmit)}>
+      <St.Login onSubmit={handleSubmit(onEdit)}>
         <St.Head>MY PAGE</St.Head>
-        <St.Login_id>
+        <St.Id>
           <h4>E-mail</h4>
-          <St.Input
+          <St.Input 
             id="email"
             name="email"
             type="email"
-            {...register('email', {
-              required: '이메일을 입력해주세요.',
-              pattern: {
-                // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: '이메일 형식이 올바르지 않습니다.',
-              },
-            })} />
-        </St.Login_id>
-        <St.Join_name>
+            value={userEmail}
+            onChange={emailchage}
+            //ref={register}
+            {...register('email')}
+          />
+        </St.Id>
+        <St.Name>
           <h4>Name</h4>
-          <St.Input
-            id="name"
+          <St.Input 
+            id="neme"
             name="name"
             type="text"
-            {...register('name', {
-              required: true,
-              minLength: true,
-              minLength: 2,
-              maxLength: 8,
-            })} />
-        </St.Join_name>
-        <St.Login_pw>
+            value={userName}
+            onChange={namechage}
+            {...register('name')}
+          />
+        </St.Name>
+        <St.Pw>
           <h4>Password</h4>
-          <St.Input id="password"
+          <St.Input 
+            id="password"
             name="password"
-            type={ShowPassword ? 'text' : 'password'}
-            {...register('password', {
-              required: true,
-              minLength: 8,
-              maxLength: 20,
-              validate: {
-                checkLang: value =>
-                  ![/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/].every(pattern =>
-                    pattern.test(value),
-                  ),
-                // checkLower: value =>
-                //   [/[a-z]/].every(pattern => pattern.test(value)),
-                // checkUpper: value =>
-                //   [/[A-Z]/].every(pattern => pattern.test(value)),
-                // checkNumber: value =>
-                //   [/[0-9]/].every(pattern => pattern.test(value)),
-                // checkSpec: value =>
-                //   [/[^a-zA-Z0-9]/].every(pattern => pattern.test(value)),
-              },
-            })} />
-        </St.Login_pw>
-        <St.Login_pw>
-          <h4>My Wallet Address</h4>
-          <St.Input id="confirmpassword"
-            name="confirmpassword"
             type="password"
-            {...register('passwordConfirm', {
-              required: true,
-              validate: value => value === password.current,
-            })} />
-        </St.Login_pw>
+            value={userPassword}
+            readOnly
+          />
+        </St.Pw>
+        <St.Pw>
+          <h4>My Wallet Address</h4>
+          <St.Input value={userWalletaddress} readOnly/>
+        </St.Pw>
+        <St.Head>MY WALLET</St.Head>
+        <St.Id>
+          <h4>Money</h4>
+          <St.Input
+            id="money"
+            name="money"
+            type="number"
+            value={userMoney}
+            onChange={moneychage}
+            {...register('money')}
+          />
+        </St.Id>
+        <St.Name>
+          <h4>Coin</h4>
+          <St.Input value={userCoin} readOnly/>
+        </St.Name>
         <St.Submit>
-          <St.Submit_button type="submit" onClick={handleSubmit(onSubmit)}>Edit</St.Submit_button>
+          <St.Submit_button type="submit" onClick={handleSubmit(onEdit)}>Edit</St.Submit_button>
         </St.Submit>
       </St.Login>
     </St.Container>

@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from "styled-components";
+import { useDispatch } from 'react-redux';
+import { auth } from '../../reducer/action/user';
+import { Link, withRouter } from 'react-router-dom';
 
 
 const St = {
@@ -28,11 +31,15 @@ const St = {
     font-weight: bolder;
     text-shadow: 1px 2px 3px black;
   `,
-  Login_sns: styled.div`
-    padding: 20px;
-    display: flex;
+  Id: styled.div`
+    margin-top: 20px;
+    width: 80%;
   `,
-  Login_id: styled.div`
+  Name: styled.div`
+    margin-top: 20px;
+    width: 80%;
+  `,
+  Pw: styled.div`
     margin-top: 20px;
     width: 80%;
   `,
@@ -74,18 +81,8 @@ const St = {
 
 };
 function MypageForm(props) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setError,
-    formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  });
+
   const dispatch = useDispatch();
-  const password = useRef();
-  password.current = watch('password');
 
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
@@ -117,7 +114,7 @@ function MypageForm(props) {
 
   return (
     <St.Container>
-      <St.Login onSubmit={handleSubmit(onSubmit)}>
+      <St.Login>
         <St.Head>MY PAGE</St.Head>
         <St.Id>
           <h4>E-mail</h4>
@@ -130,21 +127,14 @@ function MypageForm(props) {
         <St.Pw>
           <h4>Password</h4>
           <St.Input
-            value={userPassword}
           />
         </St.Pw>
         <St.Pw>
           <h4>My Wallet Address</h4>
-          <St.Input id="confirmpassword"
-            name="confirmpassword"
-            type="password"
-            {...register('passwordConfirm', {
-              required: true,
-              validate: value => value === password.current,
-            })} />
+          <St.Input/>
         </St.Pw>
         <St.Submit>
-          <St.Submit_button type="submit" onClick={handleSubmit(onSubmit)}>Edit</St.Submit_button>
+          <St.Submit_button type="submit" >Edit</St.Submit_button>
         </St.Submit>
       </St.Login>
     </St.Container>

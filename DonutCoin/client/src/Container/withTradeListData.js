@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const withTradeListData = () => (OriginalComponent) => (props) => {
   const selectedMarket = useSelector((state) => state.Coin.selectedMarket);
   const selectedTradeListData = useSelector(
-    (state) => state.Coin.tradeList.data[selectedMarket]
+    (state) => state.Coin.tradeList.data[selectedMarket=="KRW-DNC"?"KRW-BTC":selectedMarket]
   );
 
   return (

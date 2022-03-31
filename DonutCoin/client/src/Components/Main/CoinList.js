@@ -295,7 +295,7 @@ const CoinList = ({
     </St.CoinListContainer>
   );
 };
-
+};
 
 export default withLatestCoinData()(
   withMarketNames()(
@@ -304,4 +304,3 @@ export default withLatestCoinData()(
     )
   )
 );
-    };

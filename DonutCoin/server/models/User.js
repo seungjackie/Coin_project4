@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema({
   // userDescription: { type: String, maxlength: 100 },
   date: { type: Date, default: moment().format('YYYY-MM-DD HH:mm:ss')},
   token: { type: String },
+  walletaddress: { type: String },
 });
 
 

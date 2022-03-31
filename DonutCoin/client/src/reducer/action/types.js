@@ -5,6 +5,9 @@ export const CHECK_USER = 'check_user'; // checkUser
 export const AUTH_USER = 'auth_user'; // auth
 export const WITHDRAWAL_USER = 'withdrawal_user';
 
+// mypage
+export const UPDATE = 'update';
+
 // USER 업데이트 (이메일, 비밀번호, 깃헙주소 변경)
 export const UPDATE_EMAIL = 'update_email';
 export const UPDATE_PASSWORD = 'update_password';

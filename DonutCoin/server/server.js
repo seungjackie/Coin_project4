@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const Blocks = require('./donut_express/blocks');
 const path = require('path');
 const Blocks = require('./donut_express/blocks');
 

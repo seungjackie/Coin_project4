@@ -18,7 +18,10 @@ router.get('/', auth, (req, res) => {
       gender: req.user.gender,
       field: req.user.field,
       userDescription: req.user.userDescription,
-      date: req.user.date
+      date: req.user.date,
+      walletaddress: req.user.walletaddress,
+      money : req.user.money,
+      coin : req.user.coin,
     }
   })
 })

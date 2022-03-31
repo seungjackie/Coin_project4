@@ -47,7 +47,7 @@ function App() {
           <Route exact path="/join" component={Auth(Join, false)} />
           <Route exact path="/book" component={Auth(Book, false)} />
           <Route exact path="/mypage" component={Auth(Mypage, true)} />
-          <Route exact path="/explorer" component={Auth(Explorer, false)} />
+          <Route exact path="/explorer" component={Auth(Explorer, true)} />
           {/* <Route exact path="/board" component={Auth(Board, true)} />
                   <Route
                     exact

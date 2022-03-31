@@ -18,6 +18,8 @@ const userSchema = mongoose.Schema({
   date: { type: Date, default: moment().format('YYYY-MM-DD HH:mm:ss')},
   token: { type: String },
   walletaddress: { type: String },
+  money : { type : Number },
+  coin : { type : Number },
 });
 
 

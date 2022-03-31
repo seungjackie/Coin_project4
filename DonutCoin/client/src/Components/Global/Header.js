@@ -130,9 +130,7 @@ const St = {
 
 const Header = (props, { isRootURL }) => {
   const dispatch = useDispatch();
-
   const [userName, setUserName] = useState('');
-  
   const user = useSelector(state => state.user);
 
   const onClickLogout = (props) => {

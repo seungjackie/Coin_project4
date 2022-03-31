@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getMyWallet, buyCoin, sellCoin } from '../../reducer/action/wallet';
+import { useForm } from 'react-hook-form';
 import {
   changeAmountAndTotalPrice,
   changePriceAndTotalPrice,
@@ -138,13 +139,22 @@ const OrderInfoAskBid = ({
   orderPrice,
   orderAmount,
   orderTotalPrice,
+
 }) => {
+  // order
+  const {
+    order,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+  });
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   let userFrom = localStorage.getItem('userId')
 
   useEffect(() => {
-    FetchMyWallet();
+    // FetchMyWallet();
     // getBoardName(coinNameKor)
     // console.log('coinNameKor:', coinNameKor)
   }, [selectedAskBidOrder, coinSymbol]);
@@ -183,36 +193,63 @@ const OrderInfoAskBid = ({
     window.location.href = '/join'
   };
 
-  let variables = {
-    userFrom: userFrom,
-    coinName: coinSymbol
-  }
-  const FetchMyWallet = () => {
-    dispatch(getMyWallet({}))
-  }
 
-  const onBuy = () => {
-    dispatch(buyCoin(variables).then(response => {
-      if (response.payload.sucess) {
-        window.location.reload();
-        // alert(`${buyAmount} 주문완료 하였습니다`)
-        FetchMyWallet();
-        alert(`주문완료 하였습니다`)
+  // ------------------------------------ //
+
+
+  // const FetchMyWallet = () => {
+  //   dispatch(getMyWallet({}))
+  // }
+
+  // const onBuy = data => {
+  //   console.log("data", data)
+  //   try {
+  //     dispatch(buyCoin(data).then(response => {
+  //       console.log("onBuy")
+  //       if (response.payload.success) {
+  //         window.location.reload();
+  //         // alert(`${buyAmount} 주문완료 하였습니다`)
+  //         alert(`매수 주문을 완료 하였습니다`)
+  //       } else {
+  //         alert('매수 주문에 실패 하였습니다')
+  //       }
+  //     }))
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
+  // const onSell = data => {
+  //   try {
+  //     dispatch(sellCoin(data))
+  //     console.log("onSell")
+  //     if (response.payload.sucess) {
+  //       window.location.reload();
+  //       // alert(`${buyAmount} 주문완료 하였습니다`)
+  //       alert(`매도 주문을 완료 하였습니다`)
+  //     } else {
+  //       alert('매도 주문에 실패 하였습니다')
+  //     }
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
+
+  // -----------------------//
+
+  const onSubmit = useCallback(data => {
+    dispatch(buyCoin(data)).then(response => {
+      if (response.payload.success) {
+        alert(`${response.payload.name}님 환영합니다.`);
+        console.log(response.payload._id);
+        // 로컬스토리지 userId 저장
+        window.localStorage.setItem('userId', response.payload._id);
+        window.localStorage.setItem('userName', response.payload.name);
+        window.location.replace('/');
       } else {
-        alert('주문에 실패하였습니다')
+        alert(response.payload.message);
       }
-    }))
-  }
-  const onSell = () => {
-    dispatch(sellCoin(variables).then(response => {
-      if (response.payload.sucess) {
-        window.location.reload();
-        alert('주문완료 하였습니다')
-      } else {
-        alert('주문에 실패하였습니다')
-      }
-    }))
-  }
+    });
+  }, []);
 
   return (
     <St.OrderInfoContainer theme={theme}>
@@ -221,7 +258,7 @@ const OrderInfoAskBid = ({
           <St.OrderInfoDetailContainer>
             <St.OrderInfoDetailTitle>주문가능</St.OrderInfoDetailTitle>
             <St.PossibleAmount>
-              0
+              100,000,000,000,000,000
               <St.Unit>
                 {selectedAskBidOrder === "bid" ? "KRW" : coinSymbol}
               </St.Unit>
@@ -233,6 +270,8 @@ const OrderInfoAskBid = ({
             </St.OrderInfoDetailTitle>
             <St.OrderInfoInputContainer>
               <St.OrderInfoInput
+                id="price"
+                name="price"
                 onChange={changePrice}
                 value={orderPrice ? orderPrice.toLocaleString() : ""}
                 fontWeight={800}
@@ -259,6 +298,7 @@ const OrderInfoAskBid = ({
           <St.OrderInfoDetailContainer>
             <St.OrderInfoDetailTitle>주문수량</St.OrderInfoDetailTitle>
             <St.OrderInfoInput
+              id="orderAmount"
               name="orderAmount"
               onChange={changeAmount}
               value={orderAmount ? orderAmount.toLocaleString() : ""}
@@ -268,7 +308,8 @@ const OrderInfoAskBid = ({
           <St.OrderInfoDetailContainer>
             <St.OrderInfoDetailTitle>주문총액</St.OrderInfoDetailTitle>
             <St.OrderInfoInput
-              name="buyAmount"
+              name="orderAmount"
+              id="orderAmount"
               onChange={changeTotalPrice}
               value={orderTotalPrice ? orderTotalPrice.toLocaleString() : ""}
               placeholder={0}
@@ -322,23 +363,25 @@ const OrderInfoAskBid = ({
             </St.Button>
             {selectedAskBidOrder === "bid" ? (
               <St.Button
+                id="buy"
                 width={"65%"}
                 bgColor={theme.priceUp}
                 fontSize={"0.9rem"}
                 fontColor={"white"}
                 type='submit'
-                onClick={onBuy}
+                onClick={"onBuy"}
               >
                 매수
               </St.Button>
             ) : (
               <St.Button
+                id="sell"
                 width={"65%"}
                 bgColor={theme.priceDown}
                 fontSize={"0.9rem"}
                 fontColor={"white"}
                 type='submit'
-                onClick={onSell}
+                onClick={"onSell"}
               >
                 매도
               </St.Button>

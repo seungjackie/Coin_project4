@@ -206,7 +206,7 @@ const BlockSearch = (event) =>{
                                                     <span className='valueofblock'>{value.strippedsize}</span>
                                                 </div>
                                                 <div className='block-line'>
-                                                    <span className='kindofblock'>weight :</span>
+                                                    <span className='kindofblock'>weight ::</span>
                                                     <span className='valueofblock'>{value.weight}</span>
                                                 </div>
                                             </div>

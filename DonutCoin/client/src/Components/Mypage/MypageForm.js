@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { registerUser, checkUser } from '../../reducer/action/user';
+
+
+import { useForm } from 'react-hook-form';
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
-import { auth } from '../../reducer/action/user';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 
 
 const St = {
@@ -15,9 +17,9 @@ const St = {
     justify-content: center;
     background-color: rgb(231, 234, 239);
   `,
-  Mypage: styled.form`
+  Login: styled.form`
     width: 30%;
-    height: 700px;
+    height: 600px;
     background: white;
     border-radius: 20px;
     display: flex;
@@ -32,15 +34,11 @@ const St = {
     font-weight: bolder;
     text-shadow: 1px 2px 3px black;
   `,
-  Id: styled.div`
-    margin-top: 20px;
-    width: 80%;
+  Login_sns: styled.div`
+    padding: 20px;
+    display: flex;
   `,
-  Pw: styled.div`
-    margin-top: 20px;
-    width: 80%;
-  `,
-  Name: styled.div`
+  Login_id: styled.div`
     margin-top: 20px;
     width: 80%;
   `,
@@ -52,7 +50,15 @@ const St = {
     padding: 0px 20px;
     border: 1px solid lightgray;
     outline: none;
-    `,
+  `,
+  Login_pw: styled.div`
+    margin-top: 20px;
+    width: 80%;
+  `,
+  Join_name: styled.div`
+    margin-top: 20px;
+    width: 80%;
+`,
   Submit: styled.div`
     margin-top: 50px;
     width: 80%;
@@ -73,9 +79,26 @@ const St = {
         color: white;
     }
     `,
+  ToJoin: styled.a`
+    margin: auto;
+    text-decoration-line: none;
+    text-decoration-line: none;
+    `,
+
 };
-const MypageForm = (props, { isRootURL }) => {
+function MypageForm(props) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+  });
   const dispatch = useDispatch();
+  const password = useRef();
+  password.current = watch('password');
 
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
@@ -99,7 +122,7 @@ const MypageForm = (props, { isRootURL }) => {
 
   return (
     <St.Container>
-      <St.Mypage>
+      <St.Login onSubmit={handleSubmit(onSubmit)}>
         <St.Head>MY PAGE</St.Head>
         <St.Id>
           <h4>E-mail</h4>
@@ -121,14 +144,20 @@ const MypageForm = (props, { isRootURL }) => {
         </St.Pw>
         <St.Pw>
           <h4>My Wallet Address</h4>
-          <St.Input/>
+          <St.Input id="confirmpassword"
+            name="confirmpassword"
+            type="password"
+            {...register('passwordConfirm', {
+              required: true,
+              validate: value => value === password.current,
+            })} />
         </St.Pw>
         <St.Submit>
-          <St.Submit_button>Edit</St.Submit_button>
+          <St.Submit_button type="submit" onClick={handleSubmit(onSubmit)}>Edit</St.Submit_button>
         </St.Submit>
-      </St.Mypage>
+      </St.Login>
     </St.Container>
   )
-};
+}
 
-export default MypageForm;
+export default withRouter(MypageForm);

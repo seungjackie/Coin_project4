@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-// import {Bootst}aa
+// import {Bootst}
 
 const Search = styled.div`
     /* .fix-bar {
@@ -204,7 +204,7 @@ const BlockSearch = (event) =>{
                                                     <span className='valueofblock'>{value.strippedsize}</span>
                                                 </div>
                                                 <div className='block-line'>
-                                                    <span className='kindofblock'>weight ::</span>
+                                                    <span className='kindofblock'>weight :</span>
                                                     <span className='valueofblock'>{value.weight}</span>
                                                 </div>
                                             </div>

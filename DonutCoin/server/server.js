@@ -39,7 +39,7 @@ const walletRoute = require('./routes/wallet');
 
 app.use('/api/user', usersRoute);
 app.use('/api/auth', authRoute);
-app.use('/api/wallet', authRoute);
+app.use('/api/wallet', walletRoute);
 // app.use('/api/board', boardRoute);
 // app.use('/api/coininfo', coinInfoRoute)
 // app.use('/api/comment', commentRoute);

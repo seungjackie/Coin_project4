@@ -190,9 +190,11 @@ const Header = (props, { isRootURL }) => {
               readOnly
             />
           </Link>
+          <Link to="/">
             <button onClick={onClickLogout} className="logoutbar">
               로그아웃
             </button>
+          </Link>
 
         </>
       )}

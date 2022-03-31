@@ -4,6 +4,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const Blocks = require('./donut_express/blocks');
+
 require('dotenv').config({ path: path.join(__dirname, '/process.env')});
 
 const app = express();
@@ -45,6 +47,15 @@ app.use('/api/wallet', walletRoute);
 // app.use('/api/comment', commentRoute);
 // app.use('/api/like', likeRoute);
 // app.use('/api/reply', replyRoute);
+
+app.get('/search',async(req,res) => {
+    // app.get('/block',async(req,res) => {
+        const blocks = await Blocks.find({})
+        res.json(blocks)                                                    //클라이언트 요청에 반응하는거다 ..
+        console.log(blocks)
+    })
+    
+    
 
 
 const port = 4000;

@@ -51,7 +51,7 @@ app.get('/search',async(req,res) => {
   // app.get('/block',async(req,res) => {
       const blocks = await Blocks.find({})
       res.json(blocks)
-      //클라이언트 요청에 반응하는거다 ..
+      //클라이언트 요청에 반응하는거다 ..a
       // sconsole.log(blocks)
   })
   

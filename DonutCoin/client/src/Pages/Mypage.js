@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import withSize from "../Container/withSize";
+import MypageForm from "../Components/Mypage/MypageForm";
 
 import Header from "../Components/Global/Header";
 import Footer from "../Components/Global/Footer";
@@ -11,7 +12,7 @@ const Main = ({ match, widthSize, heightSize }) => {
   return (
     <>
       <Header isRootURL={isRootURL} />
-
+      <MypageForm />
       <Footer />
     </>
   );

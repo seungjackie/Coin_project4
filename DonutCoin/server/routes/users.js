@@ -8,6 +8,14 @@ const { User } = require('../models/User');
 // const { Reply } = require("../models/Reply");
 const saltRounds = 10;
 const bcrypt = require('bcrypt');
+
+const srequest = require("sync-request");
+const USER = "parkisak";
+const PASS = 1234;
+const PORT = 9776;
+const headers = {
+  "content-type": "text/plain;"
+};
 //=================================
 //             User
 //=================================
@@ -18,13 +26,33 @@ router.post('/register', async (req, res) => {
   console.log("2 : register")
   // 이메일 중복확인
   const emailExist = await User.findOne({ email: req.body.email });
+
   if (emailExist) return res.status(400)
     .send('이미 존재하는 이메일입니다.')
     .json({
       overlap: true,
       message: "이미 존재하는 이메일입니다."
     });
+
   const user = new User(req.body);
+  console.log(user);
+  
+  var dataString = `{
+    "jsonrpc":"1.0", 
+    "id":"parkisak", 
+    "method":"getnewaddress",
+    "params":["${req.body.name}"]
+  }`;
+  var options = {
+      headers: headers,
+      body: dataString
+  };
+  var wres = srequest('POST', `http://${USER}:${PASS}@127.0.0.1:${PORT}`, options);
+  // console.log(wres);
+  var wallet = JSON.parse(wres.body.toString()).result;
+  console.log(wallet);
+  user.walletaddress = wallet;
+
   try {
     await user.save();
     res.json({

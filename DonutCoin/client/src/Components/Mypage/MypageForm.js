@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { auth } from '../../reducer/action/user';
-import { useSelector, useDispatch } from 'react-redux';
+import { updateEmail } from '../../reducer/action/user';
 import axios from 'axios';
 
 
@@ -97,14 +98,14 @@ const MypageForm = (props, { isRootURL }) => {
     getInfo();
   }, []);
 
-  // const onEdit = useCallback(user => {
-  //   dispatch(updateEmail(user)).then(response => {
-  //     if(response.payload.success) {
+  const onEdit = useCallback(user => {
+    dispatch(updateEmail(user)).then(response => {
+      if(response.payload.success) {
         
-  //     }
+      }
 
-  //   })
-  // })
+    })
+  })
 
   return (
     <St.Container>

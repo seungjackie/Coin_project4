@@ -15,7 +15,7 @@ const asyncHandler = require('express-async-handler')
 // controller
 const getBlocks = asyncHandler(async(req, res) => {
     const blocks = await Blocks.find({})
-    res.json(blocks)                                                    //클라이언트 요청에 반응하는거다 ..
+    res.json(blocks)                                                    //클라이언트 요청에 반응하는거다 .. a
     console.log(blocks)
 })
 

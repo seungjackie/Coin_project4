@@ -1,7 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useRef, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { registerUser, checkUser } from '../../reducer/action/user';
+
+
+import { useForm } from 'react-hook-form';
+import styled from "styled-components";
 
 
 const St = {
@@ -82,84 +86,119 @@ const St = {
     `,
 
 };
-
-const MypageForm = (props) => {
-  // redux의 dispatch
+function MypageForm(props) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+  });
   const dispatch = useDispatch();
+  const password = useRef();
+  password.current = watch('password');
 
-  // react hook에서 state 사용
-  const [Email, setEmail] = useState('');
-  const [Name, setName] = useState('');
-  const [Password, setPassword] = useState('');
-  const [ConfirmPassword, setConfirmPassword] = useState('');
-
-
-  // handler 함수들
-  const onEmailHandler = (event) => {
-    setEmail(event.currentTarget.value);
+  const [ShowPassword, setShowPassword] = useState(false);
+  const handleVisibility = () => {
+    setShowPassword(!ShowPassword);
   };
 
-  const onNameHandler = (event) => {
-    setName(event.currentTarget.value);
-  };
-
-  const onPasswordHandler = (event) => {
-    setPassword(event.currentTarget.value);
-  };
-
-  const onConfirmPasswordHandler = (event) => {
-    setConfirmPassword(event.currentTarget.value);
-  };
-
-  const onSubmitHandler = (event) => {
-    // 태그의 기본 기능으로 리프레쉬 되는 것을 방지.
-    event.preventDefault();
-
-    if (Password !== ConfirmPassword) {
-      return alert('비밀번호 확인이 일치하지 않습니다.');
+  const onSubmit = async data => {
+    // console.log(data);
+    try {
+      await dispatch(checkUser(data.email))
+        .then(response => {
+          console.log(response)
+          if (response.payload.success) {
+            dispatch(registerUser(data));
+            alert(`${data.name}님 회원가입을 축하드립니다.`);
+            props.history.push('/login');
+          } else {
+            setError('email', {
+              type: 'validate',
+              message: response.payload.message,
+            }
+            );
+          }
+        })
+        .catch(error => {
+          console.log('response: ', error.response);
+        });
+    } catch (err) {
+      console.log(err);
     }
-
-    let body = {
-      email: Email,
-      name: Name,
-      password: Password,
-    };
-
-    // // action을 dispatch해준다.
-    // dispatch(joinUser(body)).then((response) => {
-    //   if (response.payload.success) {
-    //     props.history.push('/');
-    //   } else {
-    //     alert('회원가입에 실패했습니다.');
-    //   }
-    // });
   };
-
-
-
 
   return (
     <St.Container>
-      <St.Login onSubmit={onSubmitHandler}>
-        <St.Head>MYPAGE</St.Head>
+      <St.Login onSubmit={handleSubmit(onSubmit)}>
+        <St.Head>MY PAGE</St.Head>
         <St.Login_id>
           <h4>E-mail</h4>
-          <St.Input type="email" value={Email} onChange={onEmailHandler} name="Email" id="" placeholder="Email" />
+          <St.Input
+            id="email"
+            name="email"
+            type="email"
+            {...register('email', {
+              required: '이메일을 입력해주세요.',
+              pattern: {
+                // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: '이메일 형식이 올바르지 않습니다.',
+              },
+            })} />
         </St.Login_id>
         <St.Join_name>
           <h4>Name</h4>
-          <St.Input type="text" value={Name} onChange={onNameHandler} name="Name" id="" placeholder="Name" />
+          <St.Input
+            id="name"
+            name="name"
+            type="text"
+            {...register('name', {
+              required: true,
+              minLength: true,
+              minLength: 2,
+              maxLength: 8,
+            })} />
         </St.Join_name>
         <St.Login_pw>
           <h4>Password</h4>
-          <St.Input type="password" value={Password} onChange={onPasswordHandler} name="Password" id="" placeholder="Password" />
+          <St.Input id="password"
+            name="password"
+            type={ShowPassword ? 'text' : 'password'}
+            {...register('password', {
+              required: true,
+              minLength: 8,
+              maxLength: 20,
+              validate: {
+                checkLang: value =>
+                  ![/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/].every(pattern =>
+                    pattern.test(value),
+                  ),
+                // checkLower: value =>
+                //   [/[a-z]/].every(pattern => pattern.test(value)),
+                // checkUpper: value =>
+                //   [/[A-Z]/].every(pattern => pattern.test(value)),
+                // checkNumber: value =>
+                //   [/[0-9]/].every(pattern => pattern.test(value)),
+                // checkSpec: value =>
+                //   [/[^a-zA-Z0-9]/].every(pattern => pattern.test(value)),
+              },
+            })} />
         </St.Login_pw>
         <St.Login_pw>
-          <h4>MY Wallet Address</h4>
-          <St.Input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} name="ConfirmPassword" id="" placeholder="MY Wallet Address" />
+          <h4>My Wallet Address</h4>
+          <St.Input id="confirmpassword"
+            name="confirmpassword"
+            type="password"
+            {...register('passwordConfirm', {
+              required: true,
+              validate: value => value === password.current,
+            })} />
         </St.Login_pw>
         <St.Submit>
-          <St.Submit_button>Edit</St.Submit_button>
+          <St.Submit_button type="submit" onClick={handleSubmit(onSubmit)}>Edit</St.Submit_button>
         </St.Submit>
       </St.Login>
     </St.Container>

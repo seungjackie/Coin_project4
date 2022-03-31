@@ -1,11 +1,12 @@
-import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getMyWallet, buyCoin, sellCoin } from '../../reducer/action/wallet';
 import {
   changeAmountAndTotalPrice,
   changePriceAndTotalPrice,
   changeTotalPriceAndAmount,
-} from "../../Reducer/coinReducer";
+} from "../../reducer/modules/coinReducer";
 import OrderInfoTradeList from "./OrderInfoTradeList";
 
 const St = {
@@ -35,7 +36,7 @@ const St = {
     font-weight: 900;
     color: ${({ fontColor }) => fontColor || "black"};
   `,
-  OrderInfoContainer: styled.div`
+  OrderInfoContainer: styled.form`
     width: 100%;
     padding: 15px;
     padding-top: 0;
@@ -139,6 +140,15 @@ const OrderInfoAskBid = ({
   orderTotalPrice,
 }) => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  let userFrom = localStorage.getItem('userId')
+
+  useEffect(() => {
+    FetchMyWallet();
+    // getBoardName(coinNameKor)
+    // console.log('coinNameKor:', coinNameKor)
+  }, [selectedAskBidOrder, coinSymbol]);
+
   const changePrice = useCallback(
     (e) =>
       dispatch(
@@ -165,6 +175,44 @@ const OrderInfoAskBid = ({
       ),
     [dispatch]
   );
+
+  const toLogin = () => {
+    window.location.href = '/login'
+  };
+  const toJoin = () => {
+    window.location.href = '/join'
+  };
+
+  let variables = {
+    userFrom: userFrom,
+    coinName: coinSymbol
+  }
+  const FetchMyWallet = () => {
+    dispatch(getMyWallet({}))
+  }
+
+  const onBuy = () => {
+    dispatch(buyCoin(variables).then(response => {
+      if (response.payload.sucess) {
+        window.location.reload();
+        // alert(`${buyAmount} 주문완료 하였습니다`)
+        FetchMyWallet();
+        alert(`주문완료 하였습니다`)
+      } else {
+        alert('주문에 실패하였습니다')
+      }
+    }))
+  }
+  const onSell = () => {
+    dispatch(sellCoin(variables).then(response => {
+      if (response.payload.sucess) {
+        window.location.reload();
+        alert('주문완료 하였습니다')
+      } else {
+        alert('주문에 실패하였습니다')
+      }
+    }))
+  }
 
   return (
     <St.OrderInfoContainer theme={theme}>
@@ -211,6 +259,7 @@ const OrderInfoAskBid = ({
           <St.OrderInfoDetailContainer>
             <St.OrderInfoDetailTitle>주문수량</St.OrderInfoDetailTitle>
             <St.OrderInfoInput
+              name="orderAmount"
               onChange={changeAmount}
               value={orderAmount ? orderAmount.toLocaleString() : ""}
               placeholder={0}
@@ -219,6 +268,7 @@ const OrderInfoAskBid = ({
           <St.OrderInfoDetailContainer>
             <St.OrderInfoDetailTitle>주문총액</St.OrderInfoDetailTitle>
             <St.OrderInfoInput
+              name="buyAmount"
               onChange={changeTotalPrice}
               value={orderTotalPrice ? orderTotalPrice.toLocaleString() : ""}
               placeholder={0}
@@ -228,28 +278,75 @@ const OrderInfoAskBid = ({
       ) : (
         <OrderInfoTradeList theme={theme} />
       )}
-      <St.OrderBtnContainer>
-        <St.Button
-          width={"30%"}
-          minWidth={"70px"}
-          marginRight={"5px"}
-          bgColor={theme.deepBlue}
-          fontSize={"0.9rem"}
-          fontColor={"white"}
-          //링크추가필요  
-        >
-          회원가입
-        </St.Button>
-        <St.Button
-          width={"65%"}
-          bgColor={theme.priceDown}
-          fontSize={"0.9rem"}
-          fontColor={"white"}
-          //링크추가필요
-        >
-          로그인
-        </St.Button>
-      </St.OrderBtnContainer>
+      {user.userData && !user.userData.isAuth ? (
+        <>
+          <St.OrderBtnContainer>
+
+            <St.Button
+              width={"30%"}
+              minWidth={"70px"}
+              marginRight={"5px"}
+              bgColor={theme.deepBlue}
+              fontSize={"0.9rem"}
+              fontColor={"white"}
+              onClick={toJoin}
+            >
+              회원가입
+            </St.Button>
+            <St.Button
+              width={"65%"}
+              bgColor={theme.priceDown}
+              fontSize={"0.9rem"}
+              fontColor={"white"}
+              onClick={toLogin}
+            >
+              로그인
+            </St.Button>
+          </St.OrderBtnContainer>
+        </>
+      ) : (
+        <>
+          <St.OrderBtnContainer>
+
+            <St.Button
+              width={"30%"}
+              minWidth={"70px"}
+              marginRight={"5px"}
+              bgColor={theme.deepBlue}
+              fontSize={"0.9rem"}
+              fontColor={"white"}
+              type='reset'
+
+            >
+              초기화
+            </St.Button>
+            {selectedAskBidOrder === "bid" ? (
+              <St.Button
+                width={"65%"}
+                bgColor={theme.priceUp}
+                fontSize={"0.9rem"}
+                fontColor={"white"}
+                type='submit'
+                onClick={onBuy}
+              >
+                매수
+              </St.Button>
+            ) : (
+              <St.Button
+                width={"65%"}
+                bgColor={theme.priceDown}
+                fontSize={"0.9rem"}
+                fontColor={"white"}
+                type='submit'
+                onClick={onSell}
+              >
+                매도
+              </St.Button>
+            )}
+
+          </St.OrderBtnContainer>
+        </>
+      )}
     </St.OrderInfoContainer>
   );
 };

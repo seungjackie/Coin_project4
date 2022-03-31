@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { EmailError, PasswordError } from '../../lib/options/errors';
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { loginUser } from '../../Reducer/action/user_action';
+import { Link, withRouter } from 'react-router-dom';
+import { loginUser } from '../../reducer/action/user';
+import { useForm } from 'react-hook-form';
+import {
+  // FormBox,
+  // FormTitle,
+  // InputBox,
+  // PasswordBox,
+  // PasswordButton,
+  // LoginButton,
+  // FilledInput,
+  ErrorMessage,
+  // TextBox,
+} from '../../styles/form/styles';
 
 const St = {
-    Container: styled.div`
+  Container: styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -13,7 +26,7 @@ const St = {
     justify-content: center;
     background-color: rgb(231, 234, 239);
   `,
-    Login: styled.form`
+  Login: styled.form`
     width: 30%;
     height: 600px;
     background: white;
@@ -23,18 +36,18 @@ const St = {
     align-items: center;
     flex-direction: column;
   `,
-    Head: styled.div`
+  Head: styled.div`
     /* color: rgb(231, 234, 239); */
     color: white;
     font-size: 3em;
     font-weight: bolder;
     text-shadow: 1px 2px 3px black;
   `,
-    Login_id: styled.div`
+  Login_id: styled.div`
     margin-top: 20px;
     width: 80%;
   `,
-    Input: styled.input`
+  Input: styled.input`
     width: 100%;
     height: 50px;
     border-radius: 30px;
@@ -43,11 +56,11 @@ const St = {
     border: 1px solid lightgray;
     outline: none;
   `,
-    Login_pw: styled.div`
+  Login_pw: styled.div`
     margin-top: 20px;
     width: 80%;
   `,
-    Login_etc: styled.div`
+  Login_etc: styled.div`
     padding: 10px;
     width: 80%;
     font-size: 14px;
@@ -56,11 +69,11 @@ const St = {
     align-items: center;
     font-weight: bold;
    `,
-    Submit: styled.div`
+  Submit: styled.div`
     margin-top: 50px;
     width: 80%;
    `,
-    Submit_button: styled.button`
+  Submit_button: styled.button`
     width: 100%;
     height: 50px;
     border: 0;
@@ -77,70 +90,104 @@ const St = {
     }
     `,
 
-    ToJoin: styled.a`
+  ToJoin: styled.a`
     margin: auto;
     text-decoration-line: none;
     `,
 };
 
-const LoginForm = (props) => {
-  
-  // redux의 dispatch
+function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+  });
   const dispatch = useDispatch();
-  
-  // react hook에서 state 사용
-  const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
+  const [ShowPassword, setShowPassword] = useState(false);
+  const [RememberId, setRememberId] = useState(false);
 
-  //handler 함수
-  const onEmailHandler = (event) => {
-    setEmail(event.currentTarget.value);
-  }
+  const handleVisibility = () => {
+    setShowPassword(!ShowPassword);
+  };
+  const handleChange = e => {
+    setRememberId(e.target.checked);
+  };
 
-  const onPasswordHandler = (event) => {
-    setPassword(event.currentTarget.value);
-
-  }
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-
-    let body = {
-      email: Email,
-      password: Password,
-    };
-
-    // action의 반환값을 dispatch해준다.
-    dispatch(loginUser(body))
-    .then((response) => {
-      if(response.payload.loginSuccess) {
-        window.location.replace('/')
+  const onSubmit = useCallback(user => {
+    dispatch(loginUser(user)).then(response => {
+      if (response.payload.success) {
+        alert(`${response.payload.name}님 환영합니다.`);
+        console.log(response.payload._id);
+        // 로컬스토리지 userId 저장
+        window.localStorage.setItem('userId', response.payload._id);
+        window.localStorage.setItem('userName', response.payload.name);
+        window.location.replace('/');
       } else {
-        alert("로그인 정보를 확인하세요.")
-        window.location.replace('/login')
+        alert(response.payload.message);
+        
       }
     });
-  };
+  }, []);
+
 
 
   return (
     <St.Container>
-        <St.Login onSubmit={onSubmitHandler}>
-            <St.Head>Log-in</St.Head>
-            <St.Login_id>
-                <h4>E-mail</h4>
-                <St.Input type="email" value={Email} onChange={onEmailHandler} name="" id="" placeholder="Email" />
-            </St.Login_id>
-            <St.Login_pw>
-                <h4>Password</h4>
-                <St.Input type="password" value={Password} onChange={onPasswordHandler} name="" id="" placeholder="Password" />
-            </St.Login_pw>
-            <St.Login_etc>
-                <St.ToJoin href="/join">아직 회원이 아니신가요?</St.ToJoin>
-            </St.Login_etc>
-            <St.Submit>
-                <St.Submit_button type="submit">LOGIN</St.Submit_button>
-            </St.Submit>
-        </St.Login>
+      <St.Login onSubmit={handleSubmit(onSubmit)}>
+        <St.Head>Log-in</St.Head>
+        <St.Login_id>
+          <h4>E-mail</h4>
+          <St.Input
+            id="email"
+            name="email"
+            type="text"
+            placeholder="이메일을 입력해주세요."
+            {...register('email', {
+              required: true,
+              validate: {
+                checkPattern: value =>
+                  [/^\S+@\S+$/i].every(pattern => pattern.test(value)),
+              },
+            })} />
+          {errors.email && (
+            <ErrorMessage>{EmailError[errors.email.type]}</ErrorMessage>
+          )}
+        </St.Login_id>
+        <St.Login_pw>
+          <h4>Password</h4>
+          <St.Input id="password"
+            name="password"
+            type={ShowPassword ? 'text' : 'password'}
+            placeholder="비밀번호를 입력해주세요."
+            {...register('password', {
+              required: true,
+              minLength: 8,
+              maxLength: 20,
+              // validate: {
+              //   checkLang: value =>
+              //     ![/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/].every(pattern =>
+              //       pattern.test(value),
+              //     ),
+              //   checkLower: value =>
+              //     [/[a-z]/].every(pattern => pattern.test(value)),
+              //   checkUpper: value =>
+              //     [/[A-Z]/].every(pattern => pattern.test(value)),
+              //   checkNumber: value =>
+              //     [/[0-9]/].every(pattern => pattern.test(value)),
+              //   checkSpec: value =>
+              //     [/[^a-zA-Z0-9]/].every(pattern => pattern.test(value)),
+              // },
+            })} />
+        </St.Login_pw>
+        <St.Login_etc>
+          <St.ToJoin href="/join">아직 회원이 아니신가요?</St.ToJoin>
+        </St.Login_etc>
+        <St.Submit>
+          <St.Submit_button type="submit">LOGIN</St.Submit_button>
+        </St.Submit>
+      </St.Login>
     </St.Container>
   )
 }

@@ -1,10 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { registerUser, checkUser } from '../../reducer/action/user';
-
-
-import { useForm } from 'react-hook-form';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from "styled-components";
 
 
@@ -50,15 +44,8 @@ const St = {
     padding: 0px 20px;
     border: 1px solid lightgray;
     outline: none;
-  `,
-  Login_pw: styled.div`
-    margin-top: 20px;
-    width: 80%;
-  `,
-  Join_name: styled.div`
-    margin-top: 20px;
-    width: 80%;
-`,
+    letter-spacing: 5px;
+    `,
   Submit: styled.div`
     margin-top: 50px;
     width: 80%;
@@ -102,16 +89,15 @@ function MypageForm(props) {
 
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-
-  const user = useSelector(state => state.user);
+  // const [userPassword, setUserPassword] = useState('');
 
   const getInfo = () => {
     dispatch(auth()).then(response => {
       if (response.payload.userData != null) {
-        setUserEmail(response.payload.userData.email)
-        setUserName(response.payload.userData.name)
-        console.log(response.payload.userData)
+        setUserName(response.payload.userData.name);
+        setUserEmail(response.payload.userData.email);
+        // setUserPassword(response.payload.userData.password);
+
       }
     });
   };
@@ -120,21 +106,26 @@ function MypageForm(props) {
     getInfo();
   }, []);
 
+  // const onEdit = useCallback(user => {
+  //   dispatch(updateEmail(user)).then(response => {
+  //     if(response.payload.success) {
+        
+  //     }
+
+  //   })
+  // })
+
   return (
     <St.Container>
       <St.Login onSubmit={handleSubmit(onSubmit)}>
         <St.Head>MY PAGE</St.Head>
         <St.Id>
           <h4>E-mail</h4>
-          <St.Input
-            value={userEmail}
-          />
+          <St.Input value={userEmail}/>
         </St.Id>
         <St.Name>
           <h4>Name</h4>
-          <St.Input
-            value={userName}
-          />
+          <St.Input value={userName}/>
         </St.Name>
         <St.Pw>
           <h4>Password</h4>

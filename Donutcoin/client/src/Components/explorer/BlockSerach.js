@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './block.css';
 import styled from 'styled-components';
 
-// import {Bootst}
+// import {Bootst}aa
 
 const Search = styled.div`
     /* .fix-bar {

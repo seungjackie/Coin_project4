@@ -12,6 +12,9 @@ import {
   GET_MYCOMMENT,
   GET_MYBOARD,
   GET_MYREPLY,
+  GET_WALLET,
+  BUY_WALLET,
+  SELL_WALLET,
 } from '../action/types';
 
 export default function reducer(state = {}, action) {
@@ -42,6 +45,12 @@ export default function reducer(state = {}, action) {
       return { ...state, myBoard: action.payload };
     case GET_MYREPLY:
       return { ...state, myReply: action.payload };
+    case GET_WALLET:
+      return { ...state, wallet: action.payload };
+    case BUY_WALLET:
+      return { ...state, buy: action.payload };
+    case SELL_WALLET:
+      return { ...state, sell: action.payload };
     default:
       return state;
   }

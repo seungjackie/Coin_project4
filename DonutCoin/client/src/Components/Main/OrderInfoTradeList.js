@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 const St = {
   Container: styled.div`
@@ -15,7 +16,18 @@ const St = {
 };
 
 const OrderInfoTradeList = ({ theme }) => {
-  return <St.Container>로그인 후 사용 가능합니다.</St.Container>;
+  const user = useSelector(state => state.user);
+
+
+  return (
+    <>
+      {user.userData && !user.userData.isAuth ? (
+        <St.Container>로그인 후 사용 가능합니다.</St.Container>
+      ) : (
+        <St.Container>거래내역입니다.</St.Container>
+      )}
+    </>
+  )
 };
 
 export default React.memo(OrderInfoTradeList);

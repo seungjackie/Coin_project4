@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { auth } from '../../reducer/action/user';
@@ -103,12 +103,13 @@ const Header = (props, { isRootURL }) => {
   const [userName, setUserName] = useState('');
   const user = useSelector(state => state.user);
 
-  const onClickLogout = () => {
+  const onClickLogout = (props) => {
     axios.get('/api/user/logout').then(response => {
       if (response.data.success) {
         localStorage.removeItem('key');
         localStorage.clear();
         props.history.push('/');
+        window.location.reload();
       } else {
         alert('로그아웃 실패');
       }
@@ -189,9 +190,12 @@ const Header = (props, { isRootURL }) => {
               readOnly
             />
           </Link>
-          <button onClick={onClickLogout} className="logoutbar">
-            로그아웃
-          </button>
+          <Link to="/">
+            <button onClick={onClickLogout} className="logoutbar">
+              로그아웃
+            </button>
+          </Link>
+
         </>
       )}
     </St.Header>

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 const withSelectedCoinName = () => (OriginalComponent) => (props) => {
   const selectedMarket = useSelector((state) => state.Coin.selectedMarket);
-  console.log("0 : ", selectedMarket)
+  // console.log("0 : ", selectedMarket)
   const coinNameKor = useSelector(
     (state) => {
       if (selectedMarket != "KRW-DNC") {
@@ -13,7 +13,7 @@ const withSelectedCoinName = () => (OriginalComponent) => (props) => {
       }
     }
   );
-  console.log("coinNameKor : " + coinNameKor)
+  // console.log("coinNameKor : " + coinNameKor)
   const coinNameEng = useSelector(
     (state) => state.Coin.marketNames.data[selectedMarket == "KRW-DNC" ? "KRW-BTC" : selectedMarket].english
   );

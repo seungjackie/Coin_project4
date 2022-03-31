@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { auth } from '../../reducer/action/user';
@@ -52,6 +52,7 @@ const St = {
     padding: 0px 20px;
     border: 1px solid lightgray;
     outline: none;
+    letter-spacing: 5px;
     `,
   Submit: styled.div`
     margin-top: 50px;
@@ -79,21 +80,31 @@ const MypageForm = (props, { isRootURL }) => {
 
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  // const [userPassword, setUserPassword] = useState('');
 
-  const user = useSelector(state => state.user);
-
-  const getName = () => {
+  const getInfo = () => {
     dispatch(auth()).then(response => {
       if (response.payload.userData != null) {
         setUserName(response.payload.userData.name);
+        setUserEmail(response.payload.userData.email);
+        // setUserPassword(response.payload.userData.password);
+
       }
     });
   };
 
   useEffect(() => {
-    getName();
+    getInfo();
   }, []);
+
+  // const onEdit = useCallback(user => {
+  //   dispatch(updateEmail(user)).then(response => {
+  //     if(response.payload.success) {
+        
+  //     }
+
+  //   })
+  // })
 
   return (
     <St.Container>
@@ -101,11 +112,11 @@ const MypageForm = (props, { isRootURL }) => {
         <St.Head>MY PAGE</St.Head>
         <St.Id>
           <h4>E-mail</h4>
-          <St.Input/>
+          <St.Input value={userEmail}/>
         </St.Id>
         <St.Name>
           <h4>Name</h4>
-          <St.Input/>
+          <St.Input value={userName}/>
         </St.Name>
         <St.Pw>
           <h4>Password</h4>

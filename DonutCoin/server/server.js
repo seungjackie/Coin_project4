@@ -110,6 +110,7 @@ app.get('/search',async(req,res) => {
 
 // 서버에서 connectdb를 가져와야함
 // 모듈일땐 어떻게 해야하지?
+//a
 
 
 

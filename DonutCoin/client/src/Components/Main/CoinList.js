@@ -24,6 +24,7 @@ const St = {
     background-color: white;
     overflow: hidden;
 
+    /* 특정 조건이 true 인 경우만 */
     @media ${({ theme }) => theme.desktop} {
       display: block;
       max-width: 400px;
@@ -52,19 +53,21 @@ const St = {
     overflow: hidden;
     text-indent: -9999px;
   `,
+
   CoinSearchContainer: styled.div`
     display: flex;
     width: 100%;
     border-bottom: 1px solid ${({ theme }) => theme.lightGray2};
   `,
-  CoinSearchInput: styled.input`
+
+  CInput: styled.input`
     width: 100%;
     border: none;
-    padding: 5px;
+    padding: 20px;
     padding-left: 12px;
     &::placeholder {
       font-size: 0.7rem;
-      color: gray;
+      color: black;
       font-weight: 700;
     }
   `,
@@ -123,7 +126,7 @@ const St = {
       background-color: ${({ theme }) => theme.middleGray};
       border-radius: 5rem;
     }
-
+    /* 반응형 */
     @media ${({ theme }) => theme.desktop} {
       display: block;
       max-width: 400px;
@@ -131,6 +134,23 @@ const St = {
     }
   `,
 };
+  // 
+  const CoinList = ({
+    //value 
+    theme,
+    marketNames,
+    sortedMarketNames,
+    latestCoinData,
+    selectedMarket,
+    searchCoinInput,
+    isMarketNamesLoading,
+    isInitCandleLoading,
+    heightSize,
+    isRootURL,
+  }) => {
+    // dispatch() 사용시 reducer 함수를 동작 시킬 수 있다.
+    // ex) 데이터 수정
+    const dispatch = useDispatch();
 
 
 
@@ -226,9 +246,10 @@ const CoinList = ({
           </button>
         </li> */}
 
-        {isMarketNamesLoading || isInitCandleLoading ? (
-          <Loading center={false} />
-        ) : (
+          {/* a || b 어느 하나가 트루인경우 true */}
+          {isMarketNamesLoading || isInitCandleLoading ? (
+            <Loading center={false} />
+          ) : (
 
           DNCsortedMarketNames?.map((marketName) => {
             const splitedName = marketName.split("-");
@@ -283,3 +304,4 @@ export default withLatestCoinData()(
     )
   )
 );
+    };
